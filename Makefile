@@ -2,14 +2,14 @@ NAME		= containers
 CPPFLAGS	= -MMD -Wall -Wextra -Werror -std=c++98
 #-MMD : first M for dependencies, second M to ignore system header directories, D to output to file .d with same name as .o file
 CPP			= c++
-INC			= -I ./inc
 
 SRC_DIR		= ./src
 HEADER_DIR	= ./inc
 OBJ_DIR		= ./obj
+INC			= -I $(HEADER_DIR)
 
 SRC_LIST	= main.cpp
-HEADER_LIST	= stack.hpp stack.tpp
+HEADER_LIST	= vector.hpp vector.tpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))
