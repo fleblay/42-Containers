@@ -1,10 +1,6 @@
 #ifndef VECTOR_H
 # define VECTOR_H
 
-# ifndef DEBUG
-#  define DEBUG 0
-# endif
-
 # include <memory>
 
 namespace ft
@@ -16,10 +12,10 @@ namespace ft
 		public	:
 		typedef	T											value_type;
 		typedef	Alloc										allocator_type;
-		typedef	typename allocator_type::reference			reference;
-		typedef	typename allocator_type::const_reference	const_reference;
-		typedef	typename allocator_type::pointer			pointer;
-		typedef	typename allocator_type::const_pointer		const_pointer;
+		typedef	typename allocator_type::reference			reference; // value_type& for default
+		typedef	typename allocator_type::const_reference	const_reference; // const value_type& for default
+		typedef	typename allocator_type::pointer			pointer; // value_type* for default
+		typedef	typename allocator_type::const_pointer		const_pointer; // const value_type * for default
 		typedef	pointer										iterator; // a changer par ft::random_iterator<value_type>
 		typedef	const iterator								const_iterator;
 		//typedef	todo									reverse_iterator;

@@ -9,7 +9,7 @@ OBJ_DIR		= ./obj
 INC			= -I $(HEADER_DIR)
 
 SRC_LIST	= main.cpp
-HEADER_LIST	= vector.hpp vector.tpp
+HEADER_LIST	= containers.hpp vector.hpp vector.tpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))
@@ -17,11 +17,19 @@ OBJS		= $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.o, $(SRCS))
 DEPS		= $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.d, $(SRCS))
 
 ifeq ($(MAKECMDGOALS), debug)
-	CPPFLAGS		+= -D DEBUG=1
+	CPPFLAGS	+= -D DEBUG=1
+else
+	CPPFLAGS	+= -D DEBUG=0
+endif
+
+ifeq ($(MAKECMDGOALS), std)
+	CPPFLAGS	+= -D NAMESPACE=std
+	NAME		= stdcontainers
 endif
 
 all	: $(NAME)
-debug : $(NAME)
+std	: fclean $(NAME)
+debug : fclean $(NAME)
 
 $(NAME)	: $(OBJS)
 	$(CPP) $(CPPFLAGS) $(OBJS) -o $@
@@ -35,6 +43,7 @@ clean :
 
 fclean	: clean
 	rm -rf $(NAME)
+	rm -rf stdcontainers
 
 re : clean
 	make all

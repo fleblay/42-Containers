@@ -1,16 +1,31 @@
 #include "vector.hpp"
+#include <vector>
+#include "containers.hpp"
+#include <stdexcept>
+#include <iostream>
 
-using namespace ft;
+using namespace NAMESPACE;
 
 int main(void)
 {
-	vector<char>	test;
-	std::cerr << "max size : [" << test.max_size() << "]" << std::endl;
-	test.~vector();
-
 	vector<int>	myVector;
-	std::cerr << "max size : [" << myVector.max_size() << "]" << std::endl;
+	std::cout << "max size : [" << myVector.max_size() << "]" << std::endl;
+	try
+	{
+		myVector.reserve(myVector.max_size() - 1);
+	}
+	catch (std::exception &e)
+	{
+		COUT(e.what())
+	}
+	try
+	{
+		myVector.reserve(myVector.max_size() + 1);
+	}
+	catch (std::exception &e)
+	{
+		COUT(e.what())
+	}
 	myVector.push_back(42);
-	myVector.push_back(21);
 	return (0);
 }

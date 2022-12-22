@@ -5,23 +5,24 @@
 #  error __FILE__ should only be included via vector.hpp
 # endif
 
+#include "containers.hpp" // DEBUG
 #include <iostream> // for printer
 #include <new> // for bad_alloc
-#include <stdexcept>
+#include <stdexcept> // for length_error
 
 namespace ft
 {
 	template <class T, class Alloc>
 	vector<T, Alloc>::vector(const allocator_type &alloc) : _size(0), _capacity(0), _data(NULL), _alloc(alloc)
 	{
-		std::cerr << "ft::vector Default Constructor called" << std::endl;
+		DEBUG_PRINT("ft::vector : default constructor")
 		return ;
 	}
 
 	template <class T, class Alloc>
 	vector<T, Alloc>::~vector(void)
 	{
-		std::cerr << "ft::vector Default Destructor called" << std::endl;
+		DEBUG_PRINT("ft::vector : default destructor")
 		for (size_type i = 0; i < _size; i++)
 			_alloc.destroy(_data + i);
 		_alloc.deallocate(_data, _capacity);
@@ -39,7 +40,7 @@ namespace ft
 	template <class T, class Alloc>
 	void	vector<T, Alloc>::reserve(size_type n)
 	{
-		std::cerr << "ft::vector reserve" << std::endl;
+		DEBUG_PRINT("ft::vector : reserve")
 		if (n <= _capacity)
 			return;
 		if (n > this->max_size())
@@ -62,7 +63,7 @@ namespace ft
 		}
 		catch (std::bad_alloc &ba)
 		{
-			std::cerr << "_increaseCapacity : bad_alloc : " << ba.what() << std::endl;
+			DEBUG_PRINT("ft::vector : bad alloc");
 			throw;
 		}
 	}
@@ -70,7 +71,7 @@ namespace ft
 	template <class T, class Alloc>
 	void	vector<T, Alloc>::push_back(const value_type &val)
 	{
-		std::cout << "ft::vector push_back" << std::endl;
+		DEBUG_PRINT("ft::vector push_back")
 		if (_size + 1 > _capacity)
 			this->reserve(_size + 1);
 		_alloc.construct(_data + _size, val);
