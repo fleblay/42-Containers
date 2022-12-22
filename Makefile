@@ -1,3 +1,5 @@
+SHELL		= /bin/bash
+
 NAME		= containers
 CPPFLAGS	= -MMD -Wall -Wextra -Werror -std=c++98
 #-MMD : first M for dependencies, second M to ignore system header directories, D to output to file .d with same name as .o file
@@ -8,7 +10,12 @@ HEADER_DIR	= ./inc
 OBJ_DIR		= ./obj
 INC			= -I $(HEADER_DIR)
 
-SRC_LIST	= main.cpp
+ifndef TEST_FILE
+	SRC_LIST	:= main.cpp
+else
+	SRC_LIST	:= ${TEST_FILE}
+endif
+
 HEADER_LIST	= containers.hpp vector.hpp vector.tpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
@@ -25,10 +32,11 @@ endif
 ifeq ($(MAKECMDGOALS), std)
 	CPPFLAGS	+= -D NAMESPACE=std
 	NAME		= stdcontainers
+	OBJ_DIR		= ./std_obj
 endif
 
 all	: $(NAME)
-std	: fclean $(NAME)
+std	: $(NAME)
 debug : fclean $(NAME)
 
 $(NAME)	: $(OBJS)
@@ -40,6 +48,7 @@ $(OBJ_DIR)/%.o	: $(SRC_DIR)/%.cpp
 
 clean :
 	rm -rf $(OBJ_DIR)
+	rm -rf ./std_obj
 
 fclean	: clean
 	rm -rf $(NAME)
