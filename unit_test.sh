@@ -20,8 +20,8 @@ function run_test()
 	echo -n "Running test : $1"
 	${TEST_EXEC_DIR}/ft/$1 > ${TEST_EXEC_DIR}/output/$1_ft_stdout 2 > ${TEST_EXEC_DIR}/output/$1_ft_stderr
 	${TEST_EXEC_DIR}/std/$1 > ${TEST_EXEC_DIR}/output/$1_std_stdout 2 > ${TEST_EXEC_DIR}/output/$1_std_stderr
-	DIF_STDOUT=$(diff ${TEST_EXEC_DIR}/output/$1_ft_stdout ${TEST_EXEC_DIR}/output/$1_std_stdout)
-	DIF_STDERR=$(diff ${TEST_EXEC_DIR}/output/$1_ft_stderr ${TEST_EXEC_DIR}/output/$1_std_stderr)
+	DIF_STDOUT=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stdout ${TEST_EXEC_DIR}/output/$1_std_stdout)
+	DIF_STDERR=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stderr ${TEST_EXEC_DIR}/output/$1_std_stderr)
 	if [ ! -z "$DIF_STDOUT" ]  || [ ! -z "$DIF_STDERR" ]
 	then
 		RET="1"
@@ -30,10 +30,14 @@ function run_test()
 	fi
 }
 
-while getopts :f:v opt
+while getopts :f:vs opt
 do
 	case $opt in
 
+		s)
+			echo "Stop on error mode on"
+			STOP="1"
+		;;
 		v)
 			echo "Verbose mode on"
 			VERBOSE=""
@@ -50,7 +54,7 @@ do
 			fi
 		;;
 		*)
-			echo "Wrong option. Choices available are : -v -f <test_name"
+			echo "Wrong option. Choices available are : -v -s -f <test_name"
 			exit 1
 		;;
 	esac
@@ -85,12 +89,15 @@ case $1 in
 			run_test $TEST_EXEC
 			if [ $RET -ne "0" ]
 			then
-				echo -e " : \e[31mKO\e[0m"
-				test ! -z "$DIF_STDOUT" && echo "STDOUT DIFF :" && echo "$DIF_STDOUT"
-				test ! -z "$DIF_STDERR" && echo "STDERR DIFF :" && echo "$DIF_STDERR"
-				break;
+				echo -e " : \x1b[31mKO\x1b[0m"
+				if [ -z $STOP ]
+				then
+					test ! -z "$DIF_STDOUT" && echo "STDOUT DIFF :" && echo "$DIF_STDOUT"
+					test ! -z "$DIF_STDERR" && echo "STDERR DIFF :" && echo "$DIF_STDERR"
+					break;
+				fi
 			else
-				echo -e " : \e[32mOK\e[0m"
+				echo -e " : \x1b[32mOK\x1b[0m"
 			fi
 		done
 	;;
