@@ -101,11 +101,12 @@ case $1 in
 			fi
 		done
 	;;
-	clear)
+	clean)
 		echo "Clearing env and workdir"
 		rm -rf $TEST_EXEC_DIR
+		make ${VERBOSE---quiet} fclean
 	;;
 	*)
-		echo "Usage $0 full | make | run | clear"
+		echo "Usage $0 full | make | run | clean"
 	;;
 esac
