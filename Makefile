@@ -53,6 +53,7 @@ clean :
 fclean	: clean
 	rm -rf $(NAME)
 	rm -rf stdcontainers
+	./unit_test.sh "clean"
 
 re : clean
 	make all
