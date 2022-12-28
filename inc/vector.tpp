@@ -9,6 +9,7 @@
 #include <iostream> // for printer
 #include <new> // for bad_alloc
 #include <stdexcept> // for length_error
+#include <sstream> // for at -> stringstream error
 
 namespace ft
 {
@@ -125,10 +126,77 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-	const typename vector<T, Alloc>::reference	vector<T, Alloc>::operator[](size_type n) const
+	typename vector<T, Alloc>::const_reference	vector<T, Alloc>::operator[](size_type n) const
 	{
 		DEBUG_PRINT("ft::vector const operator[]")
 		return (*(_data + n));
 	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference	vector<T, Alloc>::at(size_type n)
+	{
+		DEBUG_PRINT("ft::vector at")
+		if (n >= _size)
+		{
+			std::stringstream	oor_what;
+
+			oor_what	<< "vector::_M_range_check: __n (which is "
+						<< n
+						<< ") >= this->size() (which is "
+						<< this->size()
+						<< ")";
+
+			throw(std::out_of_range(oor_what.str()));
+		}
+		return (*(_data + n));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference	vector<T, Alloc>::at(size_type n) const
+	{
+		DEBUG_PRINT("ft::vector const at")
+		if (n >= _size)
+		{
+			std::stringstream	oor_what;
+
+			oor_what	<< "vector::_M_range_check: __n (which is "
+						<< n
+						<< ") >= this->size() (which is "
+						<< this->size()
+						<< ")";
+
+			throw(std::out_of_range(oor_what.str()));
+		}
+		return (*(_data + n));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference	vector<T, Alloc>::front(void)
+	{
+		DEBUG_PRINT("ft::vector front")
+		return (*_data);
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference	vector<T, Alloc>::front(void) const
+	{
+		DEBUG_PRINT("ft::vector const front")
+		return (*_data);
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reference	vector<T, Alloc>::back(void)
+	{
+		DEBUG_PRINT("ft::vector back")
+		return (*(_data + _size - 1));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reference	vector<T, Alloc>::back(void) const
+	{
+		DEBUG_PRINT("ft::vector const back")
+		return (*(_data + _size - 1));
+	}
+
 };
 #endif

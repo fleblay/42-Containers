@@ -29,19 +29,30 @@ namespace ft
 		explicit vector(const allocator_type &alloc = allocator_type());
 		~vector(void);
 
-		//FUNCTIONS
+		//FUNCTIONS : CAPACITY
 
 		public	:
-
 		size_type		size(void) const;
 		size_type		max_size(void) const;
 		void			resize(size_type n, value_type val = value_type());
 		size_type		capacity(void) const;
 		bool			empty(void) const;
 		void			reserve(size_type n);
-		void			push_back(const value_type &val);
+
+		//FUNCTIONS : ELEMENT ACCESS
+
 		reference		operator[](size_type n);
-		const reference	operator[](size_type n) const;
+		const_reference	operator[](size_type n) const;
+		reference		at(size_type n);
+		const_reference	at(size_type n) const;
+		reference		front(void);
+		const_reference	front(void) const;
+		reference		back(void);
+		const_reference	back(void) const;
+
+		//FUNCTIONS : MODIFIER
+
+		void			push_back(const value_type &val);
 
 		//ATTRIBUTES
 		private	:

@@ -6,12 +6,6 @@
 #include <csignal>
 #include <cstdlib>
 
-void	signal_handler(int signal_number)
-{
-	std::cout << "A signal has been trapped [" << signal_number << "]" << std::endl;
-	exit(2);
-}
-
 using namespace NAMESPACE;
 
 template <typename T>
@@ -21,6 +15,12 @@ void printInfo(const vector<T> &to_print)
 				<< " size : [" << to_print.size() << "]"
 				<< " capacity : [" << to_print.capacity() << "]"
 				<< std::endl;
+}
+
+void	signal_handler(int signal_number)
+{
+	std::cout << "A signal has been trapped [" << signal_number << "]" << std::endl;
+	exit(2);
 }
 
 int main(void)
@@ -33,16 +33,16 @@ int main(void)
 
 	std::cout << "Pushing back a value" << std::endl;
 	myVector.push_back(42);
-	std::cout << "back on vector : [" << myVector.back() << "]" << std::endl;
+	std::cout << "Front on vector : [" << myVector.front() << "]" << std::endl;
 	std::cout << "Pushing back a value" << std::endl;
 	myVector.push_back(84);
-	std::cout << "back on vector : [" << myVector.back() << "]" << std::endl;
-	std::cout << "const back on vector : [" << cRef.back() << "]" << std::endl;
+	std::cout << "Front on vector : [" << myVector.front() << "]" << std::endl;
+	std::cout << "const Front on vector : [" << cRef.front() << "]" << std::endl;
 
 	try
 	{
-		std::cout << "back on empty vector" << std::endl;
-		int result = myEmptyVector.back();
+		std::cout << "Front on empty vector" << std::endl;
+		int result = myEmptyVector.front();
 		std::cout << result << std::endl;
 	}
 	catch (std::exception &e)
