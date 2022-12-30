@@ -2,6 +2,7 @@
 # define VECTOR_H
 
 # include <memory>
+# include "random_access_iterator.hpp"
 
 namespace ft
 {
@@ -16,9 +17,9 @@ namespace ft
 		typedef	typename allocator_type::const_reference	const_reference; // const value_type& for default
 		typedef	typename allocator_type::pointer			pointer; // value_type* for default
 		typedef	typename allocator_type::const_pointer		const_pointer; // const value_type * for default
-		typedef	pointer										iterator; // a changer par ft::random_iterator<value_type>
-		typedef	const iterator								const_iterator;
-		//typedef	todo									reverse_iterator;
+		typedef	ft::random_access_iterator<pointer>										iterator; // a changer par ft::random_iterator<value_type> -> ft::random_iterator<pointer, vector>
+		//typedef	const iterator								const_iterator; // random<const_pointer>
+		//typedef	todo									reverse_iterator; // ft::reverse_it<iterator>
 		//typedef	todo									const_reverse_iterator;
 		typedef	typename allocator_type::difference_type	difference_type;
 		typedef	typename allocator_type::size_type			size_type;

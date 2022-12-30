@@ -16,7 +16,7 @@ else
 	SRC_LIST	:= ${TEST_FILE}
 endif
 
-HEADER_LIST	= containers.hpp vector.hpp vector.tpp
+HEADER_LIST	= containers.hpp iterator.hpp random_access_iterator.hpp vector.hpp vector.tpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))
