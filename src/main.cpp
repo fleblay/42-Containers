@@ -22,32 +22,22 @@ void printInfo(const vector<T> &to_print)
 				<< " capacity : [" << to_print.capacity() << "]"
 				<< std::endl;
 }
+struct myStruct
+{
+	int a;
+};
 
 int main(void)
 {
 	signal(SIGSEGV, signal_handler);
 
-	vector<int>	myVector;
-	vector<int>	myEmptyVector;
-	const vector<int> &cRef = myVector;
-
-	std::cout << "Pushing back a value" << std::endl;
-	myVector.push_back(42);
-	std::cout << "back on vector : [" << myVector.back() << "]" << std::endl;
-	std::cout << "Pushing back a value" << std::endl;
-	myVector.push_back(84);
-	std::cout << "back on vector : [" << myVector.back() << "]" << std::endl;
-	std::cout << "const back on vector : [" << cRef.back() << "]" << std::endl;
-
-	try
-	{
-		std::cout << "back on empty vector" << std::endl;
-		int result = myEmptyVector.back();
-		std::cout << result << std::endl;
-	}
-	catch (std::exception &e)
-	{
-		COUT("THIS SHOULD NOT PRINT : segfault expected")
-	}
-	return (0);
+	vector<int>::iterator it_0;
+	int a = 12;
+	vector<int>::iterator it_1(&a);
+	it_0 = it_1;
+	std::cout << *it_0 << std::endl;
+	struct myStruct test;
+	test.a = 28;
+	vector<struct myStruct>::iterator	it_struct(&test);
+	std::cout << it_struct->a << std::endl;
 }

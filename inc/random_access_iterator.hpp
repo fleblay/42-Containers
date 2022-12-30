@@ -7,21 +7,34 @@
 namespace ft
 {
 	template<typename Iter>
-	class random_access_iterator : public iterator<ft::random_access_iterator_tag, Iter> // changer ft par std pour tester algo
+	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, Iter> // changer ft par std pour tester algo
 	{
+		public	:
+		//On rend accessible a la classe (pour les definition de fx) et a l'exterieur
+		//les typedefs necessaires a l'utilisation des iterator_traits
+		typedef typename ft::iterator_traits<Iter>::iterator_category iterator_category;
+		typedef typename ft::iterator_traits<Iter>::value_type value_type;
+		typedef typename ft::iterator_traits<Iter>::difference_type difference_type;
+		typedef typename ft::iterator_traits<Iter>::reference reference;
+		typedef typename ft::iterator_traits<Iter>::pointer pointer;
+
 		private	:
 		Iter	_curentElemPtr;
 
 		public	:
 		random_access_iterator(void);
-		random_access_iterator(const Iter &initValue);
-		random_access_iterator(const random_access_iterator &src);
+		explicit random_access_iterator(const Iter &initValue);
+		random_access_iterator(const random_access_iterator<Iter> &src);
 		random_access_iterator &operator=(const random_access_iterator &rhs);
 		virtual ~random_access_iterator(void);
-		const Iter 	&base(void);
 
+		//Fonction pour les operateurs de comparaison
+		const Iter	&base(void) const;
+
+		//Va renvoyer la valeur pointee par _currentElemPtr, ie acceder a la val pointee par le
+		//pointer de type iter qui est dans le random_access_iterator
 		reference				operator*(void);
-		reference				operator->(const difference_type &offset);
+		pointer					operator->(void);
 		random_access_iterator	&operator++(void); // pre-increment
 		random_access_iterator	&operator--(void); // pre-decrement
 		random_access_iterator	operator++(int);
@@ -34,13 +47,29 @@ namespace ft
 		reference				operator[](const difference_type &offset);
 	};
 
+	//A faire via des template pour comparer avec les Iter, avec les const Iter et volatile Iter
 	template<typename IterL, typename IterR>
 	bool	operator==(const random_access_iterator<IterL> &lhs,
-			const random_access_iterator<IterR> &rhs)
-	{ return (lhs.base() == rhs.base()); }
-	//A faire via des template pour comparer avec les const et volatiles
+			const random_access_iterator<IterR> &rhs);
+	template<typename IterL, typename IterR>
+	bool	operator!=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs);
+	template<typename IterL, typename IterR>
+	bool	operator>(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs);
+	template<typename IterL, typename IterR>
+	bool	operator<(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs);
+	template<typename IterL, typename IterR>
+	bool	operator>=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs);
+	template<typename IterL, typename IterR>
+	bool	operator<=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs);
 	//TODO
 	//overload de operator+ avec friend pour difference_type
 }
+
+# include "random_access_iterator.tpp"
 
 #endif

@@ -57,18 +57,18 @@ namespace ft
 	//by iterator_traits. The iterator struct has been created to facilitate this. Each
 	//Iterator class should inherit from this base class, insuring it to have the proprer
 	//typedefs
-	template <class Category,
-			 class T,
-			 class Distance = std::ptrdiff_t,
-			 class Pointer = T*,
-			 class Reference = T&>
+	template <typename Category,
+			 typename T,
+			 typename Distance = std::ptrdiff_t,
+			 typename Pointer = T*,
+			 typename Reference = T&>
 	struct iterator
 	{
-		typedef Category									iterator_category;
-		typedef T											value_type;
-		typedef Distance									difference_type;
-		typedef Pointer										pointer;
-		typedef Reference									reference;
+		typedef Category							iterator_category;
+		typedef T									value_type;
+		typedef Distance							difference_type;
+		typedef Pointer								pointer;
+		typedef Reference							reference;
 	};
 }
 
