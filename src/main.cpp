@@ -61,7 +61,7 @@ int main(void)
 	std::cout << "vector value : [" << *(++it2) << "]" << std::endl;
 	std::cout << "vector value : [" << *(--it2) << "]" << std::endl;
 	std::cout << "vector value : [" << *(it2 + 3) << "]" << std::endl;
-//	std::cout << "vector value : [" << *(3 + it2) << "]" << std::endl;
+	std::cout << "vector value : [" << *(3 + it2) << "]" << std::endl;
 	std::cout << "vector value : [" << *(it2 += 3) << "]" << std::endl;
 	std::cout << "vector value : [" << *(it2 - 2) << "]" << std::endl;
 	std::cout << "vector value : [" << *(it2 -= 1) << "]" << std::endl;
@@ -80,4 +80,19 @@ int main(void)
 		std::cout << "gt" << std::endl;
 	if (it < it2)
 		std::cout << "lt" << std::endl;
+
+	const vector<int>				myconstvector;
+	vector<int>::const_iterator		cit = myconstvector.begin();
+	cit++;
+	vector<int>::const_iterator		cend = myconstvector.end();
+	cend--;
+
+	vector<int>::const_iterator		cit2;
+	cit2 = myvector.begin();
+	cit2++;
+
+	vector<int>::const_iterator		cit3 = myvector.begin();
+	cit3++;
+	vector<int>::const_iterator		cit4 = myvector.end();
+	cit4--;
 }

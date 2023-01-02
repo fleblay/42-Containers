@@ -3,6 +3,7 @@
 
 # include "iterator.hpp"
 # include <cstddef>
+# include "containers.hpp"
 
 namespace ft
 {
@@ -24,8 +25,10 @@ namespace ft
 		public	:
 		random_access_iterator(void);
 		explicit random_access_iterator(const Iter &initValue);
-		random_access_iterator(const random_access_iterator<Iter> &src);
-		random_access_iterator &operator=(const random_access_iterator &rhs);
+		template<typename IterR>
+		random_access_iterator(const random_access_iterator<IterR> &src);
+		template<typename IterR>
+		random_access_iterator &operator=(const random_access_iterator<IterR> &rhs);
 		virtual ~random_access_iterator(void);
 
 		//Fonction pour les operateurs de comparaison
@@ -45,7 +48,11 @@ namespace ft
 		random_access_iterator	&operator+=(const difference_type &offset); // compound assignement
 		random_access_iterator	&operator-=(const difference_type &offset); // compound assignement
 		reference				operator[](const difference_type &offset);
-		friend random_access_iterator	operator+(const difference_type &offset, const random_access_iterator<Iter> &rhs);
+		friend random_access_iterator	operator+(difference_type offset, const random_access_iterator &rhs)
+		{	
+			return (random_access_iterator(rhs.base() + offset));
+		}
+
 	};
 
 	//A faire via des template pour comparer avec les Iter, avec les const Iter et volatile Iter

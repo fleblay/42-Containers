@@ -33,13 +33,29 @@ namespace ft
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator			vector<T, Alloc>::begin(void)
 	{
+		DEBUG_PRINT("ft::vector : begin")
 		return (iterator(_data));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::begin(void) const
+	{
+		DEBUG_PRINT("ft::vector : const begin")
+		return (const_iterator(_data));
 	}
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator			vector<T, Alloc>::end(void)
 	{
+		DEBUG_PRINT("ft::vector : end")
 		return (iterator(_data + _size));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_iterator	vector<T, Alloc>::end(void) const
+	{
+		DEBUG_PRINT("ft::vector : const end")
+		return (const_iterator(_data + _size));
 	}
 
 	template <class T, class Alloc>

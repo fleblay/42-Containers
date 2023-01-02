@@ -11,18 +11,18 @@ namespace ft
 	{
 		//TYPES
 		public	:
-		typedef	T											value_type;
-		typedef	Alloc										allocator_type;
-		typedef	typename allocator_type::reference			reference; // value_type& for default
-		typedef	typename allocator_type::const_reference	const_reference; // const value_type& for default
-		typedef	typename allocator_type::pointer			pointer; // value_type* for default
-		typedef	typename allocator_type::const_pointer		const_pointer; // const value_type * for default
-		typedef	typename ft::random_access_iterator<pointer>	iterator; // a changer par ft::random_iterator<value_type> -> ft::random_iterator<pointer, vector>
-		//typedef	const iterator								const_iterator; // random<const_pointer>
-		//typedef	todo									reverse_iterator; // ft::reverse_it<iterator>
-		//typedef	todo									const_reverse_iterator;
-		typedef	typename allocator_type::difference_type	difference_type;
-		typedef	typename allocator_type::size_type			size_type;
+		typedef	T													value_type;
+		typedef	Alloc												allocator_type;
+		typedef	typename allocator_type::reference					reference; // value_type& for default
+		typedef	typename allocator_type::const_reference			const_reference; // const value_type& for default
+		typedef	typename allocator_type::pointer					pointer; // value_type* for default
+		typedef	typename allocator_type::const_pointer				const_pointer; // const value_type * for default
+		typedef	typename ft::random_access_iterator<pointer>		iterator; // ft::random_iterator<pointer, vector>
+		typedef	typename ft::random_access_iterator<const_pointer>	const_iterator; // ft::random_iterator<pointer, vector>
+		//typedef	todo											reverse_iterator; // ft::reverse_it<iterator>
+		//typedef	todo											const_reverse_iterator;
+		typedef	typename allocator_type::difference_type			difference_type;
+		typedef	typename allocator_type::size_type					size_type;
 
 		//CONSTRUCTOR AND DESTRUCTOR
 
@@ -33,7 +33,9 @@ namespace ft
 		//FUNCTIONS : ITERATOR
 		public	:
 		iterator		begin(void);
+		const_iterator	begin(void) const;
 		iterator		end(void);
+		const_iterator	end(void) const;
 
 		//FUNCTIONS : CAPACITY
 

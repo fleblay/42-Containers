@@ -26,8 +26,8 @@ namespace ft
 		return ;
 	}
 
-	template<typename Iter>
-	random_access_iterator<Iter>::random_access_iterator(const random_access_iterator &src)
+	template<typename Iter> template <typename IterR>
+	random_access_iterator<Iter>::random_access_iterator(const random_access_iterator<IterR> &src)
 	{
 		DEBUG_PRINT("ft::random_access_iterator : copy constructor")
 		if (*this != src)
@@ -35,8 +35,8 @@ namespace ft
 		return ;
 	}
 
-	template<typename Iter>
-	random_access_iterator<Iter> &random_access_iterator<Iter>::operator=(const random_access_iterator &rhs)
+	template<typename Iter> template <typename IterR>
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator=(const random_access_iterator<IterR> &rhs)
 	{
 		DEBUG_PRINT("ft::random_access_iterator : assignation overload")
 		this->_curentElemPtr = rhs.base();
@@ -152,12 +152,8 @@ namespace ft
 		return (_curentElemPtr[offset]);
 	}
 
-	template<typename Iter>
-	random_access_iterator<Iter>	operator+(const typename random_access_iterator<Iter>::difference_type &offset, const random_access_iterator<Iter> &rhs)
-	{
-		DEBUG_PRINT("ft::random_access_iterator : friend operator+")
-		return (random_access_iterator<Iter>(rhs.base() + offset));
-	}
+	//Implementation dans le hpp car ne fonctionne pas ici
+	//Forward declaration de la fonction template a faire avant de la friend
 
 	template<typename IterL, typename IterR>
 	bool	operator==(const random_access_iterator<IterL> &lhs,
