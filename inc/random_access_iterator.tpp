@@ -71,6 +71,142 @@ namespace ft
 		DEBUG_PRINT("ft::random_access_iterator : operator->")
 		return (_curentElemPtr);
 	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator++(void)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : pre-increment")
+		++_curentElemPtr;
+		return *this;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator--(void)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : pre-decrement")
+		--_curentElemPtr;
+		return *this;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> random_access_iterator<Iter>::operator++(int)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : post-increment")
+		random_access_iterator	tmp(_curentElemPtr);
+		++_curentElemPtr;
+		return tmp;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> random_access_iterator<Iter>::operator--(int)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : post-decrement")
+		random_access_iterator	tmp(_curentElemPtr);
+		--_curentElemPtr;
+		return tmp;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter>	random_access_iterator<Iter>::operator+(const difference_type &offset) const
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator+")
+		random_access_iterator	tmp(_curentElemPtr + offset);
+		return tmp;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter>	random_access_iterator<Iter>::operator-(const difference_type &offset) const
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator-")
+		random_access_iterator	tmp(_curentElemPtr - offset);
+		return tmp;
+	}
+
+	template<typename Iter>
+	typename random_access_iterator<Iter>::difference_type	random_access_iterator<Iter>::operator-(const random_access_iterator &rhs) const
+	{
+		DEBUG_PRINT("ft::random_access_iterator : difference operator-")
+		return (_curentElemPtr - rhs._curentElemPtr);
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator+=(const difference_type &offset)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : compound assignement +=")
+		_curentElemPtr += offset;
+		return *this;
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator-=(const difference_type &offset)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : compound assignement -=")
+		_curentElemPtr -= offset;
+		return *this;
+	}
+
+	template<typename Iter>
+	typename random_access_iterator<Iter>::reference	random_access_iterator<Iter>::operator[](const difference_type &offset)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator[]")
+		return (_curentElemPtr[offset]);
+	}
+
+	template<typename Iter>
+	random_access_iterator<Iter>	operator+(const typename random_access_iterator<Iter>::difference_type &offset, const random_access_iterator<Iter> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : friend operator+")
+		return (random_access_iterator<Iter>(rhs.base() + offset));
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator==(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator==")
+		return (lhs.base() == rhs.base());
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator!=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator!=")
+		return (lhs.base() != rhs.base());
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator>(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator>")
+		return (lhs.base() > rhs.base());
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator<(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator<")
+		return (lhs.base() < rhs.base());
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator>=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator>=")
+		return (lhs.base() >= rhs.base());
+	}
+
+	template<typename IterL, typename IterR>
+	bool	operator<=(const random_access_iterator<IterL> &lhs,
+			const random_access_iterator<IterR> &rhs)
+	{
+		DEBUG_PRINT("ft::random_access_iterator : operator<=")
+		return (lhs.base() <= rhs.base());
+	}
+
 };
 #endif
 

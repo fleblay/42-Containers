@@ -31,6 +31,7 @@ int main(void)
 {
 	signal(SIGSEGV, signal_handler);
 
+	//Simple Iterator Test
 	vector<int>::iterator it_0;
 	int a = 12;
 	vector<int>::iterator it_1(&a);
@@ -40,4 +41,43 @@ int main(void)
 	test.a = 28;
 	vector<struct myStruct>::iterator	it_struct(&test);
 	std::cout << it_struct->a << std::endl;
+
+	//Using begin and end to test operators
+	vector<int>	myvector;
+
+	for (int i = 0; i <= 10; i++)
+		myvector.push_back(i);
+	vector<int>::iterator	it = myvector.begin();
+	vector<int>::iterator	ite = myvector.end();
+
+	for (; it != ite; it++)
+		std::cout << "vector value : [" << *it << "]" << std::endl;
+
+
+	vector<int>::iterator	it2 = myvector.begin() + 4;
+	std::cout << "vector value : [" << (*it2++) << "]" << std::endl;
+	std::cout << "vector value : [" << *it2 << "]" << std::endl;
+	std::cout << "vector value : [" << *(it2--) << "]" << std::endl;
+	std::cout << "vector value : [" << *(++it2) << "]" << std::endl;
+	std::cout << "vector value : [" << *(--it2) << "]" << std::endl;
+	std::cout << "vector value : [" << *(it2 + 3) << "]" << std::endl;
+//	std::cout << "vector value : [" << *(3 + it2) << "]" << std::endl;
+	std::cout << "vector value : [" << *(it2 += 3) << "]" << std::endl;
+	std::cout << "vector value : [" << *(it2 - 2) << "]" << std::endl;
+	std::cout << "vector value : [" << *(it2 -= 1) << "]" << std::endl;
+	std::cout << "vector value : [" << it2[3] << "]" << std::endl;
+	std::cout << "diff value : [" << it2 - it << "]" << std::endl;
+
+	if (it == it2)
+		std::cout << "same" << std::endl;
+	if (it != it2)
+		std::cout << "diff" << std::endl;
+	if (it >= it2)
+		std::cout << "ge" << std::endl;
+	if (it <= it2)
+		std::cout << "le" << std::endl;
+	if (it > it2)
+		std::cout << "gt" << std::endl;
+	if (it < it2)
+		std::cout << "lt" << std::endl;
 }

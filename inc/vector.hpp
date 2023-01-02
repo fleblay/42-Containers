@@ -17,7 +17,7 @@ namespace ft
 		typedef	typename allocator_type::const_reference	const_reference; // const value_type& for default
 		typedef	typename allocator_type::pointer			pointer; // value_type* for default
 		typedef	typename allocator_type::const_pointer		const_pointer; // const value_type * for default
-		typedef	ft::random_access_iterator<pointer>										iterator; // a changer par ft::random_iterator<value_type> -> ft::random_iterator<pointer, vector>
+		typedef	typename ft::random_access_iterator<pointer>	iterator; // a changer par ft::random_iterator<value_type> -> ft::random_iterator<pointer, vector>
 		//typedef	const iterator								const_iterator; // random<const_pointer>
 		//typedef	todo									reverse_iterator; // ft::reverse_it<iterator>
 		//typedef	todo									const_reverse_iterator;
@@ -29,6 +29,11 @@ namespace ft
 		public	:
 		explicit vector(const allocator_type &alloc = allocator_type());
 		~vector(void);
+
+		//FUNCTIONS : ITERATOR
+		public	:
+		iterator		begin(void);
+		iterator		end(void);
 
 		//FUNCTIONS : CAPACITY
 

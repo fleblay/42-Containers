@@ -45,6 +45,7 @@ namespace ft
 		random_access_iterator	&operator+=(const difference_type &offset); // compound assignement
 		random_access_iterator	&operator-=(const difference_type &offset); // compound assignement
 		reference				operator[](const difference_type &offset);
+		friend random_access_iterator	operator+(const difference_type &offset, const random_access_iterator<Iter> &rhs);
 	};
 
 	//A faire via des template pour comparer avec les Iter, avec les const Iter et volatile Iter
@@ -66,8 +67,6 @@ namespace ft
 	template<typename IterL, typename IterR>
 	bool	operator<=(const random_access_iterator<IterL> &lhs,
 			const random_access_iterator<IterR> &rhs);
-	//TODO
-	//overload de operator+ avec friend pour difference_type
 }
 
 # include "random_access_iterator.tpp"

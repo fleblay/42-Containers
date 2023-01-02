@@ -31,6 +31,18 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator			vector<T, Alloc>::begin(void)
+	{
+		return (iterator(_data));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator			vector<T, Alloc>::end(void)
+	{
+		return (iterator(_data + _size));
+	}
+
+	template <class T, class Alloc>
 	typename vector<T, Alloc>::size_type		vector<T, Alloc>::size(void) const
 	{
 		return (_size);
