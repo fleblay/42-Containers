@@ -24,7 +24,7 @@ void printInfo(const vector<T> &to_print)
 }
 struct myStruct
 {
-	int a;
+	int a[2];
 };
 
 int main(void)
@@ -33,16 +33,20 @@ int main(void)
 
 	//Simple reverse_iterator Test, * and ->
 	vector<int>::reverse_iterator rit_0;
-	int a = 12;
-	vector<int>::iterator it_1(&a);
+	// On utilise le fait que * renvoie un iterateur temporaire qui a subit le pre-increment --
+	int a[2] = {12, 10};
+	vector<int>::iterator it_1(a + 1);
 	vector<int>::reverse_iterator rit_1(it_1);
 	rit_0 = rit_1;
 	std::cout << *rit_0 << std::endl;
-	struct myStruct test;
-	test.a = 28;
-	vector<struct myStruct>::iterator	it_struct(&test);
+	struct myStruct test[2];
+	test[0].a[0] = 21;
+	test[0].a[1] = 42;
+	test[1].a[0] = 84;
+	test[1].a[1] = 168;
+	vector<struct myStruct>::iterator	it_struct(test + 1);
 	vector<struct myStruct>::reverse_iterator	rit_struct(it_struct);
-	std::cout << rit_struct->a << std::endl;
+	std::cout << rit_struct->a[0] << std::endl;
 
 	//Using rbegin and end to test simple use case operators
 	vector<int>	myvector;
@@ -131,3 +135,4 @@ int main(void)
 	if (cit < it2)
 		std::cout << "lt" << std::endl;
 }
+
