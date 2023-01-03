@@ -1,7 +1,7 @@
 SHELL		= /bin/bash
 
 NAME		= containers
-CPPFLAGS	= -MMD -Wall -Wextra -Werror -std=c++98
+CPPFLAGS	= -MMD -Wall -Wextra -Werror #-std=c++98
 #-MMD : first M for dependencies, second M to ignore system header directories, D to output to file .d with same name as .o file
 CPP			= c++
 
@@ -16,7 +16,7 @@ else
 	SRC_LIST	:= ${TEST_FILE}
 endif
 
-HEADER_LIST	= containers.hpp iterator.hpp random_access_iterator.hpp random_access_iterator.tpp vector.hpp vector.tpp
+HEADER_LIST	= containers.hpp iterator.hpp random_access_iterator.hpp random_access_iterator.tpp vector.hpp vector.tpp reverse_iterators.hpp reverse_iterators.tpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))

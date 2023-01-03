@@ -76,14 +76,14 @@ namespace ft
 	typename vector<T, Alloc>::reverse_iterator	vector<T, Alloc>::rend(void)
 	{
 		DEBUG_PRINT("ft::vector : rend")
-		return (reverse_iterator(iterator(_data - 1 )));
+		return (reverse_iterator(iterator(_data)));
 	}
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rend(void) const
 	{
 		DEBUG_PRINT("ft::vector : const rend")
-		return (const_reverse_iterator(iterator(_data - 1)));
+		return (const_reverse_iterator(iterator(_data)));
 	}
 
 	template <class T, class Alloc>

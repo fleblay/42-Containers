@@ -32,17 +32,17 @@ int main(void)
 	signal(SIGSEGV, signal_handler);
 
 	//Simple reverse_iterator Test, * and ->
- //	vector<int>::reverse_iterator rit_0;
- //	int a = 12;
- //	vector<int>::iterator it_1(&a);
- //	vector<int>::reverse_iterator rit_1(it_1);
- //	rit_0 = rit_1;
- //	std::cout << *rit_0 << std::endl;
- //	struct myStruct test;
- //	test.a = 28;
- //	vector<struct myStruct>::iterator	it_struct(&test);
- //	vector<struct myStruct>::reverse_iterator	rit_struct(it_struct);
- //	std::cout << rit_struct->a << std::endl;
+	vector<int>::reverse_iterator rit_0;
+	int a = 12;
+	vector<int>::iterator it_1(&a);
+	vector<int>::reverse_iterator rit_1(it_1);
+	rit_0 = rit_1;
+	std::cout << *rit_0 << std::endl;
+	struct myStruct test;
+	test.a = 28;
+	vector<struct myStruct>::iterator	it_struct(&test);
+	vector<struct myStruct>::reverse_iterator	rit_struct(it_struct);
+	std::cout << rit_struct->a << std::endl;
 
 	//Using rbegin and end to test simple use case operators
 	vector<int>	myvector;

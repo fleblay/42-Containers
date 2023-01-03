@@ -70,7 +70,7 @@ namespace ft
 	typename reverse_iterator<Iter>::pointer	reverse_iterator<Iter>::operator->(void) const
 	{
 		DEBUG_PRINT("ft::reverse_iterator : operator->")
-		return (_nonReverseIter.operator->());
+		return (&(operator*()));
 	}
 
 	template<typename Iter>
