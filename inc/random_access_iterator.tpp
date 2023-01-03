@@ -107,7 +107,7 @@ namespace ft
 	}
 
 	template<typename Iter>
-	random_access_iterator<Iter>	random_access_iterator<Iter>::operator+(const difference_type &offset) const
+	random_access_iterator<Iter>	random_access_iterator<Iter>::operator+(difference_type offset) const
 	{
 		DEBUG_PRINT("ft::random_access_iterator : operator+")
 		random_access_iterator	tmp(_curentElemPtr + offset);
@@ -115,7 +115,7 @@ namespace ft
 	}
 
 	template<typename Iter>
-	random_access_iterator<Iter>	random_access_iterator<Iter>::operator-(const difference_type &offset) const
+	random_access_iterator<Iter>	random_access_iterator<Iter>::operator-(difference_type offset) const
 	{
 		DEBUG_PRINT("ft::random_access_iterator : operator-")
 		random_access_iterator	tmp(_curentElemPtr - offset);
@@ -130,7 +130,7 @@ namespace ft
 	}
 
 	template<typename Iter>
-	random_access_iterator<Iter> &random_access_iterator<Iter>::operator+=(const difference_type &offset)
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator+=(difference_type offset)
 	{
 		DEBUG_PRINT("ft::random_access_iterator : compound assignement +=")
 		_curentElemPtr += offset;
@@ -138,7 +138,7 @@ namespace ft
 	}
 
 	template<typename Iter>
-	random_access_iterator<Iter> &random_access_iterator<Iter>::operator-=(const difference_type &offset)
+	random_access_iterator<Iter> &random_access_iterator<Iter>::operator-=(difference_type offset)
 	{
 		DEBUG_PRINT("ft::random_access_iterator : compound assignement -=")
 		_curentElemPtr -= offset;
@@ -146,7 +146,7 @@ namespace ft
 	}
 
 	template<typename Iter>
-	typename random_access_iterator<Iter>::reference	random_access_iterator<Iter>::operator[](const difference_type &offset)
+	typename random_access_iterator<Iter>::reference	random_access_iterator<Iter>::operator[](const difference_type offset)
 	{
 		DEBUG_PRINT("ft::random_access_iterator : operator[]")
 		return (_curentElemPtr[offset]);

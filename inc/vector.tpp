@@ -59,6 +59,34 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
+	typename vector<T, Alloc>::reverse_iterator	vector<T, Alloc>::rbegin(void)
+	{
+		DEBUG_PRINT("ft::vector : rbegin")
+		return (reverse_iterator(iterator(_data + _size)));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rbegin(void) const
+	{
+		DEBUG_PRINT("ft::vector : const rbegin")
+		return (const_reverse_iterator(iterator(_data + _size)));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::reverse_iterator	vector<T, Alloc>::rend(void)
+	{
+		DEBUG_PRINT("ft::vector : rend")
+		return (reverse_iterator(iterator(_data - 1 )));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rend(void) const
+	{
+		DEBUG_PRINT("ft::vector : const rend")
+		return (const_reverse_iterator(iterator(_data - 1)));
+	}
+
+	template <class T, class Alloc>
 	typename vector<T, Alloc>::size_type		vector<T, Alloc>::size(void) const
 	{
 		return (_size);

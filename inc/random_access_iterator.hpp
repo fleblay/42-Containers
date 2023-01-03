@@ -3,6 +3,7 @@
 
 # include "iterator.hpp"
 # include <cstddef>
+# include "containers.hpp" // for debug
 
 namespace ft
 {
@@ -41,14 +42,15 @@ namespace ft
 		random_access_iterator	&operator--(void); // pre-decrement
 		random_access_iterator	operator++(int);
 		random_access_iterator	operator--(int);
-		random_access_iterator	operator+(const difference_type &offset) const;
-		random_access_iterator	operator-(const difference_type &offset) const;
+		random_access_iterator	operator+(difference_type offset) const;
+		random_access_iterator	operator-(difference_type offset) const;
 		difference_type			operator-(const random_access_iterator &rhs) const;
-		random_access_iterator	&operator+=(const difference_type &offset); // compound assignement
-		random_access_iterator	&operator-=(const difference_type &offset); // compound assignement
-		reference				operator[](const difference_type &offset);
+		random_access_iterator	&operator+=(difference_type offset); // compound assignement
+		random_access_iterator	&operator-=(difference_type offset); // compound assignement
+		reference				operator[](difference_type offset);
 		friend random_access_iterator	operator+(difference_type offset, const random_access_iterator &rhs)
-		{	
+		{
+			DEBUG_PRINT("ft::random_access_iterator : friend operator+")
 			return (random_access_iterator(rhs.base() + offset));
 		}
 

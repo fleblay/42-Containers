@@ -30,19 +30,31 @@ struct myStruct
 int main(void)
 {
 	signal(SIGSEGV, signal_handler);
+
+	//Simple Iterator Test, * and ->
+	vector<int>::iterator it_0;
+	int a = 12;
+	vector<int>::iterator it_1(&a);
+	it_0 = it_1;
+	std::cout << *it_0 << std::endl;
+	struct myStruct test;
+	test.a = 28;
+	vector<struct myStruct>::iterator	it_struct(&test);
+	std::cout << it_struct->a << std::endl;
+
+	//Using begin and end to test simple use case operators
 	vector<int>	myvector;
 
 	for (int i = 0; i <= 10; i++)
 		myvector.push_back(i);
-	vector<int>::reverse_iterator	it = myvector.rbegin();
-	vector<int>::reverse_iterator	ite = myvector.rend();
+	vector<int>::iterator	it = myvector.begin();
+	vector<int>::iterator	ite = myvector.end();
 
 	for (; it != ite; it++)
 		std::cout << "vector value : [" << *it << "]" << std::endl;
 
-	/*
-	//Testing reverse_iterator member functions (overload of operators)
-	vector<int>::reverse_iterator	it2 = myvector.rbegin() + 4;
+	//Testing iterator member functions (overload of operators)
+	vector<int>::iterator	it2 = myvector.begin() + 4;
 	std::cout << "vector value : [" << (*it2++) << "]" << std::endl;
 	std::cout << "vector value : [" << *it2 << "]" << std::endl;
 	std::cout << "vector value : [" << *(it2--) << "]" << std::endl;
@@ -56,7 +68,7 @@ int main(void)
 	std::cout << "diff value : [" << it2 - it << "]" << std::endl;
 	std::cout << "vector value : [" << *(3 + it2) << "]" << std::endl;
 
-	//Testing reverse_iterator comparisons
+	//Testing iterator comparisons
 	if (it == it2)
 		std::cout << "same" << std::endl;
 	if (it != it2)
@@ -70,7 +82,7 @@ int main(void)
 	if (it < it2)
 		std::cout << "lt" << std::endl;
 
-	it = myvector.rbegin();
+	it = myvector.begin();
 	
 	if (it == it2)
 		std::cout << "same" << std::endl;
@@ -85,25 +97,25 @@ int main(void)
 	if (it < it2)
 		std::cout << "lt" << std::endl;
 
-	//Testing const reverse_iterators
+	//Testing const iterators
 	const vector<int>				myconstvector;
-	vector<int>::const_reverse_iterator		cit = myconstvector.rbegin();
+	vector<int>::const_iterator		cit = myconstvector.begin();
 	cit++;
-	vector<int>::const_reverse_iterator		crend = myconstvector.rend();
-	crend--;
+	vector<int>::const_iterator		cend = myconstvector.end();
+	cend--;
 
-	vector<int>::const_reverse_iterator		cit2;
-	cit2 = myvector.rbegin();
+	vector<int>::const_iterator		cit2;
+	cit2 = myvector.begin();
 	cit2++;
 	std::cout << "const vector value : [" << *cit2 << "]" << std::endl;
 
-	//Testing const reverse_iterators construction from non-const reverse_iterator
-	vector<int>::const_reverse_iterator		cit3 = myvector.rbegin();
+	//Testing const iterators construction from non-const iterator
+	vector<int>::const_iterator		cit3 = myvector.begin();
 	cit3++;
-	vector<int>::const_reverse_iterator		cit4 = myvector.rend();
+	vector<int>::const_iterator		cit4 = myvector.end();
 	cit4--;
 
-	//Testing comparison of const and non-const reverse_iterator
+	//Testing comparison of const and non-const iterator
 	if (cit == it2)
 		std::cout << "same" << std::endl;
 	if (cit != it2)
@@ -116,5 +128,4 @@ int main(void)
 		std::cout << "gt" << std::endl;
 	if (cit < it2)
 		std::cout << "lt" << std::endl;
-	*/
 }

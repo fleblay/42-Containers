@@ -3,6 +3,7 @@
 
 # include <memory>
 # include "random_access_iterator.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -19,8 +20,8 @@ namespace ft
 		typedef	typename allocator_type::const_pointer				const_pointer; // const value_type * for default
 		typedef	typename ft::random_access_iterator<pointer>		iterator; // ft::random_iterator<pointer, vector>
 		typedef	typename ft::random_access_iterator<const_pointer>	const_iterator; // ft::random_iterator<pointer, vector>
-		//typedef	todo											reverse_iterator; // ft::reverse_it<iterator>
-		//typedef	todo											const_reverse_iterator;
+		typedef	typename ft::reverse_iterator<iterator>				reverse_iterator; // ft::reverse_it<iterator>
+		typedef	typename ft::reverse_iterator<const_iterator>		const_reverse_iterator; // ft::reverse_it<iterator>
 		typedef	typename allocator_type::difference_type			difference_type;
 		typedef	typename allocator_type::size_type					size_type;
 
@@ -32,10 +33,14 @@ namespace ft
 
 		//FUNCTIONS : ITERATOR
 		public	:
-		iterator		begin(void);
-		const_iterator	begin(void) const;
-		iterator		end(void);
-		const_iterator	end(void) const;
+		iterator				begin(void);
+		const_iterator			begin(void) const;
+		iterator				end(void);
+		const_iterator			end(void) const;
+		reverse_iterator		rbegin(void);
+		const_reverse_iterator	rbegin(void) const;
+		reverse_iterator		rend(void);
+		const_reverse_iterator	rend(void) const;
 
 		//FUNCTIONS : CAPACITY
 

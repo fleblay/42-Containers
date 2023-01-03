@@ -7,55 +7,51 @@
 
 namespace ft
 {
+	//Iter is a random_access_iterator, or a const variant
 	template<typename Iter>
-	class reverse_iterator : public ft::iterator<ft::random_access_iterator_tag, Iter> // changer ft par std pour tester algo
+	class reverse_iterator : public ft::iterator<ft::random_access_iterator_tag, Iter>
 	{
 		public	:
-		//On rend accessible a la classe (pour les definition de fx) et a l'exterieur
-		//les typedefs necessaires a l'utilisation des iterator_traits
 		typedef typename ft::iterator_traits<Iter>::iterator_category iterator_category;
 		typedef typename ft::iterator_traits<Iter>::value_type value_type;
 		typedef typename ft::iterator_traits<Iter>::difference_type difference_type;
 		typedef typename ft::iterator_traits<Iter>::reference reference;
 		typedef typename ft::iterator_traits<Iter>::pointer pointer;
+		typedef Iter iterator_type;
 
 		private	:
-		Iter	_curentElemPtr;
+		Iter	_nonReverseIter;
 
 		public	:
 		reverse_iterator(void);
-		explicit reverse_iterator(const Iter &initValue);
+		explicit reverse_iterator(iterator_type initValue);
 		template<typename IterR>
 		reverse_iterator(const reverse_iterator<IterR> &src);
 		template<typename IterR>
 		reverse_iterator &operator=(const reverse_iterator<IterR> &rhs);
 		virtual ~reverse_iterator(void);
 
-		//Fonction pour les operateurs de comparaison
-		const Iter	&base(void) const;
+		iterator_type	base(void) const;
 
-		//Va renvoyer la valeur pointee par _currentElemPtr, ie acceder a la val pointee par le
-		//pointer de type iter qui est dans le random_access_iterator
-		reference				operator*(void);
-		pointer					operator->(void);
-		reverse_iterator	&operator++(void); // pre-increment
-		reverse_iterator	&operator--(void); // pre-decrement
+		reference			operator*(void) const;
+		pointer				operator->(void) const;
+		reverse_iterator	&operator++(void);
+		reverse_iterator	&operator--(void);
 		reverse_iterator	operator++(int);
 		reverse_iterator	operator--(int);
-		reverse_iterator	operator+(const difference_type &offset) const;
-		reverse_iterator	operator-(const difference_type &offset) const;
+		reverse_iterator	operator+(difference_type offset) const;
+		reverse_iterator	operator-(difference_type offset) const;
 		difference_type			operator-(const reverse_iterator &rhs) const;
-		reverse_iterator	&operator+=(const difference_type &offset); // compound assignement
-		reverse_iterator	&operator-=(const difference_type &offset); // compound assignement
-		reference				operator[](const difference_type &offset);
+		reverse_iterator	&operator+=(difference_type offset);
+		reverse_iterator	&operator-=(difference_type offset);
+		reference				operator[](difference_type offset) const;
 		friend reverse_iterator	operator+(difference_type offset, const reverse_iterator &rhs)
-		{	
-			return (reverse_iterator(rhs.base() + offset));
+		{
+			DEBUG_PRINT("ft::reverse_iterator : friend operator+")
+			return (reverse_iterator(rhs.base() - offset));
 		}
-
 	};
 
-	//A faire via des template pour comparer avec les Iter, avec les const Iter et volatile Iter
 	template<typename IterL, typename IterR>
 	bool	operator==(const reverse_iterator<IterL> &lhs,
 			const reverse_iterator<IterR> &rhs);
