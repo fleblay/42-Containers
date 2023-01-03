@@ -65,6 +65,7 @@ int main(void)
 	for (; it3 != ite3; it3++)
 		std::cout << "myvect : [" << *it3 << "]" << std::endl;
 
+	//Test bad alloc
 	try
 	{
 		myvect3.assign(myvect3.max_size(), 2);
@@ -74,4 +75,8 @@ int main(void)
 	{
 		COUT(e.what())
 	}
+	//Test vector in valid state after throw
+	printInfo(myvect3);
+	for (; it3 != ite3; it3++)
+		std::cout << "myvect : [" << *it3 << "]" << std::endl;
 }
