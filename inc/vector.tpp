@@ -10,6 +10,8 @@
 #include <new> // for bad_alloc
 #include <stdexcept> // for length_error
 #include <sstream> // for at -> stringstream error
+#include "is_integral.hpp"
+#include "enable_if.hpp"
 
 namespace ft
 {
@@ -162,6 +164,37 @@ namespace ft
 			DEBUG_PRINT("ft::vector : bad alloc");
 			throw;
 		}
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+	{
+		DEBUG_PRINT("ft::vector assign : range version")
+
+		size_type	n = 0;
+		for (InputIterator first_copy = first; first_copy != last; first_copy++)
+			++n;
+		if (n > _capacity)
+			this->reserve(n);
+		for (size_type i = 0; i < _size; i++)
+			_alloc.destroy(_data + i);
+		for (size_type i = 0; i < n; i++, first++)
+			_alloc.construct(_data + i, *first);
+		_size = n;
+
+	}
+
+	template <class T, class Alloc>
+	void	vector<T, Alloc>::assign(size_type n, const value_type &val)
+	{
+		DEBUG_PRINT("ft::vector assign : fill version")
+		if (n > _capacity)
+			this->reserve(n);
+		for (size_type i = 0; i < _size; i++)
+			_alloc.destroy(_data + i);
+		for (size_type i = 0; i < n; i++)
+			_alloc.construct(_data + i, val);
+		_size = n;
 	}
 
 	template <class T, class Alloc>

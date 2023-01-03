@@ -4,6 +4,8 @@
 # include <memory>
 # include "random_access_iterator.hpp"
 # include "reverse_iterator.hpp"
+# include "is_integral.hpp"
+# include "enable_if.hpp"
 
 namespace ft
 {
@@ -66,6 +68,9 @@ namespace ft
 		//FUNCTIONS : MODIFIER
 
 		void			push_back(const value_type &val);
+		void			assign(size_type n, const value_type &val);
+		template <class InputIterator>
+		void			assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last);
 
 		//ATTRIBUTES
 		private	:
