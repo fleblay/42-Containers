@@ -6,6 +6,7 @@
 # include "reverse_iterator.hpp"
 # include "is_integral.hpp"
 # include "enable_if.hpp"
+# include <iterator> //For the tags
 
 namespace ft
 {
@@ -69,10 +70,15 @@ namespace ft
 
 		void			assign(size_type n, const value_type &val);
 		template <class InputIterator>
+		void			assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag);
+		template <class InputIterator>
+		void			assign_range(InputIterator first, InputIterator last, std::input_iterator_tag);
+		template <class InputIterator>
 		void			assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last);
 		void			push_back(const value_type &val);
 		void			pop_back(void);
-		iterator		insert(iterator postion, const value_type &val);
+		iterator		insert(iterator position, const value_type &val);
+		void			insert(iterator position, size_type n, const value_type &val);
 
 		//ATTRIBUTES
 		private	:

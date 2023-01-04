@@ -32,29 +32,29 @@ int main(void)
 	signal(SIGSEGV, signal_handler);
 
 	vector<int>		myvect;
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 		myvect.push_back(i * 10);
 
-	myvect.insert(myvect.begin() + 1, 3, 42);
+	std::cout << "[" << *myvect.insert(myvect.begin() + 1, 42) << std::endl;
 	printInfo(myvect);
 	for (vector<int>::iterator it = myvect.begin(); it != myvect.end(); it++)
 		std::cout << "myvect : [" << *it << "]" << std::endl;
 
 	std::cout << "----" << std::endl;
 
-	myvect.insert(myvect.begin(), 4, 21);
+	std::cout << "[" << *myvect.insert(myvect.begin(), 21) << std::endl;
 	printInfo(myvect);
 	for (vector<int>::iterator it = myvect.begin(); it != myvect.end(); it++)
 		std::cout << "myvect : [" << *it << "]" << std::endl;
 
 	std::cout << "----" << std::endl;
 
-	myvect.insert(myvect.end(), 6, 84);
+	std::cout << "[" << *myvect.insert(myvect.end(), 84) << std::endl;
 	printInfo(myvect);
 	for (vector<int>::iterator it = myvect.begin(); it != myvect.end(); it++)
 		std::cout << "myvect : [" << *it << "]" << std::endl;
 
-	myvect.insert(myvect.begin() + 6, 8, 168);
+	std::cout << "[" << *myvect.insert(myvect.begin() + 6, 168) << std::endl;
 	printInfo(myvect);
 	for (vector<int>::iterator it = myvect.begin(); it != myvect.end(); it++)
 		std::cout << "myvect : [" << *it << "]" << std::endl;

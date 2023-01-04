@@ -32,7 +32,7 @@ int main(void)
 
 	vector<int>	myvect;
 
-	//Forward or better Iterator
+	//Forward (or better) Iterator
 
 	for (int i = 0; i <= 10; i++)
 		myvect.push_back(i);
@@ -40,7 +40,6 @@ int main(void)
 	std::cout << "Distance : " << dist <<  std::endl;
 
 	//Input Iterator
-
 	std::stringstream	text;
 	text	<< "42" << std::endl
 			<< "84" << std::endl

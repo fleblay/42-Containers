@@ -33,6 +33,7 @@ int main(void)
 	vector<int>	myvect;
 	vector<int>	myvect2;
 
+	myvect2.push_back(-12);
 	for (int i = 20; i < 30; i++)
 		myvect.push_back(i);
 	myvect2.assign(myvect.begin() + 1, myvect.begin() + 8);

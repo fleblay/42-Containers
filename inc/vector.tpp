@@ -171,7 +171,16 @@ namespace ft
 	void			vector<T, Alloc>::assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
 	{
 		DEBUG_PRINT("ft::vector assign : range version")
+		typename iterator_traits<InputIterator>::iterator_category	InputIteratorTag;
 
+		assign_range(first, last, InputIteratorTag);
+		return ;
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag)
+	{
+		DEBUG_PRINT("ft::vector assign : range version : forward_iterator_tag specialisation")
 		size_type	n = ft::distance(first, last);
 		if (n > _capacity)
 			this->reserve(n);
@@ -180,7 +189,17 @@ namespace ft
 		for (size_type i = 0; i < n; i++, first++)
 			_alloc.construct(_data + i, *first);
 		_size = n;
+	}
 
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::input_iterator_tag)
+	{
+		DEBUG_PRINT("ft::vector assign : range version : input_iterator specialisation")
+		for (size_type i = 0; i < _size; i++)
+			_alloc.destroy(_data + i);
+		_size = 0;
+		for (; first != last; first++)
+			this->push_back(*first);
 	}
 
 	template <class T, class Alloc>
@@ -216,16 +235,45 @@ namespace ft
 		--_size;
 	}
 
-	/*
 	template <class T, class Alloc>
-	iterator	vector<T, Alloc>::insert(iterator postion, const value_type &val)
+	typename vector<T, Alloc>::iterator		vector<T, Alloc>::insert(iterator position, const value_type &val)
 	{
-		DEBUG_PRINT("ft::vector push_back")
+		DEBUG_PRINT("ft::vector insert : single elem")
+		size_type	pos = ft::distance(begin(), position);
+		size_type i = _size;
+
 		if (_size == _capacity)
 			this->reserve(_size == 0 ? 1 : _size * 2);
-
+		for (; i > pos; i--)
+		{
+			_alloc.destroy(_data + i);
+			_alloc.construct(_data + i, *(_data + i - 1));
+		}
+		_alloc.destroy(_data + i);
+		_alloc.construct(_data + i, val);
+		++_size;
+		return (iterator(_data + i));
 	}
-	*/
+
+	template <class T, class Alloc>
+	void	vector<T, Alloc>::insert(iterator position, size_type n, const value_type &val)
+	{
+		DEBUG_PRINT("ft::vector insert : fill")
+		size_type	pos = ft::distance(begin(), position);
+		size_type i = _size + n - 1; //fin de l'array
+
+		if (_size + n > _capacity)
+			this->reserve(_size + n > 2 * _size ? _size + n : 2 * _size);
+		for (; i > pos + n - 1; i--) // i sup a la fin de l'insert
+			_alloc.construct(_data + i, *(_data + i - n));
+		for (size_type j = 0; j < n; j++)
+		{
+			_alloc.destroy(_data + i - j);
+			_alloc.construct(_data + i - j, val);
+		}
+		_size += n;
+		return ;
+	}
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::reference	vector<T, Alloc>::operator[](size_type n)
