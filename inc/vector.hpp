@@ -67,10 +67,12 @@ namespace ft
 
 		//FUNCTIONS : MODIFIER
 
-		void			push_back(const value_type &val);
 		void			assign(size_type n, const value_type &val);
 		template <class InputIterator>
 		void			assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last);
+		void			push_back(const value_type &val);
+		void			pop_back(void);
+		iterator		insert(iterator postion, const value_type &val);
 
 		//ATTRIBUTES
 		private	:

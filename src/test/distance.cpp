@@ -7,8 +7,6 @@
 #include <cstdlib>
 #include "is_integral.hpp"
 #include "enable_if.hpp"
-#include <iterator>
-#include <sstream>
 
 void	signal_handler(int signal_number)
 {
@@ -32,27 +30,25 @@ int main(void)
 {
 	signal(SIGSEGV, signal_handler);
 
+	vector<int>	myvect;
+
+	//Forward or better Iterator
+
+	for (int i = 0; i <= 10; i++)
+		myvect.push_back(i);
+	vector<int>::difference_type dist = ::distance(myvect.begin(), myvect.end());
+	std::cout << "Distance : " << dist <<  std::endl;
+
+	//Input Iterator
+
 	std::stringstream	text;
 	text	<< "42" << std::endl
 			<< "84" << std::endl
 			<< "21" << std::endl;
 
-	std::stringstream	textCopy;
-	textCopy	<< "42" << std::endl
-				<< "84" << std::endl
-				<< "21" << std::endl;
-
-	//std::istream_iterator<int> iit (std::cin);
 	std::istream_iterator<int> iit (text);
-	std::istream_iterator<int> iit2 (textCopy);
 	std::istream_iterator<int> eos;
 
-	while (iit != eos)
-	{
-		std::cout << "value : [" << *iit << "]" << std::endl;
-		iit++;
-	}
-	vector<int>	myvect;
-	//myvect.assign(iit2, eos);
-	// assign et verifier le contenu de myvect;
+	vector<int>::difference_type dist2 = ::distance(iit, eos);
+	std::cout << "Distance 2: " << dist2 << std::endl;
 }

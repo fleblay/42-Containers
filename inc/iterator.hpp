@@ -1,6 +1,8 @@
 #ifndef ITERATOR_H
 # define ITERATOR_H
 
+# include <iterator> // for std::TAGS
+
 namespace ft
 {
 	//Types for the iterator_category
@@ -38,7 +40,7 @@ namespace ft
 	template <typename T>
 	struct iterator_traits<T*>
 	{
-		typedef random_access_iterator_tag			iterator_category;
+		typedef std::random_access_iterator_tag			iterator_category;
 		typedef T									value_type;
 		typedef std::ptrdiff_t						difference_type;
 		typedef T*									pointer;
@@ -47,7 +49,7 @@ namespace ft
 	template <typename T>
 	struct iterator_traits<const T*>
 	{
-		typedef random_access_iterator_tag			iterator_category;
+		typedef std::random_access_iterator_tag			iterator_category;
 		typedef T									value_type;
 		typedef std::ptrdiff_t						difference_type;
 		typedef const T*							pointer;

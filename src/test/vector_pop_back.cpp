@@ -7,8 +7,6 @@
 #include <cstdlib>
 #include "is_integral.hpp"
 #include "enable_if.hpp"
-#include <iterator>
-#include <sstream>
 
 void	signal_handler(int signal_number)
 {
@@ -32,27 +30,25 @@ int main(void)
 {
 	signal(SIGSEGV, signal_handler);
 
-	std::stringstream	text;
-	text	<< "42" << std::endl
-			<< "84" << std::endl
-			<< "21" << std::endl;
-
-	std::stringstream	textCopy;
-	textCopy	<< "42" << std::endl
-				<< "84" << std::endl
-				<< "21" << std::endl;
-
-	//std::istream_iterator<int> iit (std::cin);
-	std::istream_iterator<int> iit (text);
-	std::istream_iterator<int> iit2 (textCopy);
-	std::istream_iterator<int> eos;
-
-	while (iit != eos)
-	{
-		std::cout << "value : [" << *iit << "]" << std::endl;
-		iit++;
-	}
 	vector<int>	myvect;
-	//myvect.assign(iit2, eos);
-	// assign et verifier le contenu de myvect;
+
+	for (int i = 0; i < 12; i++)
+		myvect.push_back(i * 2);
+
+	for (int i = 1; i <= 3; i++)
+	{
+		for (int j = 0; j <= i; j++)
+			myvect.pop_back();
+		for (vector<int>::size_type j = 0; j < myvect.size(); j++)
+			std::cout << "vect : [" << myvect[j] << "]" << std::endl;
+		printInfo(myvect);
+	}
+	for (vector<int>::size_type j = 0; j < myvect.size(); j++)
+		std::cout << "vect : [" << myvect[j] << "]" << std::endl;
+	printInfo(myvect);
+	for (vector<int>::size_type i = 0; i <= myvect.size() + 2; i++)
+	{
+		myvect.pop_back();
+		printInfo(myvect);
+	}
 }

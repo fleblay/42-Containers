@@ -8,7 +8,7 @@
 namespace ft
 {
 	template<typename Iter>
-	class random_access_iterator : public ft::iterator<ft::random_access_iterator_tag, Iter> // changer ft par std pour tester algo
+	class random_access_iterator : public ft::iterator<std::random_access_iterator_tag, Iter> // changer ft par std pour tester algo
 	{
 		public	:
 		//On rend accessible a la classe (pour les definition de fx) et a l'exterieur

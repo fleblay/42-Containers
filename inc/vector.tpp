@@ -12,6 +12,7 @@
 #include <sstream> // for at -> stringstream error
 #include "is_integral.hpp"
 #include "enable_if.hpp"
+#include "distance.hpp"
 
 namespace ft
 {
@@ -171,9 +172,7 @@ namespace ft
 	{
 		DEBUG_PRINT("ft::vector assign : range version")
 
-		size_type	n = 0;
-		for (InputIterator first_copy = first; first_copy != last; first_copy++)
-			++n;
+		size_type	n = ft::distance(first, last);
 		if (n > _capacity)
 			this->reserve(n);
 		for (size_type i = 0; i < _size; i++)
@@ -206,6 +205,27 @@ namespace ft
 		_alloc.construct(_data + _size, val);
 		++_size;
 	}
+
+	template <class T, class Alloc>
+	void	vector<T, Alloc>::pop_back(void)
+	{
+		DEBUG_PRINT("ft::vector pop_back")
+		if (_size == 0 )
+			return ;
+		_alloc.destroy(_data + _size - 1);
+		--_size;
+	}
+
+	/*
+	template <class T, class Alloc>
+	iterator	vector<T, Alloc>::insert(iterator postion, const value_type &val)
+	{
+		DEBUG_PRINT("ft::vector push_back")
+		if (_size == _capacity)
+			this->reserve(_size == 0 ? 1 : _size * 2);
+
+	}
+	*/
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::reference	vector<T, Alloc>::operator[](size_type n)
