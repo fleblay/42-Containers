@@ -107,6 +107,9 @@ case $1 in
 		echo "Clearing env and workdir"
 		rm -rf $TEST_EXEC_DIR
 	;;
+	full)
+		"$0" make && "$0" run
+	;;
 	*)
 		echo "Usage $0 full | make | run | clean"
 		echo "Defaulting to full test"
