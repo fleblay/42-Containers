@@ -25,8 +25,6 @@ DEPS		= $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.d, $(SRCS))
 
 ifeq ($(MAKECMDGOALS), debug)
 	CPPFLAGS	+= -D DEBUG=1
-else
-	CPPFLAGS	+= -D DEBUG=0
 endif
 
 ifeq ($(MAKECMDGOALS), std)

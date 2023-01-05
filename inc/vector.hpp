@@ -81,8 +81,9 @@ namespace ft
 		iterator		insert(iterator position, const value_type &val);
 		void			insert(iterator position, size_type n, const value_type &val);
 		template <class InputIterator>
-		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
-							InputIterator last);
+//		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
+//							InputIterator last);
+		void			insert(iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = 0);
 		iterator		erase(iterator position);
 		iterator		erase(iterator first, iterator last);
 		void			swap(vector &x);

@@ -324,12 +324,17 @@ namespace ft
 	}
 
 	template <class T, class Alloc> template <class InputIterator>
-	void			vector<T, Alloc>::insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+	//void			vector<T, Alloc>::insert(iterator position,
+//			typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+	void			vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type*)
 	{
 		DEBUG_PRINT("ft::vector insert : range version")
 		typename iterator_traits<InputIterator>::iterator_category	InputIteratorTag;
+		//typename std::random_access_iterator_tag							InputIteratorTag_DEBUG;
+		//typename std::input_iterator_tag							InputIteratorTag_DEBUG;
 
 		insert_range(position, first, last, InputIteratorTag);
+		//insert_range(position, first, last, InputIteratorTag_DEBUG);
 		return ;
 	}
 
@@ -532,7 +537,7 @@ namespace ft
 	bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
 	{
 		DEBUG_PRINT("ft::vector operator<")
-		return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 	}
 
 	template <class T, class Alloc>

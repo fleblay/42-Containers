@@ -36,8 +36,8 @@ int main(void)
 	std::cout << "char : " << is_integral<char>::value << std::endl;
 	std::cout << "bool " << is_integral<bool>::value << std::endl;
 	std::cout << "char " << is_integral<char>::value << std::endl;
-	std::cout << "char16_t " << is_integral<char16_t>::value << std::endl;
-	std::cout << "char32_t " << is_integral<char32_t>::value << std::endl;
+	//std::cout << "char16_t " << is_integral<char16_t>::value << std::endl;
+	//std::cout << "char32_t " << is_integral<char32_t>::value << std::endl;
 	std::cout << "wchar_t " << is_integral<wchar_t>::value << std::endl;
 	std::cout << "signed char " << is_integral<signed char>::value << std::endl;
 	std::cout << "short int " << is_integral<short int>::value << std::endl;
@@ -55,8 +55,8 @@ int main(void)
 	std::cout << "char : " << is_integral<char>() << std::endl;
 	std::cout << "bool " << is_integral<bool>() << std::endl;
 	std::cout << "char " << is_integral<char>() << std::endl;
-	std::cout << "char16_t " << is_integral<char16_t>() << std::endl;
-	std::cout << "char32_t " << is_integral<char32_t>() << std::endl;
+	//std::cout << "char16_t " << is_integral<char16_t>() << std::endl;
+	//std::cout << "char32_t " << is_integral<char32_t>() << std::endl;
 	std::cout << "wchar_t " << is_integral<wchar_t>() << std::endl;
 	std::cout << "signed char " << is_integral<signed char>() << std::endl;
 	std::cout << "short int " << is_integral<short int>() << std::endl;
