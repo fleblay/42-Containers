@@ -243,7 +243,9 @@ namespace ft
 		size_type i = _size;
 
 		if (_size == _capacity)
-			this->reserve(_size == 0 ? 1 : _size * 2);
+			this->reserve(_size < 3 ? _size + 1 : _size * 2);
+			//this->reserve(_size == 0 ? 1 : _size * 2);
+			//this->reserve(_size + 1 >= 2 * _size ? _size + 1 : 2 * _size);
 		for (; i > pos; i--)
 		{
 			_alloc.destroy(_data + i);
@@ -273,6 +275,52 @@ namespace ft
 		}
 		_size += n;
 		return ;
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+	{
+		DEBUG_PRINT("ft::vector insert : range version")
+		typename iterator_traits<InputIterator>::iterator_category	InputIteratorTag;
+
+		insert_range(position, first, last, InputIteratorTag);
+		return ;
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::insert_range(iterator position, InputIterator first, InputIterator last,
+						std::forward_iterator_tag)
+	{
+		DEBUG_PRINT("ft::vector insert : range version : forward_iterator_tag specialisation")
+		size_type	pos = ft::distance(begin(), position);
+		size_type	n = ft::distance(first, last);
+		size_type i = _size + n - 1; //fin de l'array
+
+		if (_size + n > _capacity)
+			this->reserve(_size + n > 2 * _size ? _size + n : 2 * _size);
+		for (; i > pos + n - 1; i--) // i sup a la fin de l'insert
+			_alloc.construct(_data + i, *(_data + i - n));
+		for (size_type j = 0; j < n; j++)
+		{
+			_alloc.destroy(_data + i - j);
+			_alloc.construct(_data + i - j, *--last);
+		}
+		_size += n;
+		return ;
+
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	void			vector<T, Alloc>::insert_range(iterator position, InputIterator first, InputIterator last,
+						std::input_iterator_tag)
+	{
+		DEBUG_PRINT("ft::vector insert : range version : input_iterator_tag specialisation")
+		iterator	insert_position = position;
+		for (; first != last; first++)
+		{
+			insert_position = this->insert(insert_position, *first);
+			insert_position++;
+		}
 	}
 
 	template <class T, class Alloc>

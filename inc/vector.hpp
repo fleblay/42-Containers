@@ -70,15 +70,24 @@ namespace ft
 
 		void			assign(size_type n, const value_type &val);
 		template <class InputIterator>
-		void			assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag);
-		template <class InputIterator>
-		void			assign_range(InputIterator first, InputIterator last, std::input_iterator_tag);
-		template <class InputIterator>
 		void			assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last);
 		void			push_back(const value_type &val);
 		void			pop_back(void);
 		iterator		insert(iterator position, const value_type &val);
 		void			insert(iterator position, size_type n, const value_type &val);
+		template <class InputIterator>
+		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
+							InputIterator last);
+
+		private	:
+		template <class InputIterator>
+		void			assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag);
+		template <class InputIterator>
+		void			assign_range(InputIterator first, InputIterator last, std::input_iterator_tag);
+		template <class InputIterator>
+		void			insert_range(iterator position, InputIterator first, InputIterator last, std::forward_iterator_tag);
+		template <class InputIterator>
+		void			insert_range(iterator position, InputIterator first, InputIterator last, std::input_iterator_tag);
 
 		//ATTRIBUTES
 		private	:
