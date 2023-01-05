@@ -52,9 +52,11 @@ namespace ft
 	vector<T,Alloc>	&vector<T, Alloc>::operator=(const vector &x)
 	{
 		DEBUG_PRINT("ft::vector : operator=")
-		//IF *this !=x !!!
-		this->assign(x.begin(), x.end());
-		this->_alloc = x.get_allocator();
+		if (*this !=x)
+		{
+			this->assign(x.begin(), x.end());
+			this->_alloc = x.get_allocator();
+		}
 		return (*this);
 	}
 
@@ -559,6 +561,13 @@ namespace ft
 	{
 		DEBUG_PRINT("ft::vector operator>=")
 		return (!(lhs < rhs));
+	}
+
+	template <class T, class Alloc>
+	void swap(vector<T, Alloc> &x, vector<T, Alloc> &y)
+	{
+		DEBUG_PRINT("ft::vector swap overload")
+		x.swap(y);
 	}
 };
 #endif
