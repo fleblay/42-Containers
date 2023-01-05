@@ -24,6 +24,40 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
+	vector<T, Alloc>::vector(size_type n, const value_type &val, const allocator_type &alloc) : _size(0), _capacity(0), _data(NULL), _alloc(alloc)
+	{
+		DEBUG_PRINT("ft::vector : fill constructor")
+		this->assign(n, val);
+		return ;
+	}
+
+	template <class T, class Alloc> template <class InputIterator>
+	vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type &alloc) : _size(0), _capacity(0), _data(NULL), _alloc(alloc)
+	{
+		DEBUG_PRINT("ft::vector : range constructor")
+		this->assign(first, last);
+		return ;
+	}
+
+	template <class T, class Alloc>
+	vector<T, Alloc>::vector(const vector &x) : _size(0), _capacity(0), _data(NULL)
+	{
+		DEBUG_PRINT("ft::vector : copy constructor")
+		*this = x;
+		return ;
+	}
+
+	template <class T, class Alloc>
+	vector<T,Alloc>	&vector<T, Alloc>::operator=(const vector &x)
+	{
+		DEBUG_PRINT("ft::vector : operator=")
+		//IF *this !=x !!!
+		this->assign(x.begin(), x.end());
+		this->_alloc = x.get_allocator();
+		return (*this);
+	}
+
+	template <class T, class Alloc>
 	vector<T, Alloc>::~vector(void)
 	{
 		DEBUG_PRINT("ft::vector : default destructor")
@@ -241,6 +275,7 @@ namespace ft
 		DEBUG_PRINT("ft::vector insert : single elem")
 		size_type	pos = ft::distance(begin(), position);
 		size_type i = _size;
+		size_type oldSize = _size;
 
 		if (_size == _capacity)
 			this->reserve(_size < 3 ? _size + 1 : _size * 2);
@@ -248,10 +283,12 @@ namespace ft
 			//this->reserve(_size + 1 >= 2 * _size ? _size + 1 : 2 * _size);
 		for (; i > pos; i--)
 		{
-			_alloc.destroy(_data + i);
+			if (i < oldSize)
+				_alloc.destroy(_data + i);
 			_alloc.construct(_data + i, *(_data + i - 1));
 		}
-		_alloc.destroy(_data + i);
+		if (i < oldSize)
+			_alloc.destroy(_data + i);
 		_alloc.construct(_data + i, val);
 		++_size;
 		return (iterator(_data + i));
@@ -263,14 +300,20 @@ namespace ft
 		DEBUG_PRINT("ft::vector insert : fill")
 		size_type	pos = ft::distance(begin(), position);
 		size_type i = _size + n - 1; //fin de l'array
+		size_type oldSize = _size;
 
 		if (_size + n > _capacity)
 			this->reserve(_size + n > 2 * _size ? _size + n : 2 * _size);
 		for (; i > pos + n - 1; i--) // i sup a la fin de l'insert
+			{
+			if (i < oldSize)
+				_alloc.destroy(_data + i);
 			_alloc.construct(_data + i, *(_data + i - n));
+			}
 		for (size_type j = 0; j < n; j++)
 		{
-			_alloc.destroy(_data + i - j);
+			if (i - j < oldSize)
+				_alloc.destroy(_data + i);
 			_alloc.construct(_data + i - j, val);
 		}
 		_size += n;
@@ -321,6 +364,32 @@ namespace ft
 			insert_position = this->insert(insert_position, *first);
 			insert_position++;
 		}
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator position)
+	{
+		DEBUG_PRINT("ft::vector erase single elem")
+		size_type	pos = ft::distance(begin(), position);
+
+		vector tmp(this->begin(), position);
+		tmp.insert(tmp.end(), position + 1, this->end());
+		*this = tmp;
+
+		return (this->begin() + pos);
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator first, iterator last)
+	{
+		DEBUG_PRINT("ft::vector erase range")
+
+		vector tmp(this->begin(), first);
+		size_type	pos = ft::distance(tmp.begin(), tmp.end());
+		tmp.insert(tmp.end(), last, this->end());
+		*this = tmp;
+
+		return (this->begin() + pos);
 	}
 
 	template <class T, class Alloc>
@@ -401,6 +470,13 @@ namespace ft
 	{
 		DEBUG_PRINT("ft::vector const back")
 		return (*(_data + _size - 1));
+	}
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::allocator_type	vector<T, Alloc>::get_allocator() const
+	{
+		DEBUG_PRINT("ft::vector get_allocator")
+		return (_alloc);
 	}
 
 };

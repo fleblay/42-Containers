@@ -33,24 +33,25 @@ int main(void)
 
 	vector<int>	myvect;
 
-	for (int i = 0; i < 21; i++)
+	for (int i = 0; i < 11; i++)
 		myvect.push_back(i);
 
-	std::cout << "next value : [" << *myvect.erase(myvect.begin() + 2, myvect.begin() + 4) << "]" << std::endl;
+	std::cout << "next value : [" << *myvect.erase(myvect.begin() + 4) << "]" << std::endl;
 	for (vector<int>::size_type i = 0; i < myvect.size(); i++)
 		std::cout << "value : [" << myvect[i] << "]" << std::endl;
 	printInfo(myvect);
 	std::cout << "----------------------" << std::endl;
 
-	std::cout << "next value : [" << *myvect.erase(myvect.begin(), myvect.begin() + 3) << "]" << std::endl;
+	std::cout << "next value : [" << *myvect.erase(myvect.begin()) << "]" << std::endl;
 	for (vector<int>::size_type i = 0; i < myvect.size(); i++)
 		std::cout << "value : [" << myvect[i] << "]" << std::endl;
 	printInfo(myvect);
 	std::cout << "----------------------" << std::endl;
 
-	std::cout << "next value : [" << *myvect.erase(myvect.begin() + 6, myvect.end()) << "]" << std::endl;
+	std::cout << "next value : [" << *myvect.erase(myvect.end() - 1) << "]" << std::endl;
 	for (vector<int>::size_type i = 0; i < myvect.size(); i++)
 		std::cout << "value : [" << myvect[i] << "]" << std::endl;
 	printInfo(myvect);
 	std::cout << "----------------------" << std::endl;
+
 }

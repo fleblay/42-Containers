@@ -32,6 +32,11 @@ namespace ft
 
 		public	:
 		explicit vector(const allocator_type &alloc = allocator_type());
+		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());
+		template<class InputIterator>
+		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
+		vector(const vector &x);
+		vector	&operator=(const vector &x);
 		~vector(void);
 
 		//FUNCTIONS : ITERATOR
@@ -78,6 +83,8 @@ namespace ft
 		template <class InputIterator>
 		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
 							InputIterator last);
+		iterator		erase(iterator position);
+		iterator		erase(iterator first, iterator last);
 
 		private	:
 		template <class InputIterator>
@@ -88,6 +95,9 @@ namespace ft
 		void			insert_range(iterator position, InputIterator first, InputIterator last, std::forward_iterator_tag);
 		template <class InputIterator>
 		void			insert_range(iterator position, InputIterator first, InputIterator last, std::input_iterator_tag);
+
+		//FUNCTIONS : ALLOCATOR
+		allocator_type	get_allocator() const;
 
 		//ATTRIBUTES
 		private	:
