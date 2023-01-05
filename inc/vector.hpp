@@ -85,6 +85,8 @@ namespace ft
 							InputIterator last);
 		iterator		erase(iterator position);
 		iterator		erase(iterator first, iterator last);
+		void			swap(vector &x);
+		void			clear(void);
 
 		private	:
 		template <class InputIterator>
@@ -107,6 +109,25 @@ namespace ft
 		allocator_type			_alloc;
 
 	};
+	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS
+
+	template <class T, class Alloc>
+	bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+	template <class T, class Alloc>
+	bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+	template <class T, class Alloc>
+	bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+	template <class T, class Alloc>
+	bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
+
+	template <class T, class Alloc>
+	bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
 }
 
 # include "vector.tpp"

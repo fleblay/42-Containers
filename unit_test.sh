@@ -109,5 +109,8 @@ case $1 in
 	;;
 	*)
 		echo "Usage $0 full | make | run | clean"
+		echo "Defaulting to full test"
+		"$0" make && "$0" run
+
 	;;
 esac

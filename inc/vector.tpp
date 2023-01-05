@@ -13,6 +13,7 @@
 #include "is_integral.hpp"
 #include "enable_if.hpp"
 #include "distance.hpp"
+#include "lexicographical_compare.hpp"
 
 namespace ft
 {
@@ -393,6 +394,38 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
+	void	vector<T, Alloc>::swap(vector &x)
+	{
+		DEBUG_PRINT("ft::vector swap")
+		size_type		tmp_size = _size;
+		size_type		tmp_capacity = _capacity;
+		pointer			tmp_data = _data;
+		allocator_type	tmp_alloc = _alloc;
+
+		this->_size = x._size;
+		this->_capacity = x._capacity;
+		this->_data = x._data;
+		this->_alloc = x._alloc;
+
+		x._size = tmp_size;
+		x._capacity = tmp_capacity;
+		x._data = tmp_data;
+		x._alloc = tmp_alloc;
+
+		return ;
+	}
+
+	template <class T, class Alloc>
+	void			vector<T, Alloc>::clear(void)
+	{
+		DEBUG_PRINT("ft::vector clear")
+		for (size_type i = 0; i < _size; i++)
+			_alloc.destroy(_data + i);
+		_size = 0;
+		return ;
+	}
+
+	template <class T, class Alloc>
 	typename vector<T, Alloc>::reference	vector<T, Alloc>::operator[](size_type n)
 	{
 		DEBUG_PRINT("ft::vector operator[]")
@@ -479,5 +512,53 @@ namespace ft
 		return (_alloc);
 	}
 
+	template <class T, class Alloc>
+	bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator==")
+		if (lhs.size() != rhs.size())
+			return (false);
+		for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size(); i++)
+		{
+			if (!(lhs[i] == rhs[i]))
+				return (false);
+		}
+		return (true);
+	}
+
+	template <class T, class Alloc>
+	bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator<")
+		return (lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template <class T, class Alloc>
+	bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator!=")
+		return (!(lhs == rhs));
+	}
+
+	template <class T, class Alloc>
+	bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator>")
+		return (rhs < lhs);
+	}
+
+	template <class T, class Alloc>
+	bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator<=")
+		return (!(rhs < lhs));
+	}
+
+	template <class T, class Alloc>
+	bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::vector operator>=")
+		return (!(lhs < rhs));
+	}
 };
 #endif
