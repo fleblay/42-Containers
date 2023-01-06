@@ -33,42 +33,22 @@ bool comparator (int c1, int c2)
 	return (c1 < c2);
 }
 
+#include <string>
 int main(void)
 {
 	signal(SIGSEGV, signal_handler);
 
-	vector<int>	myvect;
-	vector<int>	myvect2;
+	vector<std::string>	v1;
+	v1.push_back("numero 1");
+	v1.push_back("numero 2");
+	v1.push_back("numero 3");
 
-	for (int i = 0; i < 11; i++)
-		myvect.push_back(i);
-	for (int i = 3; i < 20; i++)
-		myvect2.push_back(i * 2);
+	vector<std::string> v2;
+	v2.push_back("Init");
+	vector<std::string>::iterator it1 = v2.begin() + 1;
 
-	vector<int>::iterator it1 = myvect.begin();
-	vector<int>::iterator it2 = myvect2.begin();
-	vector<int>::iterator ite1 = myvect.end();
-	vector<int>::iterator ite2 = myvect2.end();
+	v2.insert(it1, v1.begin(), v1.end());
 
-	swap(myvect2, myvect);
-
-	for (vector<int>::size_type i = 0; i < myvect.size(); i++)
-		std::cout << "value : [" << myvect[i] << "]" << std::endl;
-	printInfo(myvect);
-	std::cout << "----------------------" << std::endl;
-
-	myvect.push_back(48);
-
-	for (vector<int>::size_type i = 0; i < myvect2.size(); i++)
-		std::cout << "value : [" << myvect2[i] << "]" << std::endl;
-	printInfo(myvect2);
-	std::cout << "----------------------" << std::endl;
-
-	for (; it1 != ite1; it1 ++)
-		std::cout << "value : [" << *it1 << "]" << std::endl;
-	std::cout << "----------------------" << std::endl;
-
-	for (; it2 != ite2; it2 ++)
-		std::cout << "value : [" << *it2 << "]" << std::endl;
-	std::cout << "----------------------" << std::endl;
+	for (vector<std::string>::iterator it = v2.begin(); it != v2.end(); it++)
+		std::cout << *it << std::endl;
 }

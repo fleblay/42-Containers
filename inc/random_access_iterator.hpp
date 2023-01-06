@@ -36,8 +36,8 @@ namespace ft
 
 		//Va renvoyer la valeur pointee par _currentElemPtr, ie acceder a la val pointee par le
 		//pointer de type iter qui est dans le random_access_iterator
-		reference				operator*(void);
-		pointer					operator->(void);
+		reference				operator*(void) const;
+		pointer					operator->(void) const ;
 		random_access_iterator	&operator++(void); // pre-increment
 		random_access_iterator	&operator--(void); // pre-decrement
 		random_access_iterator	operator++(int);

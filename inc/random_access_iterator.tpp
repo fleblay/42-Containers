@@ -59,14 +59,14 @@ namespace ft
 	}
 
 	template<typename Iter>
-	typename random_access_iterator<Iter>::reference	random_access_iterator<Iter>::operator*(void)
+	typename random_access_iterator<Iter>::reference	random_access_iterator<Iter>::operator*(void) const
 	{
 		DEBUG_PRINT("ft::random_access_iterator : operator*")
 		return (*_curentElemPtr);
 	}
 
 	template<typename Iter>
-	typename random_access_iterator<Iter>::pointer	random_access_iterator<Iter>::operator->(void)
+	typename random_access_iterator<Iter>::pointer	random_access_iterator<Iter>::operator->(void) const
 	{
 		DEBUG_PRINT("ft::random_access_iterator : operator->")
 		return (_curentElemPtr);
