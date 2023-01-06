@@ -16,7 +16,7 @@ else
 	SRC_LIST	:= ${TEST_FILE}
 endif
 
-HEADER_LIST	= containers.hpp iterator.hpp random_access_iterator.hpp random_access_iterator.tpp vector.hpp vector.tpp reverse_iterators.hpp reverse_iterators.tpp enable_if.hpp distance.hpp lexicographical_compare.hpp
+HEADER_LIST	= containers.hpp iterator.hpp random_access_iterator.hpp random_access_iterator.tpp vector.hpp vector.tpp reverse_iterators.hpp reverse_iterators.tpp enable_if.hpp distance.hpp lexicographical_compare.hpp stack.hpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))
