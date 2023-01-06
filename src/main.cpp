@@ -12,6 +12,7 @@
 #include "lexicographical_compare.hpp"
 #include "stack.hpp"
 #include <stack>
+#include "rbtree.hpp"
 
 void	signal_handler(int signal_number)
 {
@@ -38,31 +39,18 @@ bool comparator (int c1, int c2)
 #include <string>
 int main(void)
 {
-	signal(SIGSEGV, signal_handler);
+	rbtree<int> tree;
 
-	stack<int> s1;
-	stack<int> s2;
+	tree.insert(1);
+	tree.insert(10);
+	tree.insert(5);
+	tree.insert(15);
+	tree.insert(13);
+	tree.insert(20);
 
-	for (int i = 1; i < 10 ; i++)
-		s2.push(i);
+	tree.print();
+	std::cout << "----------" << std::endl;
 
-	std::cout << s1.empty() << std::endl;
-
-	s1.push(44);
-	s1.push(28);
-	s1.push(6);
-	s1.push(-2);
-
-	s1.pop();
-
-	std::cout << s1.empty() << std::endl;
-	std::cout << s1.size() << std::endl;
-	std::cout << s1.top() << std::endl;
-
-	std::cout << (s1 < s2) << std::endl;
-	std::cout << (s1 > s2) << std::endl;
-	std::cout << (s1 == s2) << std::endl;
-	std::cout << (s1 != s2) << std::endl;
-	std::cout << (s1 <= s2) << std::endl;
-	std::cout << (s1 >= s2) << std::endl;
+	tree.leftRotate(tree.getRoot()->right);
+	tree.print();
 }
