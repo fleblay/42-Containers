@@ -70,4 +70,8 @@ int main(void)
 	std::cout << "unsigned long long int " << is_integral<unsigned long long int>() << std::endl;
 	std::cout << "float : " << is_integral<float>() << std::endl;
 	std::cout << "double : " << is_integral<double>() << std::endl;
+
+	//Const and volatile
+	std::cout << "char : " << is_integral<const char>::value << std::endl;
+	std::cout << "char : " << is_integral<volatile char>::value << std::endl;
 }
