@@ -13,13 +13,15 @@ namespace ft
 	{
 		typedef T		value_type;
 
-		node(const T &initValue = value_type()) : parent(NULL), left(NULL), right(NULL), data(initValue), color(RED) {};
-		~node(void) {};
+		node(void) : parent(NULL), left(NULL), right(NULL), data(NULL), color(RED)
+		{};
+		~node(void) { delete data; }
+		void setData(const value_type &initValue) { data = new value_type(initValue); }
 
 		node		*parent;
 		node		*left;
 		node		*right;
-		value_type	data;
+		value_type	*data; // To allow leaves to have a null pointer
 		color		color;
 	};
 
@@ -30,18 +32,20 @@ namespace ft
 		typedef T		value_type;
 
 		public	:
-		rbtree(void) : _root(NULL) {};
-		~rbtree(void) {};
+		rbtree(void) : _root(NULL) {}
+		~rbtree(void) { destroyTree(_root); }
 
 		//MEMBER FX
-		void	insert(const T &val);
+		void	insert(const value_type &val);
 		Node * &getRoot(void);
 		void	print(void) const;
 
 		void	leftRotate(Node * &root);
+		void	rightRotate(Node * &root);
 		private	:
 		void	insert(Node	* &root, Node * parent, Node *toInsert);
 		void	print(Node * const &root, unsigned int depth) const;
+		void	destroyTree(Node * &root);
 
 		//MEMBER ATTRIBUTES
 		private :

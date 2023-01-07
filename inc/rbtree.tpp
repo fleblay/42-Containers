@@ -9,14 +9,21 @@ namespace ft
 {
 
 	template<class T, class Node>
-	void	rbtree<T, Node>::insert(const T &val)
+	void	rbtree<T, Node>::insert(const value_type &val)
 	{
 		DEBUG_PRINT("rbtree : insert")
-		Node	*newNode;
-
 		try
 		{
-			newNode = new Node(val);
+			Node *newNode = new Node;
+			Node *newLeaf_1 = new Node;
+			Node *newLeaf_2 = new Node;
+			newNode->setData(val);
+			newNode->left = newLeaf_1;
+			newNode->left->parent = newNode;
+			newNode->left->color = BLACK;
+			newNode->right = newLeaf_2;
+			newNode->right->parent = newNode;
+			newNode->right->color = BLACK;
 			insert(_root, NULL, newNode);
 		}
 		catch (std::exception &e)
@@ -42,17 +49,24 @@ namespace ft
 	template<class T, class Node>
 	void	rbtree<T, Node>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
-		if (root == NULL)
+		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
+			root = toInsert;
+			root->color = BLACK;
+			return ;
+		}
+		if (root->data == NULL) // on est sur une feuille
+		{
+			delete root;
 			root = toInsert;
 			root->parent = parent;
 			/*
-			if (parent->color == RED)
+			   else if (parent->color == RED)
 				insertFix(root);
 			*/
 			return ;
 		}
-		if (toInsert->data < root->data)
+		if (*(toInsert->data) < *(root->data))
 			insert(root->left, root, toInsert);
 		else
 			insert(root->right, root, toInsert);
@@ -65,8 +79,13 @@ namespace ft
 			return ;
 		print(root->right, depth + 1);
 		for (unsigned int i = 0; i < depth; i++)
-			std::cout << "   ";
-		std::cout << "[" << (root->color == RED ? "\x1b[31m" : "\x1b[30;47m") << root->data << "\x1b[0m]" << std::endl;
+			std::cout << "    ";
+		std::cout << "[" << (root->color == RED ? "\x1b[31m" : "\x1b[30;47m");
+		if (root->data == NULL)
+			std::cout << "L";
+		else
+			std::cout << *(root->data);
+		std::cout << "\x1b[0m]"<< std::endl;
 		print(root->left, depth + 1);
 	}
 
@@ -95,6 +114,44 @@ namespace ft
 		}
 		x->parent = y; // Make y as the parent of x
 		y->left = x;
+	}
+
+	template<class T, class Node>
+	void	rbtree<T, Node>::rightRotate(Node * &root)
+	{
+		Node	*y = root;
+		Node	*x = root->left;
+		Node	*parent = root->parent;
+		if (x && x->right) // if x has a right subtree, assign y as parent of right subtree of x
+		{
+			x->right->parent = y;
+			y->left = x->right;
+		}
+		if (y->parent == NULL) // if parent of y is null, make x as root of tree
+			_root = x;
+		else if (y == parent->right) //else if y is the right child of p, make x as right child of p
+		{
+			parent->right = x;
+			x->parent = parent;
+		}
+		else // else assign x as the left child of p
+		{
+			parent->left = x;
+			x->parent = parent;
+		}
+		y->parent = x; // Make x as the parent of y
+		x->right = y;
+
+	}
+
+	template<class T, class Node>
+	void	rbtree<T, Node>::destroyTree(Node * &root)
+	{
+		if (root == NULL)
+			return;
+		destroyTree(root->left);
+		destroyTree(root->right);
+		delete root;
 	}
 };
 

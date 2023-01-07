@@ -53,4 +53,8 @@ int main(void)
 
 	tree.leftRotate(tree.getRoot()->right);
 	tree.print();
+	std::cout << "----------" << std::endl;
+
+	tree.rightRotate(tree.getRoot()->right);
+	tree.print();
 }
