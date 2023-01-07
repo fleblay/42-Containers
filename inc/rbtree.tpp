@@ -49,27 +49,41 @@ namespace ft
 	template<class T, class Node>
 	void	rbtree<T, Node>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
+		std::cout << "Start of insert" << std::endl;
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
+			std::cout << "Insert reached true tree root" << std::endl;
 			root = toInsert;
 			root->color = BLACK;
 			return ;
 		}
 		if (root->data == NULL) // on est sur une feuille
 		{
+			std::cout << "Insert reached leaf" << std::endl;
 			delete root;
 			root = toInsert;
 			root->parent = parent;
-			/*
-			   else if (parent->color == RED)
+			if (root->parent->color == RED)
+			{
+				std::cout << "Need to fix color" << std::endl;
+				std::cout << "Tree state before fix :" << std::endl;
+				std::cout << "START PRINT" << std::endl;
+				print();
+				std::cout << "END PRINT" << std::endl;
 				insertFix(root);
-			*/
+			}
 			return ;
 		}
 		if (*(toInsert->data) < *(root->data))
+		{
+			std::cout << "insert left" << std::endl;
 			insert(root->left, root, toInsert);
+		}
 		else
+		{
+			std::cout << "insert right" << std::endl;
 			insert(root->right, root, toInsert);
+		}
 	}
 
 	template<class T, class Node>
@@ -152,6 +166,77 @@ namespace ft
 		destroyTree(root->left);
 		destroyTree(root->right);
 		delete root;
+	}
+	template<class T, class Node>
+	void	rbtree<T, Node>::insertFix(Node * &root)
+	{
+		Node *toCheck = root;
+		Node *p = toCheck->parent;
+		Node *gp = toCheck->parent->parent;
+		while (p->color == RED)
+		{
+			if (gp->left == p)
+			{
+				if (gp->right->color == RED)
+				{
+					std::cout << "Case 1.1" << std::endl;
+					gp->left->color = BLACK;
+					gp->right->color = BLACK;
+					gp->color = RED;
+					toCheck = gp;
+					p = toCheck->parent;
+					gp = toCheck->parent->parent;
+				}
+				//Case 2
+				else if (toCheck == p->right)
+				{
+					std::cout << "Case 1.2" << std::endl;
+					toCheck = p;
+					p = toCheck->parent;
+					gp = toCheck->parent->parent;
+					leftRotate(toCheck); // ajout d'un tmp
+				}
+				//Case 3
+				else
+				{
+					std::cout << "Case 1.3" << std::endl;
+					p->color = BLACK;
+					gp->color = RED;
+					rightRotate(gp);
+				}
+			}
+			else
+			{
+				//red == 1
+				if (gp->left->color == RED)
+				{
+					std::cout << "Case 2.1" << std::endl;
+					gp->left->color = BLACK;
+					gp->right->color = BLACK; // p->color ? == k->parent->color ?
+					gp->color = RED;
+					toCheck = gp;
+					p = toCheck->parent;
+					gp = toCheck->parent->parent;
+				}
+				else if (toCheck == p->left) // a break en un else + if ...
+				{
+					std::cout << "Case 2.2" << std::endl;
+					toCheck = p;
+					p = toCheck->parent;
+					gp = toCheck->parent->parent;
+					rightRotate(toCheck); // ajout d'un tmp
+					p->color = BLACK;
+					gp->color = RED;
+					leftRotate(gp); // ajout d'un tmp
+				}
+			}
+			if (toCheck == _root)
+			{
+				std::cout << "Break" << std::endl;
+				break;
+			}
+		}
+		_root->color = BLACK;
 	}
 };
 

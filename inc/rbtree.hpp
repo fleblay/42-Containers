@@ -42,10 +42,12 @@ namespace ft
 
 		void	leftRotate(Node * &root);
 		void	rightRotate(Node * &root);
+
 		private	:
 		void	insert(Node	* &root, Node * parent, Node *toInsert);
 		void	print(Node * const &root, unsigned int depth) const;
 		void	destroyTree(Node * &root);
+		void	insertFix(Node * &root);
 
 		//MEMBER ATTRIBUTES
 		private :
