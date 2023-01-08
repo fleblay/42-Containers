@@ -215,7 +215,7 @@ namespace ft
 		std::cout << "Start of Fix" << std::endl;
 		while (p->color == RED)
 		{
-			if (gp->left == p)
+			if (gp->left == p) // Le parent est le node gauche du gp, ie (oncle est node droit)
 			{
 				if (gp->right->color == RED)
 				{
@@ -252,7 +252,7 @@ namespace ft
 					std::cout << "End of case 1.2" << std::endl;
 				}
 			}
-			else
+			else // Le parent est le node droit du gp, ie (oncle est node gauche)
 			{
 				//red == 1
 				if (gp->left->color == RED)
