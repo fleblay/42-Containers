@@ -42,22 +42,23 @@ int main(void)
 	rbtree<int> tree;
 
 	tree.insert(1);
-	tree.print();
-	std::cout << "----------" << std::endl;
 	tree.insert(10);
-	tree.print();
-	std::cout << "----------" << std::endl;
 	tree.insert(5);
-	tree.print();
-	std::cout << "----------" << std::endl;
-	/*
 	tree.insert(15);
 	tree.insert(13);
 	tree.insert(20);
-	*/
+	tree.insert(21);
+	tree.insert(22);
+	tree.insert(23);
+	tree.insert(24);
+	tree.insert(25);
+	tree.insert(26);
+	tree.insert(27);
+	tree.insert(28);
+	tree.insert(29);
 
-	tree.print();
 	std::cout << "----------" << std::endl;
+	tree.print();
 
 	//tree.leftRotate(tree.getRoot()->right);
 	//tree.print();
