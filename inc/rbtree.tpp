@@ -205,6 +205,123 @@ namespace ft
 		destroyTree(root->right);
 		delete root;
 	}
+
+	template<class T, class Node>
+	void	rbtree<T, Node>::insertFix(Node * &root)
+	{
+		Node *toCheck = root;
+		Node *p = toCheck->parent;
+		Node *gp = toCheck->parent->parent;
+		Node *u = (gp->left == p ? gp->right : gp->left);
+
+		std::cout << "Start of Fix" << std::endl;
+		while (toCheck != _root && p->color == RED)
+		{
+			std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+			if (u->color == RED)
+			{
+				std::cout	<< "Case " << (u == gp->left ? "Left" : "Right")
+							<< " Uncle is Red : changing parent and uncle color to black, and grandfather to red" << std::endl;
+				p->color = BLACK;
+				u->color = BLACK;
+				if (gp != _root)
+					gp->color = RED;
+				toCheck = gp;
+				std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+				if (toCheck != _root)
+				{
+					std::cout << "toCheck is not root, setting parent" << std::endl;
+					p = toCheck->parent;
+					if (p != _root)
+					{
+						std::cout << "toCheck parent is not root, setting gp and uncle" << std::endl;
+						gp = toCheck->parent->parent;
+						u = (gp->left == p ? gp->right : gp->left);
+					}
+				}
+				std::cout << "End of case Right Uncle is Red" << std::endl;
+			}
+			else // Uncle color is black
+			{
+				std::cout<< "Uncle is Black" << std::endl;
+				if (toCheck == p->left && p == gp->left )
+				{
+					std::cout<< "Left Left Case path from gp" << std::endl;
+					rightRotate(gp);
+
+					color tmp = p->color;
+					p->color = gp->color;
+					//if (gp != _root)
+						gp->color = tmp;
+					//toCheck = gp;
+					toCheck = gp->parent;
+					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+				}
+				else if (toCheck == p->right && p == gp->right)
+				{
+					std::cout<< "Right Right Case path from gp" << std::endl;
+					leftRotate(gp);
+
+					color tmp = p->color;
+					p->color = gp->color;
+					//if (gp != _root)
+						gp->color = tmp;
+					toCheck = gp;
+					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+				}
+				else if (toCheck == p->right && p == gp->left)
+				{
+					std::cout<< "Left Right Case path from gp" << std::endl;
+					leftRotate(p);
+					//Next is LL
+					rightRotate(gp);
+
+					color tmp = toCheck->color;
+					toCheck->color = gp->color;
+					//if (gp != _root)
+						gp->color = tmp;
+					toCheck = gp;
+					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+				}
+				else if (toCheck == p->left && p == gp->right)
+				{
+					std::cout<< "Right Left Case path from gp" << std::endl;
+					std::cout<< "Rotating parent" << std::endl;
+					rightRotate(p);
+					print();
+					std::cout<< "Rotating gp" << std::endl;
+					//Next is RR
+					leftRotate(gp);
+					print();
+
+					color tmp = toCheck->color;
+					toCheck->color = gp->color;
+					//if (gp != _root)
+						gp->color = tmp;
+					//toCheck = gp;
+					toCheck = gp->parent;
+					print();
+					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+					//exit(0);
+				}
+			}
+			if (toCheck != _root)
+			{
+				std::cout << "toCheck is not root, setting parent" << std::endl;
+				p = toCheck->parent;
+				if (p != _root)
+				{
+					std::cout << "toCheck parent is not root, setting gp and uncle" << std::endl;
+					gp = toCheck->parent->parent;
+					u = (gp->left == p ? gp->right : gp->left);
+				}
+			}
+			std::cout << "End of loop -> checking condition again" << std::endl;
+		}
+		std::cout << "End of Fix" << std::endl;
+	}
+
+	/*
 	template<class T, class Node>
 	void	rbtree<T, Node>::insertFix(Node * &root)
 	{
@@ -300,6 +417,7 @@ namespace ft
 		_root->color = BLACK;
 		std::cout << "End of Fix" << std::endl;
 	}
+	*/
 };
 
 #endif

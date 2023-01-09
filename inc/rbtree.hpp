@@ -25,6 +25,15 @@ namespace ft
 		color		color;
 	};
 
+	template <class T>
+	void swapColor(node<T> *lhs, node<T> *rhs)
+	{
+		typename node<T>::color tmp = lhs->color;
+
+		lhs->color = rhs->color;
+		rhs->color = tmp;
+	}
+
 	template <class T, class Node = ft::node<T> >
 	class rbtree
 	{

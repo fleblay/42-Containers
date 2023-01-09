@@ -39,31 +39,71 @@ bool comparator (int c1, int c2)
 #include <string>
 int main(void)
 {
+	//Test Right uncle is RED
 	rbtree<int> tree;
 
-	tree.insert(1);
-	tree.insert(10);
 	tree.insert(5);
-	tree.insert(15);
-	tree.insert(13);
-	tree.insert(20);
-	tree.insert(21);
-	tree.insert(22);
-	tree.insert(23);
-	tree.insert(24);
-	tree.insert(25);
-	tree.insert(26);
-	tree.insert(27);
-	tree.insert(28);
-	tree.insert(29);
+	tree.insert(3);
+	tree.insert(10);
+	tree.insert(2);
 
 	std::cout << "----------" << std::endl;
 	tree.print();
 
-	//tree.leftRotate(tree.getRoot()->right);
-	//tree.print();
-	std::cout << "----------" << std::endl;
+	//Test Left uncle is RED
+	rbtree<int> tree2;
 
-	//tree.rightRotate(tree.getRoot()->right);
-	//tree.print();
+	tree2.insert(5);
+	tree2.insert(3);
+	tree2.insert(10);
+	tree2.insert(12);
+
+	std::cout << "----------" << std::endl;
+	tree2.print();
+
+	//Test right right 
+	rbtree<int> tree3;
+
+	tree3.insert(5);
+	tree3.insert(3);
+	tree3.insert(10);
+	tree3.insert(12);
+	tree3.insert(13);
+
+	std::cout << "----------" << std::endl;
+	tree3.print();
+
+	//Test right left 
+	rbtree<int> tree4;
+
+	tree4.insert(5);
+	tree4.insert(3);
+	tree4.insert(10);
+	tree4.insert(12);
+	tree4.insert(11);
+
+	std::cout << "----------" << std::endl;
+	tree4.print();
+
+	//Test Multiple 
+	rbtree<int> tree5;
+	tree5.insert(5);
+	tree5.insert(3);
+	tree5.insert(10);
+	tree5.insert(12);
+	tree5.insert(14);
+	tree5.insert(19);
+	tree5.insert(1);
+	tree5.insert(2);
+	tree5.insert(18);
+	tree5.insert(22);
+	tree5.insert(23);
+	tree5.insert(24);
+	tree5.insert(25);
+	tree5.insert(27);
+	tree5.insert(26);
+
+
+	std::cout << "----------" << std::endl;
+	tree5.print();
 }
