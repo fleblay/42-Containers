@@ -5,6 +5,8 @@
 #  error __FILE__ should only be included via rbtree.hpp
 # endif
 
+#include <unistd.h>
+
 namespace ft
 {
 
@@ -91,6 +93,8 @@ namespace ft
 	template<class T, class Node>
 	void	rbtree<T, Node>::print(Node * const &root, unsigned int depth) const
 	{
+		//std::cout << "depth is : [" << depth << "]" << std::endl;
+		//usleep(100000);
 		if (root == NULL)
 			return ;
 		print(root->right, depth + 1);
@@ -104,13 +108,22 @@ namespace ft
 		else
 		{
 			if (root->left == NULL)
+			{
 				std::cout <<  "KO left child!!!";
+				exit(1);
+			}
 			if (root->right == NULL)
-				std::cout <<  "KO left child!!!";
+			{
+				std::cout <<  "KO Right child!!!";
+				exit(1);
+			}
 			std::cout << *(root->data);
 		}
 		if (root->parent == NULL && root != _root)
+		{
 			std::cout <<  "KO parent!!!";
+			exit(1);
+		}
 		std::cout << "\x1b[0m]"<< std::endl;
 		print(root->left, depth + 1);
 	}
@@ -139,10 +152,11 @@ namespace ft
 			x->right = y->left;
 			std::cout << "OK" << std::endl;
 		}
-		if (x->parent == NULL) // if parent of x is null, make y as root of tree
+		if (x->parent == NULL || x == _root) // if parent of x is null, make y as root of tree
 		{
 			std::cout << "Right rotating node is the new root" << std::endl;
 			_root = y;
+			_root->parent = NULL;
 			std::cout << "OK" << std::endl;
 		}
 		else if (x == parent->left) //else if x is the left child of p, make y as left child of p
@@ -180,10 +194,12 @@ namespace ft
 			std::cerr << "Right Rotating with root as y" << std::endl;
 		if (parent == _root)
 			std::cerr << "Right Rotating with root as parent" << std::endl;
+		//if (y == _root && _root->parent->data != NULL)
+			//std::cout << "WARNING : y is root and parent data is : " << *(_root->parent->data) << std::endl;
 		//std::cout << "START PRINT before rotate" << std::endl;
 		//print();
 		//std::cout << "END PRINT" << std::endl;
-		std::cout << "Right rotate start node whose value is : [" << *(y->data) << "]" << std::endl;
+		std::cout << "Right rotate start node whose value is : [" << *(y->data) << "]" << std::endl; // 675
 		if (x && x->right) // if x has a right subtree, assign y as parent of right subtree of x
 		{
 			std::cout << "Assigning right subtree of left rotating node to right rotating node" << std::endl;
@@ -191,10 +207,11 @@ namespace ft
 			y->left = x->right;
 			std::cout << "OK" << std::endl;
 		}
-		if (y->parent == NULL) // if parent of y is null, make x as root of tree
+		if (y->parent == NULL || y == _root) // if parent of y is null, make x as root of tree
 		{
 			std::cout << "Left rotating node is the new root" << std::endl;
 			_root = x;
+			_root->parent = NULL;
 			std::cout << "OK" << std::endl;
 		}
 		else if (y == parent->right) //else if y is the right child of p, make x as right child of p
@@ -304,7 +321,7 @@ namespace ft
 							<< "gp : [" << (gp->data != NULL ? *(gp->data) : -1) << std::endl;
 				if (*(toCheck->data) == 485 && *root->data == 550)
 				{
-					print();
+					//print();
 					//exit(0);
 					//go_out = 1;
 				}

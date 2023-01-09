@@ -81,13 +81,11 @@ int main(void)
 	tree.insert(467);
 	tree.insert(583);
 	tree.insert(450);
-	/*
 	tree.insert(550);
 	tree.insert(894);
-	*/
 	std::cout << "----------" << std::endl;
-	//std::cout << "OK ?? : " <<  tree.isOk() << std::endl;
-	tree.print();
+	std::cout << "OK ?? : " <<  tree.isOk() << std::endl;
+	//tree.print();
 
 	/*
 	//Test Right uncle is RED
@@ -167,12 +165,11 @@ int main(void)
 	std::cout <<  "value found : " << *(tree5.findNode(22)->data) << std::endl;
 
 	*/
-	/*
 	srand(time(NULL));
 	rbtree<int> tree6;
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1000; i++)
 	{
-		int toAdd = rand() % 1000;
+		int toAdd = rand() % 10000;
 		if (tree6.findNode(toAdd) == NULL)
 		{
 			std::cerr << toAdd << std::endl;
@@ -180,6 +177,6 @@ int main(void)
 		}
 	}
 	std::cout << "----------" << std::endl;
-	tree6.print();
-	*/
+	//tree6.print();
+	std::cout << tree6.isOk() << std::endl;
 }
