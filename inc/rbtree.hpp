@@ -28,7 +28,7 @@ namespace ft
 	template <class T>
 	void swapColor(node<T> *lhs, node<T> *rhs)
 	{
-		typename node<T>::color tmp = lhs->color;
+		color tmp = lhs->color;
 
 		lhs->color = rhs->color;
 		rhs->color = tmp;
@@ -48,15 +48,20 @@ namespace ft
 		void	insert(const value_type &val);
 		Node * &getRoot(void);
 		void	print(void) const;
+		Node	*findNode(const value_type &toFind);
+		bool	isOk(void);
 
-		void	leftRotate(Node * &root);
-		void	rightRotate(Node * &root);
 
 		private	:
 		void	insert(Node	* &root, Node * parent, Node *toInsert);
 		void	print(Node * const &root, unsigned int depth) const;
 		void	destroyTree(Node * &root);
+		void	leftRotate(Node * &root);
+		void	rightRotate(Node * &root);
 		void	insertFix(Node * &root);
+		Node	*findNode(Node * &root, const value_type &toFind);
+		int		nbOfBlack(Node * &root) const ;
+		bool	isOk(Node * &root);
 
 		//MEMBER ATTRIBUTES
 		private :

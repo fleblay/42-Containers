@@ -72,7 +72,7 @@ namespace ft
 				print();
 				std::cout << "END PRINT" << std::endl;
 				*/
-				insertFix(root);
+				//insertFix(root);
 			}
 			return ;
 		}
@@ -207,6 +207,61 @@ namespace ft
 	}
 
 	template<class T, class Node>
+	Node	*rbtree<T, Node>::findNode(const value_type &toFind)
+	{
+		if (_root == NULL)
+			return (NULL);
+		return (findNode(_root, toFind));
+
+	}
+
+	template<class T, class Node>
+	Node	*rbtree<T, Node>::findNode(Node * &root, const value_type &toFind)
+	{
+		if (root->data == NULL)
+			return (NULL);
+		if (*(root->data) == toFind)
+			return (root);
+		else if (*(root->data) > toFind)
+			return (findNode(root->left, toFind));
+		else
+			return (findNode(root->right, toFind));
+	}
+
+	template<class T, class Node>
+	int		rbtree<T, Node>::nbOfBlack(Node * &root) const
+	{
+		if (root->data == NULL)
+			return (1);
+		if (root->color == BLACK)
+			return (1 + nbOfBlack(root->left));
+		else
+			return (nbOfBlack(root->left));
+	}
+
+	template<class T, class Node>
+	bool rbtree<T, Node>::isOk(Node * &root)
+	{
+		if (root->data == NULL)
+			return (true);
+		bool leftStatus = nbOfBlack(root->left);
+		bool rightStatus = nbOfBlack(root->right);
+		if (leftStatus != rightStatus)
+			return (false);
+		if (root != _root && root->color == RED && root->parent->color == RED)
+			return (false);
+		return(isOk(root->left) && isOk(root->right));
+	}
+
+	template<class T, class Node>
+	bool rbtree<T, Node>::isOk(void)
+	{
+		if (_root == NULL)
+			return (true);
+		return (isOk(_root));
+	}
+
+	template<class T, class Node>
 	void	rbtree<T, Node>::insertFix(Node * &root)
 	{
 		Node *toCheck = root;
@@ -244,7 +299,12 @@ namespace ft
 			else // Uncle color is black
 			{
 				std::cout<< "Uncle is Black" << std::endl;
-				if (toCheck == p->left && p == gp->left )
+				if (*(toCheck->data) == 817)
+				{
+					print();
+					exit(0);
+				}
+				if (toCheck == p->left && p == gp->left)
 				{
 					std::cout<< "Left Left Case path from gp" << std::endl;
 					rightRotate(gp);
@@ -288,11 +348,11 @@ namespace ft
 					std::cout<< "Right Left Case path from gp" << std::endl;
 					std::cout<< "Rotating parent" << std::endl;
 					rightRotate(p);
-					print();
+//					print();
 					std::cout<< "Rotating gp" << std::endl;
 					//Next is RR
 					leftRotate(gp);
-					print();
+//					print();
 
 					color tmp = toCheck->color;
 					toCheck->color = gp->color;
@@ -300,7 +360,7 @@ namespace ft
 						gp->color = tmp;
 					//toCheck = gp;
 					toCheck = gp->parent;
-					print();
+//					print();
 					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
 					//exit(0);
 				}
@@ -317,6 +377,7 @@ namespace ft
 				}
 			}
 			std::cout << "End of loop -> checking condition again" << std::endl;
+			//usleep(100000);
 		}
 		std::cout << "End of Fix" << std::endl;
 	}

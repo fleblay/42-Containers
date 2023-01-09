@@ -39,6 +39,55 @@ bool comparator (int c1, int c2)
 #include <string>
 int main(void)
 {
+
+	rbtree<int> t1;
+	std::cout << t1.isOk() << std::endl;
+
+	t1.insert(5);
+	t1.insert(1);
+	t1.insert(8);
+	t1.print();
+	std::cout << t1.isOk() << std::endl;
+
+	exit(0);
+	rbtree<int> tree;
+	tree.insert(959);
+	tree.insert(485);
+	tree.insert(675);
+	tree.insert(560);
+	tree.insert(676);
+	tree.insert(382);
+	tree.insert(528);
+	tree.insert(693);
+	tree.insert(817);
+	tree.insert(318);
+	tree.insert(182);
+	tree.insert(936);
+	tree.insert(488);
+	tree.insert(274);
+	tree.insert(72);
+	tree.insert(229);
+	tree.insert(656);
+	tree.insert(479);
+	tree.insert(753);
+	tree.insert(845);
+	tree.insert(156);
+	tree.insert(65);
+	tree.insert(423);
+	tree.insert(303);
+	tree.insert(504);
+	tree.insert(394);
+	tree.insert(467);
+	/*
+	tree.insert(583);
+	tree.insert(450);
+	tree.insert(550);
+	tree.insert(894);
+	*/
+	std::cout << "----------" << std::endl;
+	tree.print();
+
+	/*
 	//Test Right uncle is RED
 	rbtree<int> tree;
 
@@ -102,8 +151,33 @@ int main(void)
 	tree5.insert(25);
 	tree5.insert(27);
 	tree5.insert(26);
+	tree5.insert(20);
 
 
 	std::cout << "----------" << std::endl;
 	tree5.print();
+
+	if (tree5.findNode(22) != NULL)
+		std::cout << "OK" << std::endl;
+	if (tree5.findNode(44) == NULL)
+		std::cout << "OK" << std::endl;
+
+	std::cout <<  "value found : " << *(tree5.findNode(22)->data) << std::endl;
+
+	*/
+	/*
+	srand(time(NULL));
+	rbtree<int> tree6;
+	for (int i = 0; i < 100; i++)
+	{
+		int toAdd = rand() % 1000;
+		if (tree6.findNode(toAdd) == NULL)
+		{
+			std::cerr << toAdd << std::endl;
+			tree6.insert(toAdd);
+		}
+	}
+	std::cout << "----------" << std::endl;
+	tree6.print();
+	*/
 }
