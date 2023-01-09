@@ -81,8 +81,8 @@ int main(void)
 	tree.insert(467);
 	tree.insert(583);
 	tree.insert(450);
-	tree.insert(550);
 	/*
+	tree.insert(550);
 	tree.insert(894);
 	*/
 	std::cout << "----------" << std::endl;

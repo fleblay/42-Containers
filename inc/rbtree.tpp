@@ -98,9 +98,19 @@ namespace ft
 			std::cout << "    ";
 		std::cout << "[" << (root->color == RED ? "\x1b[31m" : "\x1b[30;47m");
 		if (root->data == NULL)
+		{
 			std::cout << "L";
+		}
 		else
+		{
+			if (root->left == NULL)
+				std::cout <<  "KO left child!!!";
+			if (root->right == NULL)
+				std::cout <<  "KO left child!!!";
 			std::cout << *(root->data);
+		}
+		if (root->parent == NULL && root != _root)
+			std::cout <<  "KO parent!!!";
 		std::cout << "\x1b[0m]"<< std::endl;
 		print(root->left, depth + 1);
 	}
@@ -111,6 +121,13 @@ namespace ft
 		Node	*x = root;
 		Node	*y = root->right;
 		Node	*parent = root->parent;
+
+		if (x == _root)
+			std::cerr << "Left Rotating with root as x" << std::endl;
+		if (y == _root)
+			std::cerr << "Left Rotating with root as y" << std::endl;
+		if (parent == _root)
+			std::cerr << "Left Rotating with root as parent" << std::endl;
 		//std::cout << "START PRINT before rotate" << std::endl;
 		//print();
 		//std::cout << "END PRINT" << std::endl;
@@ -157,6 +174,12 @@ namespace ft
 		Node	*x = root->left;
 		Node	*parent = root->parent;
 
+		if (x == _root)
+			std::cerr << "Right Rotating with root as x" << std::endl;
+		if (y == _root)
+			std::cerr << "Right Rotating with root as y" << std::endl;
+		if (parent == _root)
+			std::cerr << "Right Rotating with root as parent" << std::endl;
 		//std::cout << "START PRINT before rotate" << std::endl;
 		//print();
 		//std::cout << "END PRINT" << std::endl;
@@ -277,7 +300,7 @@ namespace ft
 		{
 			std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl
 							<< "parent : [" << (p->data != NULL ? *(p->data) : -1) << "]"
-							<< "uncle [" << (u->data != NULL ? *(u->data) : -1)
+							<< "uncle [" << (u->data != NULL ? *(u->data) : -1) << "]"
 							<< "gp : [" << (gp->data != NULL ? *(gp->data) : -1) << std::endl;
 				if (*(toCheck->data) == 485 && *root->data == 550)
 				{
