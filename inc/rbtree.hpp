@@ -42,7 +42,7 @@ namespace ft
 
 		public	:
 		rbtree(void) : _root(NULL) {}
-		~rbtree(void) { destroyTree(_root); }
+		~rbtree(void) {/* destroyTree(_root);*/ }
 
 		//MEMBER FX
 		void	insert(const value_type &val);

@@ -72,7 +72,7 @@ namespace ft
 				print();
 				std::cout << "END PRINT" << std::endl;
 				*/
-				//insertFix(root);
+				insertFix(root);
 			}
 			return ;
 		}
@@ -269,14 +269,29 @@ namespace ft
 		Node *gp = toCheck->parent->parent;
 		Node *u = (gp->left == p ? gp->right : gp->left);
 
+		int go_out = 0;
+
 		std::cout << "Start of Fix" << std::endl;
-		while (toCheck != _root && p->color == RED)
+		//while (toCheck != _root && p->color == RED)
+		while (toCheck != _root && toCheck->color == RED && p->color == RED)
 		{
-			std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
+			std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl
+							<< "parent : [" << (p->data != NULL ? *(p->data) : -1) << "]"
+							<< "uncle [" << (u->data != NULL ? *(u->data) : -1)
+							<< "gp : [" << (gp->data != NULL ? *(gp->data) : -1) << std::endl;
+				if (*(toCheck->data) == 485 && *root->data == 550)
+				{
+					print();
+					//exit(0);
+					//go_out = 1;
+				}
 			if (u->color == RED)
 			{
 				std::cout	<< "Case " << (u == gp->left ? "Left" : "Right")
-							<< " Uncle is Red : changing parent and uncle color to black, and grandfather to red" << std::endl;
+							<< " Uncle is Red : changing parent : [" << (p->data != NULL ? *(p->data) : -1) << "]"
+							<< "and uncle [" << (u->data != NULL ? *(u->data) : -1)
+							<< "] color to black, and grandfather : [" << (gp->data != NULL ? *(gp->data) : -1)
+							<< "] to red" << std::endl;
 				p->color = BLACK;
 				u->color = BLACK;
 				if (gp != _root)
@@ -299,11 +314,6 @@ namespace ft
 			else // Uncle color is black
 			{
 				std::cout<< "Uncle is Black" << std::endl;
-				if (*(toCheck->data) == 817)
-				{
-					print();
-					exit(0);
-				}
 				if (toCheck == p->left && p == gp->left)
 				{
 					std::cout<< "Left Left Case path from gp" << std::endl;
@@ -314,7 +324,7 @@ namespace ft
 					//if (gp != _root)
 						gp->color = tmp;
 					//toCheck = gp;
-					toCheck = gp->parent;
+					toCheck = gp;
 					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
 				}
 				else if (toCheck == p->right && p == gp->right)
@@ -335,12 +345,17 @@ namespace ft
 					leftRotate(p);
 					//Next is LL
 					rightRotate(gp);
-
 					color tmp = toCheck->color;
 					toCheck->color = gp->color;
 					//if (gp != _root)
 						gp->color = tmp;
 					toCheck = gp;
+					if (*(toCheck->data) == 675 && *root->data == 550)
+					{
+						std::cout << "Here"<< std::endl;
+						std::cout << "equal ? : " << (toCheck == _root) << std::endl;
+						//exit(0);
+					}
 					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
 				}
 				else if (toCheck == p->left && p == gp->right)
@@ -359,11 +374,17 @@ namespace ft
 					//if (gp != _root)
 						gp->color = tmp;
 					//toCheck = gp;
-					toCheck = gp->parent;
+					toCheck = gp;
 //					print();
 					std::cout << "toCheck is now : [" << *(toCheck->data) << "]" << std::endl;
 					//exit(0);
 				}
+			}
+			if (go_out)
+			{
+				std:: cout << "exit now" << std::endl;
+				print();
+				exit(0);
 			}
 			if (toCheck != _root)
 			{
@@ -376,6 +397,8 @@ namespace ft
 					u = (gp->left == p ? gp->right : gp->left);
 				}
 			}
+			else
+				std::cout << "tocheck is root" << std::endl;
 			std::cout << "End of loop -> checking condition again" << std::endl;
 			//usleep(100000);
 		}

@@ -40,6 +40,7 @@ bool comparator (int c1, int c2)
 int main(void)
 {
 
+	/*
 	rbtree<int> t1;
 	std::cout << t1.isOk() << std::endl;
 
@@ -48,8 +49,8 @@ int main(void)
 	t1.insert(8);
 	t1.print();
 	std::cout << t1.isOk() << std::endl;
+	*/
 
-	exit(0);
 	rbtree<int> tree;
 	tree.insert(959);
 	tree.insert(485);
@@ -78,13 +79,14 @@ int main(void)
 	tree.insert(504);
 	tree.insert(394);
 	tree.insert(467);
-	/*
 	tree.insert(583);
 	tree.insert(450);
 	tree.insert(550);
+	/*
 	tree.insert(894);
 	*/
 	std::cout << "----------" << std::endl;
+	//std::cout << "OK ?? : " <<  tree.isOk() << std::endl;
 	tree.print();
 
 	/*
