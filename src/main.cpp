@@ -13,6 +13,7 @@
 #include "stack.hpp"
 #include <stack>
 #include "rbtree.hpp"
+#include "pair.hpp"
 
 void	signal_handler(int signal_number)
 {
@@ -39,6 +40,13 @@ bool comparator (int c1, int c2)
 #include <string>
 int main(void)
 {
+
+	pair<int, char>	p1;
+	pair<long, int>	p2(p1);
+	pair<long, int>	p3(1L, 43);
+	pair<int, char>	p4;
+
+	p4 = p1;
 
 	/*
 	rbtree<int> t1;
@@ -237,6 +245,7 @@ int main(void)
 	std::cout <<  "value found : " << *(tree5.findNode(22)->data) << std::endl;
 
 	*/
+	/*
 	srand(time(NULL));
 	for (int i = 0; i < 100; i++)
 	{
@@ -253,7 +262,6 @@ int main(void)
 			}
 		}
 		std::cout << tree6.isOk() << std::endl;
-		/*
 		std::cout << *(tree6.findMin()->data) << std::endl;
 		std::cout << *(tree6.findMax()->data) << std::endl;
 		tree6.print();
@@ -261,7 +269,7 @@ int main(void)
 		std::cout << "----------" << std::endl;
 		tree6.print();
 		std::cout << tree6.isOk() << std::endl;
-		*/
 	}
 	std::cout << "----------" << std::endl;
+	*/
 }
