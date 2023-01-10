@@ -433,32 +433,15 @@ namespace ft
 	template<class T, class Node>
 	void	rbtree<T, Node>::transplant(Node * parent, Node *child)
 	{
-		Node *gp = parent->parent;
-
-		std::cout << "Start Tranplant" << std::endl;
-		std::cout << "Parent : [" << (parent->data ? *(parent->data) : -1 ) << "] - ";
-		std::cout << "Child : [" << (child->data ? *(child->data) : -1 ) << "] - ";
-		std::cout << "gParent : [" << (gp ? ( gp->data ? *(gp->data) : -1 ): -2) << "]" << std::endl;
-
 		//changing child parent
 		child->parent = parent->parent;
 		//changing parent->parent child
 		if (parent == _root)
-		{
-			std::cout << "Parent is root" << std::endl;
 			_root = child;
-		}
 		else if (parent->parent->left == parent)
-		{
-			std::cout << "parent is left son of his own parent" << std::endl;
 			parent->parent->left = child;
-		}
 		else
-		{
-			std::cout << "parent is right son of his own parent" << std::endl;
 			parent->parent->right = child;
-		}
-		std::cout << "End Tranplant" << std::endl;
 	}
 
 	template<class T, class Node>
@@ -468,82 +451,46 @@ namespace ft
 		color originalColor = target->color;
 		Node *x;
 		Node *y;
-		Node *todestroy = NULL;
 
 		if (_root == NULL)
-		{
-			std::cout << "Tree is empty" << std::endl;
 			return ;
-		}
 		if (findNode(toDelete) == NULL)
-		{
-			std::cout << "Value does not exist" << std::endl;
 			return ;
-		}
-		std::cout << "Target is : [" << *(target->data) << "]" << std::endl;
 		if (target->left->data == NULL)
 		{
-			std::cout << "Left child is leaf" << std::endl;
 			x = target->right;
 			transplant(target, target->right);
 			delete target->left;
 		}
 		else if (target->right->data == NULL)
 		{
-			std::cout << "Right child is leaf" << std::endl;
 			x = target->left;
 			transplant(target, target->left);
 			delete target->right;
 		}
 		else
 		{
-			std::cout << "No child is leaf" << std::endl;
 			y = findMin(target->right); // plus petit superieur a target
 			originalColor = y->color;
 			x = y->right; // node droit du plus petit sup a target
 			if (y->parent == target)
-			{
 				x->parent = y;
-			}
 			else
 			{
 				transplant(y, y->right);
 				y->right = target->right;
 				y->right->parent = y;
 			}
-			std::cout << "Second transplant" << std::endl;
 			transplant(target, y);
-			//Not so sure
-			todestroy = y->left;
+			delete y->left;
 			y->left = target->left;
 			y->left->parent = y;
-			//y->color = originalColor;
 			y->color = target->color; // Not sure ?
 
 		}
 		if (originalColor == BLACK)
-		{
-			if (x->data == NULL)
-			{
-				std::cout << "About to fix a node wose data is null" << std::endl;
-				if (x->parent->left == x)
-					std::cout << "It is a left child" << std::endl;
-				else if (x->parent->right == x)
-					std::cout << "It is a right child" << std::endl;
-				if (x->parent->data)
-					std::cout << "parent is : [" << *(x->parent->data) << std::endl;
-				if (x->parent->parent->data)
-					std::cout << "gparent is : [" << *(x->parent->parent->data) << std::endl;
-				std::cout << "printing now" << std::endl;
-				print();
-				//exit(0);
-			}
-			else
-				std::cout << "About to fix [" << *(x->data) << "]" << std::endl;
 			deleteFix(x);
-		}
 		delete target;
-		delete todestroy;
 	}
 
 	template<class T, class Node>
@@ -551,16 +498,13 @@ namespace ft
 	{
 		Node *w;
 
-		std::cout << "start Fix" << std::endl;
 		while (x != _root && x->color == BLACK)
 		{
 			if (x == x->parent->left)
 			{
-				std::cout << "X is a left child" << std::endl;
 				w = x->parent->right;
 				if (w->color == RED)
 				{
-					std::cout << "Sibling is RED" << std::endl;
 					w->color = BLACK;
 					x->parent->color = RED;
 					leftRotate(x->parent);
@@ -568,7 +512,6 @@ namespace ft
 				}
 				if (w->right->color == BLACK && w->left->color == BLACK)
 				{
-					std::cout << "Both child of sibling are black" << std::endl;
 					w->color = RED;
 					x = x->parent;
 				}
@@ -576,14 +519,12 @@ namespace ft
 				{
 					if (w->right->color == BLACK)
 					{
-						std::cout << "right child of sibling is black" << std::endl;
 						w->left->color = BLACK;
 						w->color = RED;
 						rightRotate(w);
 						w = x->parent->right;
 					}
 					w->color = x->parent->color;
-					//x->parent->parent->color = BLACK;
 					x->parent->color = BLACK;
 					w->right->color = BLACK;
 					leftRotate(x->parent);
@@ -592,11 +533,9 @@ namespace ft
 			}
 			else
 			{
-				std::cout << "X is a right child" << std::endl;
 				w = x->parent->left;
 				if (w->color == RED)
 				{
-					std::cout << "Sibling is RED" << std::endl;
 					w->color = BLACK;
 					x->parent->color = RED;
 					rightRotate(x->parent);
@@ -604,7 +543,6 @@ namespace ft
 				}
 				if (w->right->color == BLACK && w->left->color == BLACK) // ???
 				{
-					std::cout << "Both child of sibling are black" << std::endl;
 					w->color = RED;
 					x = x->parent;
 				}
@@ -612,14 +550,12 @@ namespace ft
 				{
 					if (w->left->color == BLACK)
 					{
-						std::cout << "right child of sibling is black" << std::endl;
 						w->right->color = BLACK;
 						w->color = RED;
 						leftRotate(w);
 						w = x->parent->left;
 					}
 					w->color = x->parent->color;
-					//x->parent->parent->color = BLACK;
 					x->parent->color = BLACK;
 					w->left->color = BLACK;
 					rightRotate(x->parent);
@@ -939,6 +875,207 @@ namespace ft
 		_root->color = BLACK;
 		std::cout << "End of Fix" << std::endl;
 	}
+
+	template<class T, class Node>
+	void	rbtree<T, Node>::transplant(Node * parent, Node *child)
+	{
+		Node *gp = parent->parent;
+
+		std::cout << "Start Tranplant" << std::endl;
+		std::cout << "Parent : [" << (parent->data ? *(parent->data) : -1 ) << "] - ";
+		std::cout << "Child : [" << (child->data ? *(child->data) : -1 ) << "] - ";
+		std::cout << "gParent : [" << (gp ? ( gp->data ? *(gp->data) : -1 ): -2) << "]" << std::endl;
+
+		//changing child parent
+		child->parent = parent->parent;
+		//changing parent->parent child
+		if (parent == _root)
+		{
+			std::cout << "Parent is root" << std::endl;
+			_root = child;
+		}
+		else if (parent->parent->left == parent)
+		{
+			std::cout << "parent is left son of his own parent" << std::endl;
+			parent->parent->left = child;
+		}
+		else
+		{
+			std::cout << "parent is right son of his own parent" << std::endl;
+			parent->parent->right = child;
+		}
+		std::cout << "End Tranplant" << std::endl;
+	}
+
+	template<class T, class Node>
+	void rbtree<T, Node>::deleteNode(const value_type &toDelete)
+	{
+		Node *target = findNode(toDelete);
+		color originalColor = target->color;
+		Node *x;
+		Node *y;
+		Node *todestroy = NULL;
+
+		if (_root == NULL)
+		{
+			std::cout << "Tree is empty" << std::endl;
+			return ;
+		}
+		if (findNode(toDelete) == NULL)
+		{
+			std::cout << "Value does not exist" << std::endl;
+			return ;
+		}
+		std::cout << "Target is : [" << *(target->data) << "]" << std::endl;
+		if (target->left->data == NULL)
+		{
+			std::cout << "Left child is leaf" << std::endl;
+			x = target->right;
+			transplant(target, target->right);
+			delete target->left;
+		}
+		else if (target->right->data == NULL)
+		{
+			std::cout << "Right child is leaf" << std::endl;
+			x = target->left;
+			transplant(target, target->left);
+			delete target->right;
+		}
+		else
+		{
+			std::cout << "No child is leaf" << std::endl;
+			y = findMin(target->right); // plus petit superieur a target
+			originalColor = y->color;
+			x = y->right; // node droit du plus petit sup a target
+			if (y->parent == target)
+			{
+				x->parent = y;
+			}
+			else
+			{
+				transplant(y, y->right);
+				y->right = target->right;
+				y->right->parent = y;
+			}
+			std::cout << "Second transplant" << std::endl;
+			transplant(target, y);
+			//Not so sure
+			todestroy = y->left;
+			y->left = target->left;
+			y->left->parent = y;
+			//y->color = originalColor;
+			y->color = target->color; // Not sure ?
+
+		}
+		if (originalColor == BLACK)
+		{
+			if (x->data == NULL)
+			{
+				std::cout << "About to fix a node wose data is null" << std::endl;
+				if (x->parent->left == x)
+					std::cout << "It is a left child" << std::endl;
+				else if (x->parent->right == x)
+					std::cout << "It is a right child" << std::endl;
+				if (x->parent->data)
+					std::cout << "parent is : [" << *(x->parent->data) << std::endl;
+				if (x->parent->parent->data)
+					std::cout << "gparent is : [" << *(x->parent->parent->data) << std::endl;
+				std::cout << "printing now" << std::endl;
+				print();
+				//exit(0);
+			}
+			else
+				std::cout << "About to fix [" << *(x->data) << "]" << std::endl;
+			deleteFix(x);
+		}
+		delete target;
+		delete todestroy;
+	}
+
+	template<class T, class Node>
+	void rbtree<T, Node>::deleteFix(Node *x)
+	{
+		Node *w;
+
+		std::cout << "start Fix" << std::endl;
+		while (x != _root && x->color == BLACK)
+		{
+			if (x == x->parent->left)
+			{
+				std::cout << "X is a left child" << std::endl;
+				w = x->parent->right;
+				if (w->color == RED)
+				{
+					std::cout << "Sibling is RED" << std::endl;
+					w->color = BLACK;
+					x->parent->color = RED;
+					leftRotate(x->parent);
+					w = x->parent->right;
+				}
+				if (w->right->color == BLACK && w->left->color == BLACK)
+				{
+					std::cout << "Both child of sibling are black" << std::endl;
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->right->color == BLACK)
+					{
+						std::cout << "right child of sibling is black" << std::endl;
+						w->left->color = BLACK;
+						w->color = RED;
+						rightRotate(w);
+						w = x->parent->right;
+					}
+					w->color = x->parent->color;
+					//x->parent->parent->color = BLACK;
+					x->parent->color = BLACK;
+					w->right->color = BLACK;
+					leftRotate(x->parent);
+					x = _root;
+				}
+			}
+			else
+			{
+				std::cout << "X is a right child" << std::endl;
+				w = x->parent->left;
+				if (w->color == RED)
+				{
+					std::cout << "Sibling is RED" << std::endl;
+					w->color = BLACK;
+					x->parent->color = RED;
+					rightRotate(x->parent);
+					w = x->parent->left;
+				}
+				if (w->right->color == BLACK && w->left->color == BLACK) // ???
+				{
+					std::cout << "Both child of sibling are black" << std::endl;
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->left->color == BLACK)
+					{
+						std::cout << "right child of sibling is black" << std::endl;
+						w->right->color = BLACK;
+						w->color = RED;
+						leftRotate(w);
+						w = x->parent->left;
+					}
+					w->color = x->parent->color;
+					//x->parent->parent->color = BLACK;
+					x->parent->color = BLACK;
+					w->left->color = BLACK;
+					rightRotate(x->parent);
+					x = _root;
+				}
+			}
+		}
+		x->color = BLACK;
+	}
+
 	*/
 };
 
