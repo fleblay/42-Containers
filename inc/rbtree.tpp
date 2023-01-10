@@ -446,15 +446,12 @@ namespace ft
 		{
 			std::cout << "parent is left son of his own parent" << std::endl;
 			parent->parent->left = child;
-			//delete parent->right;
 		}
 		else
 		{
 			std::cout << "parent is right son of his own parent" << std::endl;
 			parent->parent->right = child;
-			//delete parent->left;
 		}
-		//delete parent;
 		std::cout << "End Tranplant" << std::endl;
 	}
 
@@ -485,9 +482,9 @@ namespace ft
 		else
 		{
 			std::cout << "No child is leaf" << std::endl;
-			y = findMin(target->right);
+			y = findMin(target->right); // plus petit superieur a target
 			originalColor = y->color;
-			x = y->right;
+			x = y->right; // node droit du plus petit sup a target
 			if (y->parent == target)
 			{
 				x->parent = y;
@@ -498,14 +495,17 @@ namespace ft
 				y->right = target->right;
 				y->right->parent = y;
 			}
+			std::cout << "Second transplant" << std::endl;
 			transplant(target, y);
+			//Not so sure
+			delete y->left;
 			y->left = target->left;
 			y->left->parent = y;
 			y->color = originalColor;
 		}
 		if (originalColor == BLACK)
 		{
-			//deleteFix
+			//deleteFix(x);
 		}
 		delete target;
 	}

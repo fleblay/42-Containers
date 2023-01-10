@@ -60,11 +60,13 @@ int main(void)
 	t2.insert(2);
 	t2.insert(1);
 	t2.insert(9);
-	t2.insert(8);
+	t2.insert(7);
 	t2.insert(6);
+	t2.insert(8);
+	t2.insert(11);
 
 	t2.print();
-	t2.deleteNode(8);
+	t2.deleteNode(7);
 	std::cout << t2.isOk() << std::endl;
 	t2.print();
 
@@ -233,21 +235,27 @@ int main(void)
 	std::cout <<  "value found : " << *(tree5.findNode(22)->data) << std::endl;
 
 	*/
-	/*
 	srand(time(NULL));
-	rbtree<int> tree6;
 	for (int i = 0; i < 100; i++)
 	{
-		int toAdd = rand() % 10000;
-		if (tree6.findNode(toAdd) == NULL)
+		rbtree<int> tree6;
+		int toDel = rand() % 20;
+		for (int i = 0; i < 20; i++)
 		{
-			tree6.insert(toAdd);
+			int toAdd = rand() % 10000;
+			if (i == toDel)
+				toDel = toAdd;
+			if (tree6.findNode(toAdd) == NULL)
+			{
+				tree6.insert(toAdd);
+			}
 		}
+		std::cout << tree6.isOk() << std::endl;
+		std::cout << *(tree6.findMin()->data) << std::endl;
+		std::cout << *(tree6.findMax()->data) << std::endl;
+		tree6.deleteNode(toDel);
 	}
 	std::cout << "----------" << std::endl;
-	tree6.print();
-	std::cout << tree6.isOk() << std::endl;
-	std::cout << *(tree6.findMin()->data) << std::endl;
-	std::cout << *(tree6.findMax()->data) << std::endl;
-	*/
+
+
 }
