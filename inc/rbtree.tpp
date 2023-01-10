@@ -31,7 +31,6 @@ namespace ft
 		catch (std::exception &e)
 		{
 			DEBUG_PRINT("rbtree : insert exception catch")
-			DEBUG_PRINT(e.what())
 			throw;
 		}
 	}
@@ -51,6 +50,33 @@ namespace ft
 	template<class T, class Node>
 	void	rbtree<T, Node>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
+		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
+		{
+			root = toInsert;
+			root->color = BLACK;
+			return ;
+		}
+		if (root->data == NULL) // on est sur une feuille
+		{
+			delete root;
+			root = toInsert;
+			root->parent = parent;
+			if (root->parent->color == RED)
+			{
+				insertFix(root);
+			}
+			return ;
+		}
+		if (*(toInsert->data) < *(root->data))
+			insert(root->left, root, toInsert);
+		else
+			insert(root->right, root, toInsert);
+	}
+
+	/*
+	template<class T, class Node>
+	void	rbtree<T, Node>::insert(Node * &root, Node *parent, Node *toInsert)
+	{
 		std::cout << "Start of insert" << std::endl;
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
@@ -67,13 +93,11 @@ namespace ft
 			root->parent = parent;
 			if (root->parent->color == RED)
 			{
-				/*
 				std::cout << "Need to fix color" << std::endl;
 				std::cout << "Tree state before fix :" << std::endl;
 				std::cout << "START PRINT" << std::endl;
 				print();
 				std::cout << "END PRINT" << std::endl;
-				*/
 				insertFix(root);
 			}
 			return ;
@@ -89,6 +113,7 @@ namespace ft
 			insert(root->right, root, toInsert);
 		}
 	}
+	*/
 
 	template<class T, class Node>
 	void	rbtree<T, Node>::print(Node * const &root, unsigned int depth) const
@@ -128,6 +153,38 @@ namespace ft
 		print(root->left, depth + 1);
 	}
 
+	template<class T, class Node>
+	void	rbtree<T, Node>::leftRotate(Node * &root)
+	{
+		Node	*x = root;
+		Node	*y = root->right;
+		Node	*parent = root->parent;
+
+		if (y && y->left) // if y has a left subtree, assign x as parent of left subtree of y
+		{
+			y->left->parent = x;
+			x->right = y->left;
+		}
+		if (x->parent == NULL || x == _root) // if parent of x is null, make y as root of tree
+		{
+			_root = y;
+			_root->parent = NULL;
+		}
+		else if (x == parent->left) //else if x is the left child of p, make y as left child of p
+		{
+			parent->left = y;
+			y->parent = parent;
+		}
+		else // else assign y as the right child of p
+		{
+			parent->right = y;
+			y->parent = parent;
+		}
+		x->parent = y; // Make y as the parent of x
+		y->left = x;
+	}
+
+	/*
 	template<class T, class Node>
 	void	rbtree<T, Node>::leftRotate(Node * &root)
 	{
@@ -180,7 +237,40 @@ namespace ft
 		//print();
 		//std::cout << "END PRINT" << std::endl;
 	}
+	*/
 
+	template<class T, class Node>
+	void	rbtree<T, Node>::rightRotate(Node * &root)
+	{
+		Node	*y = root;
+		Node	*x = root->left;
+		Node	*parent = root->parent;
+
+		if (x && x->right) // if x has a right subtree, assign y as parent of right subtree of x
+		{
+			x->right->parent = y;
+			y->left = x->right;
+		}
+		if (y->parent == NULL || y == _root) // if parent of y is null, make x as root of tree
+		{
+			_root = x;
+			_root->parent = NULL;
+		}
+		else if (y == parent->right) //else if y is the right child of p, make x as right child of p
+		{
+			parent->right = x;
+			x->parent = parent;
+		}
+		else // else assign x as the left child of p
+		{
+			parent->left = x;
+			x->parent = parent;
+		}
+		y->parent = x; // Make x as the parent of y
+		x->right = y;
+	}
+
+	/*
 	template<class T, class Node>
 	void	rbtree<T, Node>::rightRotate(Node * &root)
 	{
@@ -235,6 +325,7 @@ namespace ft
 		//print();
 		//std::cout << "END PRINT" << std::endl;
 	}
+	*/
 
 	template<class T, class Node>
 	void	rbtree<T, Node>::destroyTree(Node * &root)
@@ -301,6 +392,74 @@ namespace ft
 		return (isOk(_root));
 	}
 
+	template<class T, class Node>
+	void	rbtree<T, Node>::insertFix(Node * &root)
+	{
+		Node *toCheck = root;
+		Node *p = toCheck->parent;
+		Node *gp = toCheck->parent->parent;
+		Node *u = (gp->left == p ? gp->right : gp->left);
+
+		while (toCheck != _root && toCheck->color == RED && p->color == RED)
+		{
+			if (u->color == RED)
+			{
+				p->color = BLACK;
+				u->color = BLACK;
+				if (gp != _root)
+					gp->color = RED;
+				toCheck = gp;
+				if (toCheck != _root)
+				{
+					p = toCheck->parent;
+					if (p != _root)
+					{
+						gp = toCheck->parent->parent;
+						u = (gp->left == p ? gp->right : gp->left);
+					}
+				}
+			}
+			else // Uncle color is black
+			{
+				if (toCheck == p->left && p == gp->left)
+				{
+					rightRotate(gp);
+					swapColor(p, gp);
+				}
+				else if (toCheck == p->right && p == gp->right)
+				{
+					leftRotate(gp);
+					swapColor(p, gp);
+				}
+				else if (toCheck == p->right && p == gp->left)
+				{
+					leftRotate(p);
+					//Next is LL
+					rightRotate(gp);
+					swapColor(toCheck, gp);
+				}
+				else if (toCheck == p->left && p == gp->right)
+				{
+					rightRotate(p);
+					//Next is RR
+					leftRotate(gp);
+					swapColor(toCheck, gp);
+				}
+				toCheck = gp;
+			}
+			if (toCheck != _root)
+			{
+				p = toCheck->parent;
+				if (p != _root)
+				{
+					gp = toCheck->parent->parent;
+					u = (gp->left == p ? gp->right : gp->left);
+				}
+			}
+		}
+	}
+
+	/*
 	template<class T, class Node>
 	void	rbtree<T, Node>::insertFix(Node * &root)
 	{
@@ -444,6 +603,7 @@ namespace ft
 		}
 		std::cout << "End of Fix" << std::endl;
 	}
+	*/
 
 	/*
 	template<class T, class Node>

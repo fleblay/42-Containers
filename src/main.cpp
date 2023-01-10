@@ -167,16 +167,15 @@ int main(void)
 	*/
 	srand(time(NULL));
 	rbtree<int> tree6;
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		int toAdd = rand() % 10000;
 		if (tree6.findNode(toAdd) == NULL)
 		{
-			std::cerr << toAdd << std::endl;
 			tree6.insert(toAdd);
 		}
 	}
 	std::cout << "----------" << std::endl;
-	//tree6.print();
+	tree6.print();
 	std::cout << tree6.isOk() << std::endl;
 }
