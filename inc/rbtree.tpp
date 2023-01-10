@@ -360,7 +360,7 @@ namespace ft
 	}
 
 	template<class T, class Node>
-	int		rbtree<T, Node>::nbOfBlack(Node * &root) const
+	int		rbtree<T, Node>::nbOfBlack(const Node * root) const
 	{
 		if (root->data == NULL)
 			return (1);
@@ -371,7 +371,7 @@ namespace ft
 	}
 
 	template<class T, class Node>
-	bool rbtree<T, Node>::isOk(Node * &root)
+	bool rbtree<T, Node>::isOk(const Node * root) const
 	{
 		if (root->data == NULL)
 			return (true);
@@ -385,11 +385,145 @@ namespace ft
 	}
 
 	template<class T, class Node>
-	bool rbtree<T, Node>::isOk(void)
+	bool rbtree<T, Node>::isOk(void) const
 	{
 		if (_root == NULL)
 			return (true);
 		return (isOk(_root));
+	}
+
+	template<class T, class Node>
+	Node *rbtree<T, Node>::findMax(Node * root)
+	{
+		if (root->right->data == NULL)
+			return (root);
+		return (findMax(root->right));
+	}
+
+	template<class T, class Node>
+	Node *rbtree<T, Node>::findMax(void)
+	{
+		if (_root == NULL)
+			return (NULL);
+		return (findMax(_root));
+	}
+
+	template<class T, class Node>
+	Node *rbtree<T, Node>::findMin(Node * root)
+	{
+		if (root->left->data == NULL)
+			return (root);
+		return (findMin(root->left));
+	}
+
+	template<class T, class Node>
+	Node *rbtree<T, Node>::findMin(void)
+	{
+		if (_root == NULL)
+			return (NULL);
+		return (findMin(_root));
+	}
+
+	template<class T, class Node>
+	void	rbtree<T, Node>::transplant(Node * parent, Node *child)
+	{
+		Node *gp = parent->parent;
+
+		std::cout << "Start Tranplant" << std::endl;
+		std::cout << "Parent : [" << (parent->data ? *(parent->data) : -1 ) << "] - ";
+		std::cout << "Child : [" << (child->data ? *(child->data) : -1 ) << "] - ";
+		std::cout << "gParent : [" << (gp ? ( gp->data ? *(gp->data) : -1 ): -2) << "]" << std::endl;
+
+		//changing child parent
+		child->parent = parent->parent;
+		//changing parent->parent child
+		if (parent == _root)
+		{
+			std::cout << "Parent is root" << std::endl;
+			_root = child;
+		}
+		else if (parent->parent->left == parent)
+		{
+			std::cout << "parent is left son of his own parent" << std::endl;
+			parent->parent->left = child;
+			//delete parent->right;
+		}
+		else
+		{
+			std::cout << "parent is right son of his own parent" << std::endl;
+			parent->parent->right = child;
+			//delete parent->left;
+		}
+		//delete parent;
+		std::cout << "End Tranplant" << std::endl;
+	}
+
+	template<class T, class Node>
+	void rbtree<T, Node>::deleteNode(Node * &root, const value_type &toDelete)
+	{
+		(void)root;
+		Node *target = findNode(toDelete);
+		color originalColor = target->color;
+		Node *x;
+		Node *y;
+
+		std::cout << "Target is : [" << *(target->data) << "]" << std::endl;
+		if (target->left->data == NULL)
+		{
+			std::cout << "Left child is leaf" << std::endl;
+			x = target->right;
+			transplant(target, x);
+			delete target->left;
+		}
+		else if (target->right->data == NULL)
+		{
+			std::cout << "Right child is leaf" << std::endl;
+			x = target->left;
+			transplant(target, x);
+			delete target->right;
+		}
+		else
+		{
+			std::cout << "No child is leaf" << std::endl;
+			y = findMin(target->right);
+			originalColor = y->color;
+			x = y->right;
+			if (y->parent == target)
+			{
+				x->parent = y;
+			}
+			else
+			{
+				transplant(y, y->right);
+				y->right = target->right;
+				y->right->parent = y;
+			}
+			transplant(target, y);
+			y->left = target->left;
+			y->left->parent = y;
+			y->color = originalColor;
+		}
+		if (originalColor == BLACK)
+		{
+			//deleteFix
+		}
+		delete target;
+	}
+
+	template<class T, class Node>
+	void rbtree<T, Node>::deleteNode(const value_type &toDelete)
+	{
+		if (_root == NULL)
+		{
+			std::cout << "Tree is empty" << std::endl;
+			return ;
+		}
+		if (findNode(toDelete) == NULL)
+		{
+			std::cout << "Value does not exist" << std::endl;
+			return ;
+		}
+		return (deleteNode(_root, toDelete));
 	}
 
 	template<class T, class Node>

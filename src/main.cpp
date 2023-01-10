@@ -44,13 +44,80 @@ int main(void)
 	rbtree<int> t1;
 	std::cout << t1.isOk() << std::endl;
 
-	t1.insert(5);
 	t1.insert(1);
-	t1.insert(8);
 	t1.print();
 	std::cout << t1.isOk() << std::endl;
+
+	t1.deleteNode(1);
+	t1.print();
+
+	std::cout << "----------" << std::endl;
 	*/
 
+	rbtree<int> t2;
+	std::cout << t2.isOk() << std::endl;
+
+	t2.insert(2);
+	t2.insert(1);
+	t2.insert(9);
+	t2.insert(8);
+	t2.insert(6);
+
+	t2.print();
+	t2.deleteNode(8);
+	std::cout << t2.isOk() << std::endl;
+	t2.print();
+
+
+	std::cout << "----------" << std::endl;
+
+	/*
+	rbtree<int> t3;
+	std::cout << t3.isOk() << std::endl;
+
+	t3.insert(2);
+	t3.insert(3);
+	t3.print();
+
+	t3.deleteNode(3);
+	std::cout << t3.isOk() << std::endl;
+	t3.print();
+
+	std::cout << "----------" << std::endl;
+
+	rbtree<int> t4;
+	std::cout << t4.isOk() << std::endl;
+
+	t4.insert(20);
+	t4.insert(30);
+	t4.insert(10);
+	t4.insert(5);
+	t4.print();
+
+	t4.deleteNode(10);
+	std::cout << t4.isOk() << std::endl;
+	t4.print();
+
+	std::cout << "----------" << std::endl;
+
+	rbtree<int> t5;
+	std::cout << t5.isOk() << std::endl;
+
+	t5.insert(20);
+	t5.insert(30);
+	t5.insert(10);
+	t5.insert(5);
+	t5.insert(8);
+	t5.insert(6);
+	t5.insert(9);
+	t5.print();
+
+	t5.deleteNode(5);
+	std::cout << t5.isOk() << std::endl;
+	t5.print();
+	*/
+
+	/*
 	rbtree<int> tree;
 	tree.insert(959);
 	tree.insert(485);
@@ -86,6 +153,7 @@ int main(void)
 	std::cout << "----------" << std::endl;
 	std::cout << "OK ?? : " <<  tree.isOk() << std::endl;
 	//tree.print();
+	*/
 
 	/*
 	//Test Right uncle is RED
@@ -165,6 +233,7 @@ int main(void)
 	std::cout <<  "value found : " << *(tree5.findNode(22)->data) << std::endl;
 
 	*/
+	/*
 	srand(time(NULL));
 	rbtree<int> tree6;
 	for (int i = 0; i < 100; i++)
@@ -178,4 +247,7 @@ int main(void)
 	std::cout << "----------" << std::endl;
 	tree6.print();
 	std::cout << tree6.isOk() << std::endl;
+	std::cout << *(tree6.findMin()->data) << std::endl;
+	std::cout << *(tree6.findMax()->data) << std::endl;
+	*/
 }

@@ -49,8 +49,10 @@ namespace ft
 		Node * &getRoot(void);
 		void	print(void) const;
 		Node	*findNode(const value_type &toFind);
-		bool	isOk(void);
-
+		bool	isOk(void) const;
+		Node *findMax(void);
+		Node *findMin(void);
+		void	deleteNode(const value_type &toDelete);
 
 		private	:
 		void	insert(Node	* &root, Node * parent, Node *toInsert);
@@ -60,8 +62,14 @@ namespace ft
 		void	rightRotate(Node * &root);
 		void	insertFix(Node * &root);
 		Node	*findNode(Node * &root, const value_type &toFind);
-		int		nbOfBlack(Node * &root) const ;
-		bool	isOk(Node * &root);
+		int		nbOfBlack(const Node * root) const ;
+		bool	isOk(const Node * root) const ;
+
+		Node *findMax(Node * root);
+		Node *findMin(Node * root);
+		void deleteNode(Node * &root, const value_type &toDelete);
+
+		void	transplant(Node * parent, Node *child);
 
 		//MEMBER ATTRIBUTES
 		private :
