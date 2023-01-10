@@ -378,9 +378,15 @@ namespace ft
 		bool leftStatus = nbOfBlack(root->left);
 		bool rightStatus = nbOfBlack(root->right);
 		if (leftStatus != rightStatus)
+		{
+			std::cout << "Not same nb of black for left and right for : [" << *(root->data) << "] !" << std::endl;
 			return (false);
+		}
 		if (root != _root && root->color == RED && root->parent->color == RED)
+		{
+			std::cout << "[" << *(root->data) << "] is RED and [" << *(root->parent->data) << "] is RED !" << std::endl;
 			return (false);
+		}
 		return(isOk(root->left) && isOk(root->right));
 	}
 
@@ -456,14 +462,23 @@ namespace ft
 	}
 
 	template<class T, class Node>
-	void rbtree<T, Node>::deleteNode(Node * &root, const value_type &toDelete)
+	void rbtree<T, Node>::deleteNode(const value_type &toDelete)
 	{
-		(void)root;
 		Node *target = findNode(toDelete);
 		color originalColor = target->color;
 		Node *x;
 		Node *y;
 
+		if (_root == NULL)
+		{
+			std::cout << "Tree is empty" << std::endl;
+			return ;
+		}
+		if (findNode(toDelete) == NULL)
+		{
+			std::cout << "Value does not exist" << std::endl;
+			return ;
+		}
 		std::cout << "Target is : [" << *(target->data) << "]" << std::endl;
 		if (target->left->data == NULL)
 		{
@@ -501,29 +516,103 @@ namespace ft
 			delete y->left;
 			y->left = target->left;
 			y->left->parent = y;
-			y->color = originalColor;
+			//y->color = originalColor;
+			y->color = target->color;
+
 		}
 		if (originalColor == BLACK)
 		{
-			//deleteFix(x);
+			if (x->data == NULL)
+			{
+				std::cout << "About to fix a node wose data is null" << std::endl;
+			}
+			else
+				std::cout << "About to fix [" << *(x->data) << "]" << std::endl;
+			deleteFix(x);
 		}
 		delete target;
 	}
 
 	template<class T, class Node>
-	void rbtree<T, Node>::deleteNode(const value_type &toDelete)
+	void rbtree<T, Node>::deleteFix(Node *x)
 	{
-		if (_root == NULL)
+		Node *w;
+
+		std::cout << "start Fix" << std::endl;
+		while (x != _root && x->color == BLACK)
 		{
-			std::cout << "Tree is empty" << std::endl;
-			return ;
+			if (x == x->parent->left)
+			{
+				std::cout << "X is a left child" << std::endl;
+				w = x->parent->right;
+				if (w->color == RED)
+				{
+					std::cout << "Sibling is RED" << std::endl;
+					w->color = BLACK;
+					x->parent->color = RED;
+					leftRotate(x->parent);
+					w = x->parent->right;
+				}
+				if (w->right->color == BLACK && w->left->color == BLACK)
+				{
+					std::cout << "Both child of sibling are black" << std::endl;
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->right->color == BLACK)
+					{
+						std::cout << "right child of sibling is black" << std::endl;
+						w->left->color = BLACK;
+						w->color = RED;
+						rightRotate(w);
+						w = x->parent->right;
+					}
+					w->color = x->parent->color;
+					x->parent->parent->color = BLACK;
+					w->right->color = BLACK;
+					leftRotate(x->parent);
+					x = _root;
+				}
+			}
+			else
+			{
+				std::cout << "X is a right child" << std::endl;
+				w = x->parent->left;
+				if (w->color == RED)
+				{
+					std::cout << "Sibling is RED" << std::endl;
+					w->color = BLACK;
+					x->parent->color = RED;
+					rightRotate(x->parent);
+					w = x->parent->left;
+				}
+				if (w->right->color == BLACK && w->left->color == BLACK)
+				{
+					std::cout << "Both child of sibling are black" << std::endl;
+					w->color = RED;
+					x = x->parent;
+				}
+				else
+				{
+					if (w->left->color == BLACK)
+					{
+						std::cout << "right child of sibling is black" << std::endl;
+						w->right->color = BLACK;
+						w->color = RED;
+						leftRotate(w);
+						w = x->parent->left;
+					}
+					w->color = x->parent->color;
+					x->parent->parent->color = BLACK;
+					w->left->color = BLACK;
+					rightRotate(x->parent);
+					x = _root;
+				}
+			}
 		}
-		if (findNode(toDelete) == NULL)
-		{
-			std::cout << "Value does not exist" << std::endl;
-			return ;
-		}
-		return (deleteNode(_root, toDelete));
+		x->color = BLACK;
 	}
 
 	template<class T, class Node>

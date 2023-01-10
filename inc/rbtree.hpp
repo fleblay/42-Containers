@@ -67,9 +67,9 @@ namespace ft
 
 		Node *findMax(Node * root);
 		Node *findMin(Node * root);
-		void deleteNode(Node * &root, const value_type &toDelete);
 
 		void	transplant(Node * parent, Node *child);
+		void	deleteFix(Node *x);
 
 		//MEMBER ATTRIBUTES
 		private :

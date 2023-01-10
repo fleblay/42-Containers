@@ -54,6 +54,7 @@ int main(void)
 	std::cout << "----------" << std::endl;
 	*/
 
+	/*
 	rbtree<int> t2;
 	std::cout << t2.isOk() << std::endl;
 
@@ -72,6 +73,7 @@ int main(void)
 
 
 	std::cout << "----------" << std::endl;
+	*/
 
 	/*
 	rbtree<int> t3;
@@ -236,7 +238,7 @@ int main(void)
 
 	*/
 	srand(time(NULL));
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		rbtree<int> tree6;
 		int toDel = rand() % 20;
@@ -253,9 +255,11 @@ int main(void)
 		std::cout << tree6.isOk() << std::endl;
 		std::cout << *(tree6.findMin()->data) << std::endl;
 		std::cout << *(tree6.findMax()->data) << std::endl;
+		tree6.print();
 		tree6.deleteNode(toDel);
+		std::cout << "----------" << std::endl;
+		tree6.print();
+		std::cout << tree6.isOk() << std::endl;
 	}
 	std::cout << "----------" << std::endl;
-
-
 }
