@@ -468,6 +468,7 @@ namespace ft
 		color originalColor = target->color;
 		Node *x;
 		Node *y;
+		Node *todestroy = NULL;
 
 		if (_root == NULL)
 		{
@@ -484,14 +485,14 @@ namespace ft
 		{
 			std::cout << "Left child is leaf" << std::endl;
 			x = target->right;
-			transplant(target, x);
+			transplant(target, target->right);
 			delete target->left;
 		}
 		else if (target->right->data == NULL)
 		{
 			std::cout << "Right child is leaf" << std::endl;
 			x = target->left;
-			transplant(target, x);
+			transplant(target, target->left);
 			delete target->right;
 		}
 		else
@@ -513,11 +514,11 @@ namespace ft
 			std::cout << "Second transplant" << std::endl;
 			transplant(target, y);
 			//Not so sure
-			delete y->left;
+			todestroy = y->left;
 			y->left = target->left;
 			y->left->parent = y;
 			//y->color = originalColor;
-			y->color = target->color;
+			y->color = target->color; // Not sure ?
 
 		}
 		if (originalColor == BLACK)
@@ -525,12 +526,24 @@ namespace ft
 			if (x->data == NULL)
 			{
 				std::cout << "About to fix a node wose data is null" << std::endl;
+				if (x->parent->left == x)
+					std::cout << "It is a left child" << std::endl;
+				else if (x->parent->right == x)
+					std::cout << "It is a right child" << std::endl;
+				if (x->parent->data)
+					std::cout << "parent is : [" << *(x->parent->data) << std::endl;
+				if (x->parent->parent->data)
+					std::cout << "gparent is : [" << *(x->parent->parent->data) << std::endl;
+				std::cout << "printing now" << std::endl;
+				print();
+				//exit(0);
 			}
 			else
 				std::cout << "About to fix [" << *(x->data) << "]" << std::endl;
 			deleteFix(x);
 		}
 		delete target;
+		delete todestroy;
 	}
 
 	template<class T, class Node>
@@ -570,7 +583,8 @@ namespace ft
 						w = x->parent->right;
 					}
 					w->color = x->parent->color;
-					x->parent->parent->color = BLACK;
+					//x->parent->parent->color = BLACK;
+					x->parent->color = BLACK;
 					w->right->color = BLACK;
 					leftRotate(x->parent);
 					x = _root;
@@ -588,7 +602,7 @@ namespace ft
 					rightRotate(x->parent);
 					w = x->parent->left;
 				}
-				if (w->right->color == BLACK && w->left->color == BLACK)
+				if (w->right->color == BLACK && w->left->color == BLACK) // ???
 				{
 					std::cout << "Both child of sibling are black" << std::endl;
 					w->color = RED;
@@ -605,7 +619,8 @@ namespace ft
 						w = x->parent->left;
 					}
 					w->color = x->parent->color;
-					x->parent->parent->color = BLACK;
+					//x->parent->parent->color = BLACK;
+					x->parent->color = BLACK;
 					w->left->color = BLACK;
 					rightRotate(x->parent);
 					x = _root;
