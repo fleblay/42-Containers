@@ -14,10 +14,20 @@ namespace ft
 		typedef T		value_type;
 		typedef Alloc	allocator_type;
 
-		node(void) : parent(NULL), left(NULL), right(NULL), data(NULL), color(RED)
+		node(void) : parent(NULL), left(NULL), right(NULL), data(NULL), color(RED), alloc(allocator_type())
 		{};
-		~node(void) { delete data; }
-		void setData(const value_type &initValue) { data = new value_type(initValue); }
+		//~node(void) { delete data; }
+		//void setData(const value_type &initValue) { data = new value_type(initValue); }
+		~node(void)
+		{
+			alloc.destroy(data);
+			alloc.deallocate(data, 1);
+		}
+		void setData(const value_type &initValue)
+		{
+			data = alloc.allocate(1);
+			alloc.construct(data, initValue);
+		}
 
 		node			*parent;
 		node			*left;
@@ -36,15 +46,21 @@ namespace ft
 		rhs->color = tmp;
 	}
 
-	template <class T, class Compare, class Alloc = std::allocator<T>, class Node = ft::node<T, Alloc> >
+	template <class T,
+			 class Compare,
+			 class Alloc = std::allocator<T>,
+			 class Node = ft::node<T, Alloc>,
+			 class Alloc2 = std::allocator<Node >
+			 >
 	class rbtree
 	{
 		public	:
 		typedef T			value_type;
 		typedef Compare		key_compare;
+		typedef Alloc2		allocator_type;
 
 		public	:
-		rbtree(void) : _root(NULL), _comp(key_compare()) {}
+		rbtree(void) : _root(NULL), _comp(key_compare()), alloc(allocator_type()) {}
 		~rbtree(void) { destroyTree(_root); }
 
 		//MEMBER FX
@@ -78,6 +94,7 @@ namespace ft
 		private :
 		Node		*_root;
 		key_compare	_comp;
+		allocator_type	alloc;
 	};
 }
 

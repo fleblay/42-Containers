@@ -57,12 +57,12 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 {
 	myCustomLess(void)
 	{
-		std::cout << "mycustom less instance for pairs" << std::endl;
+		//std::cout << "mycustom less instance for pairs" << std::endl;
 	}
 	bool operator() (const pair<T,U> &x, const pair<T,U> &y) const
 	{
-		std::cout << "mycustom less comparison for pairs" << std::endl;
-		return (std::less<T>::operator()(x.first, y.second));
+		//std::cout << "mycustom less comparison for pairs" << std::endl;
+		return (std::less<T>::operator()(x.first, y.first));
 	}
 };
 
@@ -87,6 +87,8 @@ int main(void)
 	t2.insert(p5);
 
 	t2.print();
+	std::cout << "--------------------" << std::endl;
+	std::cout << "deleting :" << p4 << std::endl;
 	t2.deleteNode(p4);
 	std::cout << t2.isOk() << std::endl;
 	t2.print();

@@ -10,15 +10,26 @@
 namespace ft
 {
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insert(const value_type &val)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(const value_type &val)
 	{
 		DEBUG_PRINT("rbtree : insert")
 		try
 		{
+			/*
 			Node *newNode = new Node;
 			Node *newLeaf_1 = new Node;
 			Node *newLeaf_2 = new Node;
+			*/
+			Node *newNode = alloc.allocate(1);
+			alloc.construct(newNode, Node());
+
+			Node *newLeaf_1 = alloc.allocate(1);
+			alloc.construct(newLeaf_1, Node());
+
+			Node *newLeaf_2 = alloc.allocate(1);
+			alloc.construct(newLeaf_2, Node());
+
 			newNode->setData(val);
 			newNode->left = newLeaf_1;
 			newNode->left->parent = newNode;
@@ -35,20 +46,20 @@ namespace ft
 		}
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node * &rbtree<T, Compare, Alloc, Node>::getRoot(void)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node * &rbtree<T, Compare, Alloc, Node, Alloc2>::getRoot(void)
 	{
 		return _root;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::print(void) const
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::print(void) const
 	{
 		print(_root, 0);
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insert(Node * &root, Node *parent, Node *toInsert)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
@@ -58,15 +69,17 @@ namespace ft
 		}
 		if (root->data == NULL) // on est sur une feuille
 		{
-			delete root;
+			alloc.destroy(root);
+			alloc.deallocate(root, 1);
 			root = toInsert;
 			root->parent = parent;
 			if (root->parent->color == RED)
 			{
-				//insertFix(root);
+				insertFix(root);
 			}
 			return ;
 		}
+		//if (*(toInsert->data) < *(root->data))
 		if (_comp(*(toInsert->data), *(root->data)))
 			insert(root->left, root, toInsert);
 		else
@@ -74,8 +87,8 @@ namespace ft
 	}
 
 	/*
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insert(Node * &root, Node *parent, Node *toInsert)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
 		std::cout << "Start of insert" << std::endl;
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
@@ -115,8 +128,8 @@ namespace ft
 	}
 	*/
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::print(Node * const &root, unsigned int depth) const
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::print(Node * const &root, unsigned int depth) const
 	{
 		//std::cout << "depth is : [" << depth << "]" << std::endl;
 		//usleep(100000);
@@ -153,8 +166,8 @@ namespace ft
 		print(root->left, depth + 1);
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::leftRotate(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::leftRotate(Node * &root)
 	{
 		Node	*x = root;
 		Node	*y = root->right;
@@ -185,8 +198,8 @@ namespace ft
 	}
 
 	/*
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::leftRotate(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::leftRotate(Node * &root)
 	{
 		Node	*x = root;
 		Node	*y = root->right;
@@ -239,8 +252,8 @@ namespace ft
 	}
 	*/
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::rightRotate(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::rightRotate(Node * &root)
 	{
 		Node	*y = root;
 		Node	*x = root->left;
@@ -271,8 +284,8 @@ namespace ft
 	}
 
 	/*
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::rightRotate(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::rightRotate(Node * &root)
 	{
 		Node	*y = root;
 		Node	*x = root->left;
@@ -327,18 +340,19 @@ namespace ft
 	}
 	*/
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::destroyTree(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::destroyTree(Node * &root)
 	{
 		if (root == NULL)
 			return;
 		destroyTree(root->left);
 		destroyTree(root->right);
-		delete root;
+		alloc.destroy(root);
+		alloc.deallocate(root, 1);
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node	*rbtree<T, Compare, Alloc, Node>::findNode(const value_type &toFind)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(const value_type &toFind)
 	{
 		if (_root == NULL)
 			return (NULL);
@@ -346,21 +360,21 @@ namespace ft
 
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node	*rbtree<T, Compare, Alloc, Node>::findNode(Node * &root, const value_type &toFind)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * &root, const value_type &toFind)
 	{
 		if (root->data == NULL)
 			return (NULL);
-		if (*(root->data) == toFind)
+		if (! _comp(toFind, *(root->data)) && !_comp(*(root->data), toFind))
 			return (root);
-		else if (*(root->data) > toFind)
+		if (_comp(toFind, *(root->data)))
 			return (findNode(root->left, toFind));
 		else
 			return (findNode(root->right, toFind));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	int		rbtree<T, Compare, Alloc, Node>::nbOfBlack(const Node * root) const
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	int		rbtree<T, Compare, Alloc, Node, Alloc2>::nbOfBlack(const Node * root) const
 	{
 		if (root->data == NULL)
 			return (1);
@@ -370,8 +384,8 @@ namespace ft
 			return (nbOfBlack(root->left));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	bool rbtree<T, Compare, Alloc, Node>::isOk(const Node * root) const
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	bool rbtree<T, Compare, Alloc, Node, Alloc2>::isOk(const Node * root) const
 	{
 		if (root->data == NULL)
 			return (true);
@@ -390,48 +404,48 @@ namespace ft
 		return(isOk(root->left) && isOk(root->right));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	bool rbtree<T, Compare, Alloc, Node>::isOk(void) const
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	bool rbtree<T, Compare, Alloc, Node, Alloc2>::isOk(void) const
 	{
 		if (_root == NULL)
 			return (true);
 		return (isOk(_root));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node *rbtree<T, Compare, Alloc, Node>::findMax(Node * root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(Node * root)
 	{
 		if (root->right->data == NULL)
 			return (root);
 		return (findMax(root->right));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node *rbtree<T, Compare, Alloc, Node>::findMax(void)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(void)
 	{
 		if (_root == NULL)
 			return (NULL);
 		return (findMax(_root));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node *rbtree<T, Compare, Alloc, Node>::findMin(Node * root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(Node * root)
 	{
 		if (root->left->data == NULL)
 			return (root);
 		return (findMin(root->left));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	Node *rbtree<T, Compare, Alloc, Node>::findMin(void)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(void)
 	{
 		if (_root == NULL)
 			return (NULL);
 		return (findMin(_root));
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::transplant(Node * parent, Node *child)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::transplant(Node * parent, Node *child)
 	{
 		//changing child parent
 		child->parent = parent->parent;
@@ -444,29 +458,34 @@ namespace ft
 			parent->parent->right = child;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void rbtree<T, Compare, Alloc, Node>::deleteNode(const value_type &toDelete)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void rbtree<T, Compare, Alloc, Node, Alloc2>::deleteNode(const value_type &toDelete)
 	{
 		Node *target = findNode(toDelete);
-		color originalColor = target->color;
 		Node *x;
 		Node *y;
 
 		if (_root == NULL)
 			return ;
 		if (findNode(toDelete) == NULL)
+		{
+			std::cout << "didn't find node to delete" << std::endl;
 			return ;
+		}
+		color originalColor = target->color;
 		if (target->left->data == NULL)
 		{
 			x = target->right;
 			transplant(target, target->right);
-			delete target->left;
+			alloc.destroy(target->left);
+			alloc.deallocate(target->left, 1);
 		}
 		else if (target->right->data == NULL)
 		{
 			x = target->left;
 			transplant(target, target->left);
-			delete target->right;
+			alloc.destroy(target->right);
+			alloc.deallocate(target->right, 1);
 		}
 		else
 		{
@@ -482,7 +501,8 @@ namespace ft
 				y->right->parent = y;
 			}
 			transplant(target, y);
-			delete y->left;
+			alloc.destroy(y->left);
+			alloc.deallocate(y->left, 1);
 			y->left = target->left;
 			y->left->parent = y;
 			y->color = target->color; // Not sure ?
@@ -490,11 +510,12 @@ namespace ft
 		}
 		if (originalColor == BLACK)
 			deleteFix(x);
-		delete target;
+		alloc.destroy(target);
+		alloc.deallocate(target, 0);
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void rbtree<T, Compare, Alloc, Node>::deleteFix(Node *x)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void rbtree<T, Compare, Alloc, Node, Alloc2>::deleteFix(Node *x)
 	{
 		Node *w;
 
@@ -566,8 +587,8 @@ namespace ft
 		x->color = BLACK;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insertFix(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)
 	{
 		Node *toCheck = root;
 		Node *p = toCheck->parent;
@@ -634,8 +655,8 @@ namespace ft
 	}
 
 	/*
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insertFix(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)
 	{
 		Node *toCheck = root;
 		Node *p = toCheck->parent;
@@ -780,8 +801,8 @@ namespace ft
 	*/
 
 	/*
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::insertFix(Node * &root)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)
 	{
 		Node *toCheck = root;
 		Node *p = toCheck->parent;
@@ -876,8 +897,8 @@ namespace ft
 		std::cout << "End of Fix" << std::endl;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void	rbtree<T, Compare, Alloc, Node>::transplant(Node * parent, Node *child)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::transplant(Node * parent, Node *child)
 	{
 		Node *gp = parent->parent;
 
@@ -907,8 +928,8 @@ namespace ft
 		std::cout << "End Tranplant" << std::endl;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void rbtree<T, Compare, Alloc, Node>::deleteNode(const value_type &toDelete)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void rbtree<T, Compare, Alloc, Node, Alloc2>::deleteNode(const value_type &toDelete)
 	{
 		Node *target = findNode(toDelete);
 		color originalColor = target->color;
@@ -992,8 +1013,8 @@ namespace ft
 		delete todestroy;
 	}
 
-	template<class T, class Compare, class Alloc, class Node>
-	void rbtree<T, Compare, Node>::deleteFix(Node *x)
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void rbtree<T, Compare, Node, Alloc2>::deleteFix(Node *x)
 	{
 		Node *w;
 
