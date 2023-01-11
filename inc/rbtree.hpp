@@ -8,25 +8,27 @@ typedef enum {RED, BLACK} color;
 
 namespace ft
 {
-	template <class T>
+	template <class T, class Alloc = std::allocator<T> >
 	struct node
 	{
 		typedef T		value_type;
+		typedef Alloc	allocator_type;
 
 		node(void) : parent(NULL), left(NULL), right(NULL), data(NULL), color(RED)
 		{};
 		~node(void) { delete data; }
 		void setData(const value_type &initValue) { data = new value_type(initValue); }
 
-		node		*parent;
-		node		*left;
-		node		*right;
-		value_type	*data; // To allow leaves to have a null pointer
-		color		color;
+		node			*parent;
+		node			*left;
+		node			*right;
+		value_type		*data; // To allow leaves to have a null pointer
+		color			color;
+		allocator_type	alloc;
 	};
 
-	template <class T>
-	void swapColor(node<T> *lhs, node<T> *rhs)
+	template <class T, class Alloc>
+	void swapColor(node<T, Alloc> *lhs, node<T, Alloc> *rhs)
 	{
 		color tmp = lhs->color;
 
@@ -34,14 +36,15 @@ namespace ft
 		rhs->color = tmp;
 	}
 
-	template <class T, class Node = ft::node<T> >
+	template <class T, class Compare, class Alloc = std::allocator<T>, class Node = ft::node<T, Alloc> >
 	class rbtree
 	{
 		public	:
-		typedef T		value_type;
+		typedef T			value_type;
+		typedef Compare		key_compare;
 
 		public	:
-		rbtree(void) : _root(NULL) {}
+		rbtree(void) : _root(NULL), _comp(key_compare()) {}
 		~rbtree(void) { destroyTree(_root); }
 
 		//MEMBER FX
@@ -73,7 +76,8 @@ namespace ft
 
 		//MEMBER ATTRIBUTES
 		private :
-		Node	*_root;
+		Node		*_root;
+		key_compare	_comp;
 	};
 }
 

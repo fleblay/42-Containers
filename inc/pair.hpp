@@ -2,6 +2,7 @@
 # define PAIR_H
 
 # include "containers.hpp" // for debug print
+# include <iostream> // for debug
 
 namespace ft
 {
@@ -43,25 +44,46 @@ namespace ft
 	{ return lhs.first == rhs.first && lhs.second == lhs.second; }
 
 	template <class T1, class T2>
-	bool operator<(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs);
+	bool operator<(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 	{ return lhs.first < rhs.first || (!(rhs.first<lhs.first) && lhs.second < rhs.second); }
 
 	template <class T1, class T2>
-	bool operator!=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs);
+	bool operator!=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 	{ return !(lhs == rhs); }
 
 	template <class T1, class T2>
-	bool operator>(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs);
+	bool operator>(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 	{ return rhs < lhs; }
 
 	template <class T1, class T2>
-	bool operator<=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs);
+	bool operator<=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 	{ return !(rhs < lhs); }
 
 	template <class T1, class T2>
-	bool operator>=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs);
+	bool operator>=(const pair<T1, T2> &lhs, const pair<T1, T2> &rhs)
 	{ return !(lhs < rhs); }
+
+	template <class T1, class T2>
+	pair<T1, T2>	make_pair(T1 x, T2 y)
+	{
+		return (pair <T1, T2>(x, y));
+	}
+
+	//PRINTER FOR DEBUG
+	template <class T1, class T2>
+	std::ostream	&operator<<(std::ostream &o, const pair<T1, T2> &src)
+	{
+		o << "[" << src.first << "][" << src.second << "]";
+		return (o);
+	}
+
 }
+	template <class T1, class T2>
+	std::ostream	&operator<<(std::ostream &o, const std::pair<T1, T2> &src)
+	{
+		o << "[" << src.first << "][" << src.second << "]";
+		return (o);
+	}
 
 #endif
 
