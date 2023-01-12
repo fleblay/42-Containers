@@ -23,5 +23,3 @@ namespace ft
 	*/
 };
 #endif
-
-

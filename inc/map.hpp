@@ -8,6 +8,7 @@
 # include "rbtree.hpp"
 # include "pair.hpp"
 # include "node_iterator.hpp"
+# include "const_node_iterator.hpp"
 # include <iterator> //For the tags
 
 namespace ft
@@ -44,16 +45,15 @@ namespace ft
 		};
 
 		typedef	Alloc												allocator_type;
-		typedef	typename allocator_type::reference					reference; // value_type& for default
-		typedef	typename allocator_type::const_reference			const_reference; // const value_type& for default
-		typedef	typename allocator_type::pointer					pointer; // value_type* for default
-		typedef	typename allocator_type::const_pointer				const_pointer; // const value_type * for default
+		typedef	typename allocator_type::reference					reference;
+		typedef	typename allocator_type::const_reference			const_reference;
+		typedef	typename allocator_type::const_pointer				const_pointer;
 
 		typedef	typename ft::node_iterator<value_type>				iterator;
-		//typedef	typename ft::const_node_iterator<value_type>		const_iterator;
+		typedef	typename ft::const_node_iterator<value_type>		const_iterator;
 
 		typedef	typename ft::reverse_iterator<iterator>				reverse_iterator;
-		//typedef	typename ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef	typename ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef	typename allocator_type::difference_type			difference_type;
 		typedef	typename allocator_type::size_type					size_type;
 
@@ -73,90 +73,39 @@ namespace ft
 			DEBUG_PRINT("ft::map default destructor")
 		}
 
-		/*
-		explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());
-		template<class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
-		vector(const vector &x);
-		vector	&operator=(const vector &x);
-		~vector(void);
-		*/
 
 		//FUNCTIONS : ITERATOR
 		public	:
+
 		iterator				begin(void)
 		{
-			return iterator();
+			DEBUG_PRINT("ft::map : begin")
+			return iterator(_tree.findMin());
 		}
-		/*
-		const_iterator			begin(void) const;
-		iterator				end(void);
-		const_iterator			end(void) const;
-		reverse_iterator		rbegin(void);
-		const_reverse_iterator	rbegin(void) const;
-		reverse_iterator		rend(void);
-		const_reverse_iterator	rend(void) const;
-		*/
 
-		//FUNCTIONS : CAPACITY
+		const_iterator			begin(void) const
+		{
+			DEBUG_PRINT("ft::map : const begin")
+			return const_iterator(_tree.findMin());
+		}
 
+		//FUNCTIONS : MODIFIERS
 		public	:
-		/*
-		size_type		size(void) const;
-		size_type		max_size(void) const;
-		void			resize(size_type n, value_type val = value_type());
-		size_type		capacity(void) const;
-		bool			empty(void) const;
-		void			reserve(size_type n);
-		*/
-
-		//FUNCTIONS : ELEMENT ACCESS
-
-		/*
-		reference		operator[](size_type n);
-		const_reference	operator[](size_type n) const;
-		reference		at(size_type n);
-		const_reference	at(size_type n) const;
-		reference		front(void);
-		const_reference	front(void) const;
-		reference		back(void);
-		const_reference	back(void) const;
-		*/
-
-		//FUNCTIONS : MODIFIER
-
-		/*
-		void			assign(size_type n, const value_type &val);
-		template <class InputIterator>
-		void			assign(typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last);
-		void			push_back(const value_type &val);
-		void			pop_back(void);
-		iterator		insert(iterator position, const value_type &val);
-		void			insert(iterator position, size_type n, const value_type &val);
-//		template <class InputIterator>
-//		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
-//							InputIterator last);
-		template <class InputIterator>
-		void			insert(iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = 0);
-		iterator		erase(iterator position);
-		iterator		erase(iterator first, iterator last);
-		void			swap(vector &x);
-		void			clear(void);
-
-		private	:
-		template <class InputIterator>
-		void			assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag);
-		template <class InputIterator>
-		void			assign_range(InputIterator first, InputIterator last, std::input_iterator_tag);
-		template <class InputIterator>
-		void			insert_range(iterator position, InputIterator first, InputIterator last, std::forward_iterator_tag);
-		template <class InputIterator>
-		void			insert_range(iterator position, InputIterator first, InputIterator last, std::input_iterator_tag);
-
-		//FUNCTIONS : ALLOCATOR
-		allocator_type	get_allocator() const;
-		*/
-
+		pair<iterator, bool>	insert(const value_type &val)
+		{
+			DEBUG_PRINT("ft::map insert")
+			if (_tree.findNode(val))
+			{
+				DEBUG_PRINT("ft::map insert : Key already existed")
+				return (ft::make_pair<iterator, bool>(_tree.findNode(val), false));
+			}
+			else
+			{
+				DEBUG_PRINT("ft::map insert : Key did not exist -> inserting it")
+				_tree.insert(val);
+				return (ft::make_pair<iterator, bool>(_tree.findNode(val), true));
+			}
+		}
 		//ATTRIBUTES
 		private	:
 
@@ -165,30 +114,6 @@ namespace ft
 		tree					_tree;
 
 	};
-	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS
-
-	/*
-	template <class T, class Alloc>
-	bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	bool operator>(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	bool operator>=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs);
-
-	template <class T, class Alloc>
-	void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
-	*/
 }
 
 #endif

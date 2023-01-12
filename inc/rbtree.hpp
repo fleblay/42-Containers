@@ -69,29 +69,33 @@ namespace ft
 
 		//MEMBER FX
 		void		insert(const value_type &val);
-		Node		* &getRoot(void);
+		const Node	* getRoot(void) const;
+		Node		* getRoot(void);
 		void		print(void) const;
-		Node		*findNode(const value_type &toFind) const;
+		const Node	*findNode(const value_type &toFind) const;
 		Node		*findNode(const value_type &toFind); // used in deletion
 		bool		isOk(void) const;
-		Node		*findMax(void) const;
-		Node		*findMin(void) const;
+		const Node	*findMax(void) const;
+		Node		*findMax(void);
+		const Node	*findMin(void) const;
+		Node		*findMin(void);
 		void		deleteNode(const value_type &toDelete);
 
-		private	:
 		void		insert(Node	* &root, Node * parent, Node *toInsert);
 		void		print(Node * const &root, unsigned int depth) const;
 		void		destroyTree(Node * &root);
 		void		leftRotate(Node * &root);
 		void		rightRotate(Node * &root);
 		void		insertFix(Node * &root);
-		Node		*findNode(Node * &root, const value_type &toFind) const;
+		const Node	*findNode(Node * &root, const value_type &toFind) const;
 		Node		*findNode(Node * &root, const value_type &toFind); // used in deletion
 		int			nbOfBlack(const Node * root) const ;
 		bool		isOk(const Node * root) const ;
 
-		Node		*findMax(Node * root) const;
-		Node		*findMin(Node * root) const;
+		const Node	*findMax(Node * root) const;
+		Node		*findMax(Node * root);
+		const Node	*findMin(Node * root) const;
+		Node		*findMin(Node * root);
 
 		void		transplant(Node * parent, Node *child);
 		void		deleteFix(Node *x);
