@@ -47,7 +47,7 @@ namespace ft
 	}
 
 	template <class T,
-			 class Compare,
+			 class Compare, // en fait ici une value_compare de la map quand instanciee depuis la map
 			 class Alloc = std::allocator<T>,
 			 class Node = ft::node<T, Alloc>,
 			 class Alloc2 = std::allocator<Node >
@@ -55,45 +55,51 @@ namespace ft
 	class rbtree
 	{
 		public	:
-		typedef T			value_type;
-		typedef Compare		key_compare;
-		typedef Alloc2		allocator_type;
+		typedef T					value_type;
+		typedef Compare				value_compare;
+		typedef Alloc2				allocator_type;
 
 		public	:
-		rbtree(void) : _root(NULL), _comp(key_compare()), alloc(allocator_type()) {}
+		rbtree(const value_compare &map_compare = value_compare()) :
+			_root(NULL),
+			_comp(map_compare),
+			alloc(allocator_type())
+		{ DEBUG_PRINT("rbtree : default constuctor"); }
 		~rbtree(void) { destroyTree(_root); }
 
 		//MEMBER FX
-		void	insert(const value_type &val);
-		Node * &getRoot(void);
-		void	print(void) const;
-		Node	*findNode(const value_type &toFind);
-		bool	isOk(void) const;
-		Node *findMax(void);
-		Node *findMin(void);
-		void	deleteNode(const value_type &toDelete);
+		void		insert(const value_type &val);
+		Node		* &getRoot(void);
+		void		print(void) const;
+		Node		*findNode(const value_type &toFind) const;
+		Node		*findNode(const value_type &toFind); // used in deletion
+		bool		isOk(void) const;
+		Node		*findMax(void) const;
+		Node		*findMin(void) const;
+		void		deleteNode(const value_type &toDelete);
 
 		private	:
-		void	insert(Node	* &root, Node * parent, Node *toInsert);
-		void	print(Node * const &root, unsigned int depth) const;
-		void	destroyTree(Node * &root);
-		void	leftRotate(Node * &root);
-		void	rightRotate(Node * &root);
-		void	insertFix(Node * &root);
-		Node	*findNode(Node * &root, const value_type &toFind);
-		int		nbOfBlack(const Node * root) const ;
-		bool	isOk(const Node * root) const ;
+		void		insert(Node	* &root, Node * parent, Node *toInsert);
+		void		print(Node * const &root, unsigned int depth) const;
+		void		destroyTree(Node * &root);
+		void		leftRotate(Node * &root);
+		void		rightRotate(Node * &root);
+		void		insertFix(Node * &root);
+		Node		*findNode(Node * &root, const value_type &toFind) const;
+		Node		*findNode(Node * &root, const value_type &toFind); // used in deletion
+		int			nbOfBlack(const Node * root) const ;
+		bool		isOk(const Node * root) const ;
 
-		Node *findMax(Node * root);
-		Node *findMin(Node * root);
+		Node		*findMax(Node * root) const;
+		Node		*findMin(Node * root) const;
 
-		void	transplant(Node * parent, Node *child);
-		void	deleteFix(Node *x);
+		void		transplant(Node * parent, Node *child);
+		void		deleteFix(Node *x);
 
 		//MEMBER ATTRIBUTES
 		private :
-		Node		*_root;
-		key_compare	_comp;
+		Node			*_root;
+		value_compare	_comp;
 		allocator_type	alloc;
 	};
 }

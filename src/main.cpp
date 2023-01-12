@@ -14,6 +14,7 @@
 #include <stack>
 #include "rbtree.hpp"
 #include "pair.hpp"
+#include "map.hpp"
 
 void	signal_handler(int signal_number)
 {
@@ -69,6 +70,9 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 #include <string>
 int main(void)
 {
+
+	map<char, int> m1;
+	/*
 	//rbtree<pair<int, int>, std::less<int> > t2;
 	rbtree<pair<int, float>, myCustomLess< pair<int, float> > > t2;
 
@@ -92,4 +96,6 @@ int main(void)
 	t2.deleteNode(p4);
 	std::cout << t2.isOk() << std::endl;
 	t2.print();
+	*/
+
 }

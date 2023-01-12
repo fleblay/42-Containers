@@ -352,6 +352,29 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(const value_type &toFind) const
+	{
+		if (_root == NULL)
+			return (NULL);
+		return (findNode(_root, toFind));
+
+	}
+
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * &root, const value_type &toFind) const
+	{
+		if (root->data == NULL)
+			return (NULL);
+		if (! _comp(toFind, *(root->data)) && !_comp(*(root->data), toFind))
+			return (root);
+		if (_comp(toFind, *(root->data)))
+			return (findNode(root->left, toFind));
+		else
+			return (findNode(root->right, toFind));
+	}
+
+	//non-const version used for deletion
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(const value_type &toFind)
 	{
 		if (_root == NULL)
@@ -360,6 +383,7 @@ namespace ft
 
 	}
 
+	//non-const version used for deletion
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * &root, const value_type &toFind)
 	{
@@ -413,7 +437,7 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(Node * root)
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(Node * root) const
 	{
 		if (root->right->data == NULL)
 			return (root);
@@ -421,7 +445,7 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(void)
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMax(void) const
 	{
 		if (_root == NULL)
 			return (NULL);
@@ -429,7 +453,7 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(Node * root)
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(Node * root) const
 	{
 		if (root->left->data == NULL)
 			return (root);
@@ -437,7 +461,7 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(void)
+	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(void) const
 	{
 		if (_root == NULL)
 			return (NULL);
