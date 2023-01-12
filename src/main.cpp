@@ -72,6 +72,12 @@ int main(void)
 {
 
 	map<char, int> m1;
+
+	map<char, int>::iterator it = m1.begin();
+	map<char, int>::iterator it2;
+	it2 = it;
+	map<char, int>::iterator it3(it2);
+
 	/*
 	//rbtree<pair<int, int>, std::less<int> > t2;
 	rbtree<pair<int, float>, myCustomLess< pair<int, float> > > t2;

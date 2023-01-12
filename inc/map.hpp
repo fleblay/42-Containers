@@ -7,6 +7,7 @@
 # include "enable_if.hpp"
 # include "rbtree.hpp"
 # include "pair.hpp"
+# include "node_iterator.hpp"
 # include <iterator> //For the tags
 
 namespace ft
@@ -48,11 +49,11 @@ namespace ft
 		typedef	typename allocator_type::pointer					pointer; // value_type* for default
 		typedef	typename allocator_type::const_pointer				const_pointer; // const value_type * for default
 
-		typedef	typename ft::random_access_iterator<pointer>		iterator;
-		typedef	typename ft::random_access_iterator<const_pointer>	const_iterator;
+		typedef	typename ft::node_iterator<value_type>				iterator;
+		//typedef	typename ft::const_node_iterator<value_type>		const_iterator;
 
 		typedef	typename ft::reverse_iterator<iterator>				reverse_iterator;
-		typedef	typename ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		//typedef	typename ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef	typename allocator_type::difference_type			difference_type;
 		typedef	typename allocator_type::size_type					size_type;
 
@@ -83,8 +84,11 @@ namespace ft
 
 		//FUNCTIONS : ITERATOR
 		public	:
+		iterator				begin(void)
+		{
+			return iterator();
+		}
 		/*
-		iterator				begin(void);
 		const_iterator			begin(void) const;
 		iterator				end(void);
 		const_iterator			end(void) const;
