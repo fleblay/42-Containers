@@ -64,6 +64,7 @@ namespace ft
 			_root(NULL),
 			_comp(map_compare),
 			alloc(allocator_type())
+		//surchare de == a faire !
 		{ DEBUG_PRINT("rbtree : default constuctor"); }
 		~rbtree(void) { destroyTree(_root); }
 
