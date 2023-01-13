@@ -89,6 +89,42 @@ namespace ft
 			return const_iterator(_tree.findMin());
 		}
 
+		iterator				end(void)
+		{
+			DEBUG_PRINT("ft::map : end")
+			return iterator(_tree.findMax()->right);
+		}
+
+		const_iterator			end(void) const
+		{
+			DEBUG_PRINT("ft::map : const end")
+			return const_iterator(_tree.findMax()->right);
+		}
+
+		reverse_iterator		rbegin(void)
+		{
+			DEBUG_PRINT("ft::map : rbegin")
+			return reverse_iterator(end());
+		}
+
+		const_reverse_iterator			rbegin(void) const
+		{
+			DEBUG_PRINT("ft::map : const rbegin")
+			return const_reverse_iterator(end());
+		}
+
+		reverse_iterator				rend(void)
+		{
+			DEBUG_PRINT("ft::map : rend")
+			return reverse_iterator(begin());
+		}
+
+		const_reverse_iterator			rend(void) const
+		{
+			DEBUG_PRINT("ft::map : const end")
+			return const_reverse_iterator(begin());
+		}
+
 		//FUNCTIONS : MODIFIERS
 		public	:
 		pair<iterator, bool>	insert(const value_type &val)
