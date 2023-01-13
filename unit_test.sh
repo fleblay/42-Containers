@@ -8,6 +8,13 @@ function make_test()
 {
 	echo "Building test : $1"
 	export TEST_FILE="$TEST_FILES_DIR/$1"
+	if [[ "$1" == *"ignore98"* ]]
+	then
+		echo "Ignoring std_98 for compilation of test : $1"
+		export IGNORE_STD_98="true"
+	else
+		unset IGNORE_STD_98
+	fi
 	make ${VERBOSE---quiet}
 	TEST_EXEC=$(basename $1 .cpp)
 	mv containers ${TEST_EXEC_DIR}/ft/${TEST_EXEC}
@@ -43,19 +50,23 @@ do
 			VERBOSE=""
 		;;
 		f)
-			TEST_FILE=${OPTARG}.cpp
-			if [ -f ./src/$TEST_FILES_DIR/$TEST_FILE ]
+			TRY_FILES=$(ls ./src/$TEST_FILES_DIR/*${OPTARG}*)
+			if [ ! -z "$TRY_FILES" ]
 			then
-				echo "Adding [$OPTARG] to test list"
-				TEST_FILES+=" ${TEST_FILE}"
-				TEST_EXECS+=" ${OPTARG}"
+				for TRY in $TRY_FILES
+				do
+					RAW_TRY=$(basename $TRY .cpp)
+					echo "Adding [${RAW_TRY}] to test list"
+					TEST_FILES+=" ${RAW_TRY}.cpp"
+					TEST_EXECS+=" ${RAW_TRY}"
+				done
 			else
 				echo "No such file : $OPTARG"
 				exit 1
 			fi
 		;;
 		*)
-			echo "Wrong option. Choices available are : -v -s -f <test_name"
+			echo "Wrong option. Choices available are : -v -s -f test_name"
 			exit 1
 		;;
 	esac
@@ -71,6 +82,9 @@ fi
 
 case $1 in
 
+	full)
+		echo "Making and running test"
+	;&
 	make)
 		rm -rf $TEST_EXEC_DIR
 		echo "Building tests"
@@ -81,7 +95,7 @@ case $1 in
 		do
 			make_test $TEST_FILE
 		done
-	;;
+		;&
 	run)
 		echo "Running tests"
 		mkdir -p $TEST_EXEC_DIR/output
@@ -107,13 +121,9 @@ case $1 in
 		echo "Clearing env and workdir"
 		rm -rf $TEST_EXEC_DIR
 	;;
-	full)
-		"$0" make && "$0" run
-	;;
 	*)
 		echo "Usage $0 full | make | run | clean"
-		echo "Defaulting to full test"
-		"$0" make && "$0" run
+		exit 1
 
 	;;
 esac
