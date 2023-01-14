@@ -26,6 +26,8 @@ function run_test()
 {
 	echo -n "Running test : $1"
 	${TEST_EXEC_DIR}/ft/$1 > ${TEST_EXEC_DIR}/output/$1_ft_stdout 2>${TEST_EXEC_DIR}/output/$1_ft_stderr
+	valgrind --leak-check=full --error-exitcode=2 ${TEST_EXEC_DIR}/ft/$1 >/dev/null 2>/dev/null
+	LEAKS=$?
 	${TEST_EXEC_DIR}/std/$1 > ${TEST_EXEC_DIR}/output/$1_std_stdout 2>${TEST_EXEC_DIR}/output/$1_std_stderr
 	DIF_STDOUT=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stdout ${TEST_EXEC_DIR}/output/$1_std_stdout)
 	DIF_STDERR=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stderr ${TEST_EXEC_DIR}/output/$1_std_stderr)
@@ -105,7 +107,7 @@ case $1 in
 			run_test $TEST_EXEC
 			if [ $RET -ne "0" ]
 			then
-				echo -e " : \x1b[31mKO\x1b[0m"
+				echo -en " : \x1b[31mKO\x1b[0m"
 				if [ ! -z $STOP ]
 				then
 					test ! -z "$DIF_STDOUT" && echo "STDOUT DIFF :" && echo "$DIF_STDOUT"
@@ -113,7 +115,17 @@ case $1 in
 					break;
 				fi
 			else
-				echo -e " : \x1b[32mOK\x1b[0m"
+				echo -en " : \x1b[32mOK\x1b[0m"
+			fi
+			if [ $LEAKS -ne "0" ]
+			then
+				echo -e " : \x1b[31mLEAKS\x1b[0m"
+				if [ ! -z $STOP ]
+				then
+					break;
+				fi
+			else
+				echo -e " : \x1b[32mLEAKS OK\x1b[0m"
 			fi
 		done
 	;;

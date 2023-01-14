@@ -361,6 +361,12 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::destroyTree(void)
+	{
+		destroyTree(_root);
+	}
+
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	const Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(const value_type &toFind) const
 	{
 		if (_root == NULL)
@@ -482,6 +488,7 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	const Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(Node * root) const
 	{
+		DEBUG_PRINT("rbtree : findMin const root version")
 		if (root->left->data == NULL)
 			return (root);
 		return (findMin(root->left));
@@ -499,8 +506,19 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	Node *rbtree<T, Compare, Alloc, Node, Alloc2>::findMin(Node * root)
 	{
+		DEBUG_PRINT("rbtree : findMin root version")
+			/*
+		std::cout	<< "Current value is : "
+					<< *(root->data) <<  std::endl;
+			*/
 		if (root->left->data == NULL)
+		{
+			/*
+			std::cout	<< "root left data is null. Returning root which is : "
+						<< *(root->data) <<  std::endl;
+			*/
 			return (root);
+		}
 		return (findMin(root->left));
 	}
 

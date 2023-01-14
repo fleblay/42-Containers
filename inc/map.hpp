@@ -77,10 +77,11 @@ namespace ft
 		~map(void)
 		{
 			DEBUG_PRINT("ft::map default destructor")
+			_tree.destroyTree();
 		}
 
 		map	&operator=(const map &x)
-		{ 
+		{
 			DEBUG_PRINT("ft::map operator=")
 			this->_comp = x._comp;
 			this->_alloc = x._alloc;

@@ -15,11 +15,12 @@ namespace ft
 		typedef Alloc	allocator_type;
 
 		node(void) : parent(NULL), left(NULL), right(NULL), data(NULL), color(RED), alloc(allocator_type())
-		{};
-		//~node(void) { delete data; }
-		//void setData(const value_type &initValue) { data = new value_type(initValue); }
+		{ DEBUG_PRINT("node : default constuctor"); }
+
+
 		~node(void)
 		{
+			DEBUG_PRINT("node : default destructor")
 			alloc.destroy(data);
 			alloc.deallocate(data, 1);
 		}
@@ -69,6 +70,15 @@ namespace ft
 
 		{ DEBUG_PRINT("rbtree : default constuctor"); }
 
+		rbtree(const rbtree &src) :
+			_root(src._root),
+			_comp(src._comp),
+			_alloc(src._alloc),
+			_size(src._size)
+		{
+			DEBUG_PRINT("rbtree : copy constuctor");
+		}
+
 		rbtree &operator=(const rbtree &src)
 		{
 			DEBUG_PRINT("rbtree : operator=")
@@ -85,7 +95,11 @@ namespace ft
 			return (_size);
 		}
 
-		~rbtree(void) { destroyTree(_root); }
+		~rbtree(void)
+		{
+			DEBUG_PRINT("rbtree : destructor")
+			//destroyTree(_root);
+		}
 
 		//MEMBER FX
 		void		insert(const value_type &val);
@@ -105,6 +119,7 @@ namespace ft
 		void		insert(Node	* &root, Node * parent, Node *toInsert);
 		void		print(Node * const &root, unsigned int depth) const;
 		void		destroyTree(Node * &root);
+		void		destroyTree(void);
 		void		leftRotate(Node * &root);
 		void		rightRotate(Node * &root);
 		void		insertFix(Node * &root);
