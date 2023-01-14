@@ -80,7 +80,6 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 int main(void)
 {
 	map<char, int> m1;
-	map<char, int> m2;
 
 	pair<char, int>	p1 = make_pair<char, int>('e', 42);
 	pair<char, int>	p2 = make_pair<char, int>('z', 21);
@@ -88,56 +87,28 @@ int main(void)
 	pair<char, int>	p4 = make_pair<char, int>('b', 12);
 	pair<char, int>	p5 = make_pair<char, int>('c', 8);
 	pair<char, int>	p6 = make_pair<char, int>('d', 333);
-	pair<char, int>	p7 = make_pair<char, int>('e', 100);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100); // should fail
 	pair<char, int>	p8 = make_pair<char, int>('f', 666);
 	pair<char, int>	p9 = make_pair<char, int>('g', 1);
 
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
+	vector<pair<char, int> >	v;
+	v.insert(v.end(), p1);
+	v.insert(v.end(), p2);
+	v.insert(v.end(), p3);
+	v.insert(v.end(), p4);
+	v.insert(v.end(), p5);
+	v.insert(v.end(), p6);
+	v.insert(v.end(), p7);
+	v.insert(v.end(), p8);
+	v.insert(v.end(), p9);
 
-	m2.insert(p7);
-	m2.insert(p8);
-	m2.insert(p9);
+	m1.insert(v.begin(), v.end());
 
 	map<char, int>::iterator it = m1.begin();
 	map<char, int>::iterator ite = m1.end();
 
 	for (; it != ite; it++)
 		std::cout << *it << std::endl;
-	it = m1.begin();
 
-	std::cout << "--------------------" << std::endl;
-
-	map<char, int>::iterator it2 = m2.begin();
-	map<char, int>::iterator ite2 = m2.end();
-
-	for (; it2 != ite2; it2++)
-		std::cout << *it2 << std::endl;
-	it2 = m2.begin();
-
-	std::cout << "--------------------" << std::endl;
-
-	std::cout << "swapping values" << std::endl;
-	m1.swap(m2);
-
-
-	for (it=m1.begin();  it!= m1.end(); it++)
-		std::cout << *it << std::endl;
-
-	std::cout << "--------------------" << std::endl;
-
-	it2 = m2.begin();
-	exit(0);
-	for (it2=m2.begin(); it2 != m2.end(); it2++)
-	{
-		std::cout << "printing" << std::endl;
-		std::cout << *it2 << std::endl;
-		std::cout << "OK" << std::endl;
-		sleep(1);
-	}
 	return (0);
 }

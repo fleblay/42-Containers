@@ -80,7 +80,6 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 int main(void)
 {
 	map<char, int> m1;
-	map<char, int> m2;
 
 	pair<char, int>	p1 = make_pair<char, int>('e', 42);
 	pair<char, int>	p2 = make_pair<char, int>('z', 21);
@@ -88,56 +87,27 @@ int main(void)
 	pair<char, int>	p4 = make_pair<char, int>('b', 12);
 	pair<char, int>	p5 = make_pair<char, int>('c', 8);
 	pair<char, int>	p6 = make_pair<char, int>('d', 333);
-	pair<char, int>	p7 = make_pair<char, int>('e', 100);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100); // should fail
 	pair<char, int>	p8 = make_pair<char, int>('f', 666);
 	pair<char, int>	p9 = make_pair<char, int>('g', 1);
 
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
-
-	m2.insert(p7);
-	m2.insert(p8);
-	m2.insert(p9);
-
-	map<char, int>::iterator it = m1.begin();
-	map<char, int>::iterator ite = m1.end();
-
-	for (; it != ite; it++)
-		std::cout << *it << std::endl;
-	it = m1.begin();
-
-	std::cout << "--------------------" << std::endl;
-
-	map<char, int>::iterator it2 = m2.begin();
-	map<char, int>::iterator ite2 = m2.end();
-
-	for (; it2 != ite2; it2++)
-		std::cout << *it2 << std::endl;
-	it2 = m2.begin();
-
-	std::cout << "--------------------" << std::endl;
-
-	std::cout << "swapping values" << std::endl;
-	m1.swap(m2);
-
-
-	for (it=m1.begin();  it!= m1.end(); it++)
-		std::cout << *it << std::endl;
-
-	std::cout << "--------------------" << std::endl;
-
-	it2 = m2.begin();
-	exit(0);
-	for (it2=m2.begin(); it2 != m2.end(); it2++)
-	{
-		std::cout << "printing" << std::endl;
-		std::cout << *it2 << std::endl;
-		std::cout << "OK" << std::endl;
-		sleep(1);
-	}
+	pair<map<char, int>::iterator, bool> res1 = m1.insert(p1);
+	pair<map<char, int>::iterator, bool> res2 = m1.insert(p2);
+	pair<map<char, int>::iterator, bool> res3 = m1.insert(p3);
+	pair<map<char, int>::iterator, bool> res4 = m1.insert(p4);
+	pair<map<char, int>::iterator, bool> res5 = m1.insert(p5);
+	pair<map<char, int>::iterator, bool> res6 = m1.insert(p6);
+	pair<map<char, int>::iterator, bool> res7 = m1.insert(p7);
+	pair<map<char, int>::iterator, bool> res8 = m1.insert(p8);
+	pair<map<char, int>::iterator, bool> res9 = m1.insert(p9);
+	std::cout << "p1 : ok ? -> " << res1.second << ", value -> " << *(res1.first) << std::endl;
+	std::cout << "p2 : ok ? -> " << res2.second << ", value -> " << *(res2.first) << std::endl;
+	std::cout << "p3 : ok ? -> " << res3.second << ", value -> " << *(res3.first) << std::endl;
+	std::cout << "p4 : ok ? -> " << res4.second << ", value -> " << *(res4.first) << std::endl;
+	std::cout << "p5 : ok ? -> " << res5.second << ", value -> " << *(res5.first) << std::endl;
+	std::cout << "p6 : ok ? -> " << res6.second << ", value -> " << *(res6.first) << std::endl;
+	std::cout << "p7 : ok ? -> " << res7.second << ", value -> " << *(res7.first) << std::endl;
+	std::cout << "p8 : ok ? -> " << res8.second << ", value -> " << *(res8.first) << std::endl;
+	std::cout << "p9 : ok ? -> " << res9.second << ", value -> " << *(res9.first) << std::endl;
 	return (0);
 }

@@ -47,6 +47,7 @@ namespace ft
 		typedef	Alloc												allocator_type;
 		typedef	typename allocator_type::reference					reference;
 		typedef	typename allocator_type::const_reference			const_reference;
+		typedef	typename allocator_type::pointer					pointer;
 		typedef	typename allocator_type::const_pointer				const_pointer;
 
 		typedef	typename ft::node_iterator<value_type>				iterator;
@@ -63,14 +64,29 @@ namespace ft
 
 		public	:
 		explicit map(const key_compare &comp = key_compare(),
-				const allocator_type &alloc = allocator_type()) :  _comp(value_compare(comp)), _alloc(alloc), _tree(_comp)
+				const allocator_type &alloc = allocator_type()) :
+			_comp(value_compare(comp)),
+			_alloc(alloc),
+			_tree(_comp)
 		{
 			DEBUG_PRINT("ft::map default constructor")
 		}
 
+		//AUTRES CONSTRUCTEURS A FAIRE !!!!! 
+
 		~map(void)
 		{
 			DEBUG_PRINT("ft::map default destructor")
+		}
+
+		map	&operator=(const map &x)
+		{ 
+			DEBUG_PRINT("ft::map operator=")
+			this->_comp = x._comp;
+			this->_alloc = x._alloc;
+			this->_tree= x._tree;
+
+			return (*this);
 		}
 
 		//FUNCTIONS : ITERATOR
@@ -124,11 +140,38 @@ namespace ft
 			return const_reverse_iterator(begin());
 		}
 
+		//FUNCTIONS : CAPACITY
+		bool	empty(void) const
+		{
+			DEBUG_PRINT("ft::map : empty")
+			return (!_tree.getSize());
+		}
+
+		size_type	size(void) const
+		{
+			DEBUG_PRINT("ft::map : size")
+			return (_tree.getSize());
+		}
+
+		size_type		max_size(void) const
+		{
+			DEBUG_PRINT("ft::map : max_size")
+			return (_alloc.max_size());
+		}
+
+		//FUNCTIONS : ELEMENT ACCESS
+		mapped_type		&operator[](const key_type &k)
+		{
+			DEBUG_PRINT("ft::map : operator[]")
+			return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
+		}
+
 		//FUNCTIONS : MODIFIERS
 		public	:
+
 		pair<iterator, bool>	insert(const value_type &val)
 		{
-			DEBUG_PRINT("ft::map insert")
+			DEBUG_PRINT("ft::map insert : single element")
 			if (_tree.findNode(val))
 			{
 				DEBUG_PRINT("ft::map insert : Key already existed")
@@ -141,6 +184,65 @@ namespace ft
 				return (ft::make_pair<iterator, bool>(_tree.findNode(val), true));
 			}
 		}
+
+		iterator	insert(iterator position, const value_type &val)
+		{
+			DEBUG_PRINT("ft::map insert : single element with int")
+			(void)position;
+			iterator	ret = insert(val).first;
+			return (ret);
+		}
+
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last)
+		{
+			DEBUG_PRINT("ft::map insert : range")
+			for (; first != last; first++)
+				insert(*first);
+		}
+
+		size_type	erase(const key_type &k)
+		{
+			DEBUG_PRINT("ft::map erase : key")
+			value_type	dummy = value_type(k, mapped_type());
+			iterator	find = iterator(_tree.findNode(dummy));
+
+			if (find.base() == NULL)
+				return (0);
+			else
+			{
+				erase(find);
+				return (1);
+			}
+		}
+
+		void	erase(iterator position)
+		{
+			DEBUG_PRINT("ft::map erase : iterator position")
+			_tree.deleteNode(*position);
+		}
+
+		void	erase(iterator first, iterator last)
+		{
+			DEBUG_PRINT("ft::map erase : range")
+			for (; first != last; )
+				erase(first++->first);
+		}
+
+		void	swap(map &x)
+		{ 
+			DEBUG_PRINT("ft::swap")
+			value_compare			tmp_comp = this->_comp;
+			allocator_type			tmp_alloc = this->_alloc;
+			tree					tmp_tree = this->_tree;
+
+			*this = x;
+
+			x._comp = tmp_comp;
+			x._alloc = tmp_alloc;
+			x._tree = tmp_tree;
+		}
+
 		//ATTRIBUTES
 		private	:
 

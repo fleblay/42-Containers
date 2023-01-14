@@ -55,17 +55,36 @@ namespace ft
 	class rbtree
 	{
 		public	:
-		typedef T					value_type;
-		typedef Compare				value_compare;
-		typedef Alloc2				allocator_type;
+		typedef T												value_type;
+		typedef Compare											value_compare;
+		typedef Alloc2											allocator_type;
+		typedef	typename allocator_type::size_type				size_type;
 
 		public	:
 		rbtree(const value_compare &map_compare = value_compare()) :
 			_root(NULL),
 			_comp(map_compare),
-			alloc(allocator_type())
-		//surchare de == a faire !
+			_alloc(allocator_type()),
+			_size(0)
+
 		{ DEBUG_PRINT("rbtree : default constuctor"); }
+
+		rbtree &operator=(const rbtree &src)
+		{
+			DEBUG_PRINT("rbtree : operator=")
+			this->_root = src._root;
+			this->_comp = src._comp;
+			this->_alloc = src._alloc;
+			this->_size = src._size;
+			return (*this);
+		}
+
+		size_type	getSize(void) const
+		{
+			DEBUG_PRINT("rbtree : getSize")
+			return (_size);
+		}
+
 		~rbtree(void) { destroyTree(_root); }
 
 		//MEMBER FX
@@ -82,6 +101,7 @@ namespace ft
 		Node		*findMin(void);
 		void		deleteNode(const value_type &toDelete);
 
+		//private :
 		void		insert(Node	* &root, Node * parent, Node *toInsert);
 		void		print(Node * const &root, unsigned int depth) const;
 		void		destroyTree(Node * &root);
@@ -105,7 +125,8 @@ namespace ft
 		private :
 		Node			*_root;
 		value_compare	_comp;
-		allocator_type	alloc;
+		allocator_type	_alloc;
+		size_type		_size;
 	};
 }
 

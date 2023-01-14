@@ -21,14 +21,14 @@ namespace ft
 			Node *newLeaf_1 = new Node;
 			Node *newLeaf_2 = new Node;
 			*/
-			Node *newNode = alloc.allocate(1);
-			alloc.construct(newNode, Node());
+			Node *newNode = _alloc.allocate(1);
+			_alloc.construct(newNode, Node());
 
-			Node *newLeaf_1 = alloc.allocate(1);
-			alloc.construct(newLeaf_1, Node());
+			Node *newLeaf_1 = _alloc.allocate(1);
+			_alloc.construct(newLeaf_1, Node());
 
-			Node *newLeaf_2 = alloc.allocate(1);
-			alloc.construct(newLeaf_2, Node());
+			Node *newLeaf_2 = _alloc.allocate(1);
+			_alloc.construct(newLeaf_2, Node());
 
 			newNode->setData(val);
 			newNode->left = newLeaf_1;
@@ -38,6 +38,7 @@ namespace ft
 			newNode->right->parent = newNode;
 			newNode->right->color = BLACK;
 			insert(_root, NULL, newNode);
+			_size++;
 		}
 		catch (std::exception &e)
 		{
@@ -77,8 +78,8 @@ namespace ft
 		}
 		if (root->data == NULL) // on est sur une feuille
 		{
-			alloc.destroy(root);
-			alloc.deallocate(root, 1);
+			_alloc.destroy(root);
+			_alloc.deallocate(root, 1);
 			root = toInsert;
 			root->parent = parent;
 			if (root->parent->color == RED)
@@ -355,8 +356,8 @@ namespace ft
 			return;
 		destroyTree(root->left);
 		destroyTree(root->right);
-		alloc.destroy(root);
-		alloc.deallocate(root, 1);
+		_alloc.destroy(root);
+		_alloc.deallocate(root, 1);
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
@@ -545,15 +546,15 @@ namespace ft
 		{
 			x = target->right;
 			transplant(target, target->right);
-			alloc.destroy(target->left);
-			alloc.deallocate(target->left, 1);
+			_alloc.destroy(target->left);
+			_alloc.deallocate(target->left, 1);
 		}
 		else if (target->right->data == NULL)
 		{
 			x = target->left;
 			transplant(target, target->left);
-			alloc.destroy(target->right);
-			alloc.deallocate(target->right, 1);
+			_alloc.destroy(target->right);
+			_alloc.deallocate(target->right, 1);
 		}
 		else
 		{
@@ -569,8 +570,8 @@ namespace ft
 				y->right->parent = y;
 			}
 			transplant(target, y);
-			alloc.destroy(y->left);
-			alloc.deallocate(y->left, 1);
+			_alloc.destroy(y->left);
+			_alloc.deallocate(y->left, 1);
 			y->left = target->left;
 			y->left->parent = y;
 			y->color = target->color; // Not sure ?
@@ -578,8 +579,9 @@ namespace ft
 		}
 		if (originalColor == BLACK)
 			deleteFix(x);
-		alloc.destroy(target);
-		alloc.deallocate(target, 0);
+		_alloc.destroy(target);
+		_alloc.deallocate(target, 0);
+		_size--;
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
