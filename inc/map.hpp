@@ -108,12 +108,16 @@ namespace ft
 		iterator				end(void)
 		{
 			DEBUG_PRINT("ft::map : end")
+			if (this->empty())
+				return (begin());
 			return iterator(_tree.findMax()->right);
 		}
 
 		const_iterator			end(void) const
 		{
 			DEBUG_PRINT("ft::map : const end")
+			if (this->empty())
+				return (begin());
 			return const_iterator(_tree.findMax()->right);
 		}
 
@@ -242,6 +246,48 @@ namespace ft
 			x._comp = tmp_comp;
 			x._alloc = tmp_alloc;
 			x._tree = tmp_tree;
+		}
+
+		void	clear(void)
+		{
+			DEBUG_PRINT("ft::clear")
+			_tree.destroyTree();
+			_tree = tree(_comp);
+		}
+
+		//FUNCTIONS : OBSERVERS
+
+		key_compare key_comp(void) const
+		{
+			DEBUG_PRINT("ft::key_comp")
+			return (key_compare());
+		}
+
+		value_compare value_comp(void) const
+		{
+			DEBUG_PRINT("ft::value_compare")
+			return (value_compare(key_compare()));
+		}
+
+		//FUNCTIONS : OPERATIONS
+		iterator	find(const key_type &k)
+		{
+			DEBUG_PRINT("ft::map : find")
+			value_type	dummy = value_type(k, mapped_type());
+			iterator	find = iterator(_tree.findNode(dummy));
+			if (find.base() != NULL)
+				return (find);
+			return (end());
+		}
+
+		const_iterator	find(const key_type &k) const
+		{
+			DEBUG_PRINT("ft::map : const find")
+			value_type	dummy = value_type(k, mapped_type());
+			const_iterator find = const_iterator(_tree.findNode(dummy));
+			if (find.base() != NULL)
+				return (find);
+			return (end());
 		}
 
 		//ATTRIBUTES

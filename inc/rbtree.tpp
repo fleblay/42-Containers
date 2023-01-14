@@ -376,7 +376,7 @@ namespace ft
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	const Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * &root, const value_type &toFind) const
+	const Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(const Node * root, const value_type &toFind) const
 	{
 		if (root->data == NULL)
 			return (NULL);
@@ -400,7 +400,7 @@ namespace ft
 
 	//non-const version used for deletion
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
-	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * &root, const value_type &toFind)
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::findNode(Node * root, const value_type &toFind)
 	{
 		if (root->data == NULL)
 			return (NULL);

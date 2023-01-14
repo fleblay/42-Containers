@@ -95,30 +95,19 @@ int main(void)
 	m1.insert(p5);
 	m1.insert(p6);
 
-	if (m1.find('b') != m1.end())
-		std::cout << "node is found : "<< m1.find('b')->second << std::endl;
-	else
-		std::cout << "node is NOT found" << std::endl;
+	map<char, int>::iterator it = m1.begin();
+	map<char, int>::iterator ite = m1.end();
 
-	if (m1.find('u') != m1.end())
-		std::cout << "node is found : "<< m1.find('b')->second << std::endl;
-	else
-		std::cout << "node is NOT found" << std::endl;
+	pair<char, int>	p_try = make_pair<char, int>('f', 888);
 
-	std::cout << "Testing const" << std::endl;
+	//map<char, int>::key_compare cmp1 = m1.key_comp();
+	map<char, int>::value_compare cmp2 = m1.value_comp();
 
-	const map<char, int> m2;
-
-
-	if (m2.find('b') != m2.end())
-		std::cout << "node is found : "<< m2.find('b')->second << std::endl;
-	else
-		std::cout << "node is NOT found" << std::endl;
-
-	if (m2.find('u') != m2.end())
-		std::cout << "node is found : "<< m2.find('b')->second << std::endl;
-	else
-		std::cout << "node is NOT found" << std::endl;
+	for (; it != ite; it++)
+	{
+		//std::cout << cmp1(p_try.first, it->first) << std::endl;
+		std::cout << cmp2(p_try, *it) << std::endl;
+	}
 
 	return (0);
 }

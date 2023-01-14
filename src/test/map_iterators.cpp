@@ -254,4 +254,30 @@ int main(void)
 	}
 	std::cout << "--------18-----------" << std::endl;
 
+	//empty vector
+
+	map<char, int> m4;
+
+	map<char, int>::iterator mit1 = m4.begin();
+	map<char, int>::iterator mite1 = m4.end();
+
+	map<char, int>::const_iterator cmit1 = m4.begin();
+	map<char, int>::const_iterator cmite1 = m4.end();
+
+	map<char, int>::reverse_iterator rmit1 = m4.rbegin();
+	map<char, int>::reverse_iterator rmite1 = m4.rend();
+
+	map<char, int>::const_reverse_iterator crmit1 = m4.rbegin();
+	map<char, int>::const_reverse_iterator crmite1 = m4.rend();
+
+	for (; mit1 != mite1; mit1++)
+		std::cout << *mit1 << std::endl;
+	for (; cmit1 != cmite1; cmit1++)
+		std::cout << *cmit1 << std::endl;
+	for (; rmit1 != rmite1; rmit1++)
+		std::cout << *rmit1 << std::endl;
+	for (; crmit1 != crmite1; crmit1++)
+		std::cout << *crmit1 << std::endl;
+
+	std::cout << "--------------------" << std::endl;
 }

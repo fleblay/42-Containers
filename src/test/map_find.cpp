@@ -95,6 +95,7 @@ int main(void)
 	m1.insert(p5);
 	m1.insert(p6);
 
+
 	if (m1.find('b') != m1.end())
 		std::cout << "node is found : "<< m1.find('b')->second << std::endl;
 	else

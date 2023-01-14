@@ -123,8 +123,8 @@ namespace ft
 		void		leftRotate(Node * &root);
 		void		rightRotate(Node * &root);
 		void		insertFix(Node * &root);
-		const Node	*findNode(Node * &root, const value_type &toFind) const;
-		Node		*findNode(Node * &root, const value_type &toFind); // used in deletion
+		const Node	*findNode(const Node *root, const value_type &toFind) const;
+		Node		*findNode(Node *root, const value_type &toFind); // used in deletion
 		int			nbOfBlack(const Node * root) const ;
 		bool		isOk(const Node * root) const ;
 

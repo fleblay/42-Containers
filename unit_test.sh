@@ -3,6 +3,7 @@
 TEST_NUMBER="0"
 TEST_FILES_DIR="test" #must be inside ./src/
 TEST_EXEC_DIR="./test_exec"
+LEAKS="0"
 
 function make_test()
 {
