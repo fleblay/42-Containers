@@ -742,6 +742,31 @@ namespace ft
 		}
 	}
 
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::lowerBound(const value_type &toFind)
+	{
+		DEBUG_PRINT("rbtree : lowerBound")
+		if (_root == NULL)
+			return (NULL);
+		return (lowerBound(_root, toFind));
+	}
+
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::lowerBound(Node * root, const value_type &toFind)
+	{
+		if (root->data == NULL)
+			return (NULL);
+
+		Node *	leftResult = lowerBound(root->left, toFind);
+		Node *	rightResult = lowerBound(root->right, toFind);
+
+		if (leftResult)
+			return (leftResult);
+		if (! _comp(*(root->data), toFind))
+			return (root);
+		return (rightResult);
+	}
+
 	/*
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)

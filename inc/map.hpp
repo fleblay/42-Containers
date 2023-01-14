@@ -290,6 +290,24 @@ namespace ft
 			return (end());
 		}
 
+		size_type count(const key_type &k) const
+		{
+			DEBUG_PRINT("ft::map : count")
+			if (find(k) != end())
+				return (1);
+			return (0);
+		}
+
+		iterator lower_bound(const key_type &k)
+		{
+			DEBUG_PRINT("ft::map : lowerBound")
+			value_type	dummy = value_type(k, mapped_type());
+			iterator	lower = iterator(_tree.lowerBound(dummy));
+			if (lower.base() != NULL)
+				return (lower);
+			return (end());
+		}
+
 		//ATTRIBUTES
 		private	:
 

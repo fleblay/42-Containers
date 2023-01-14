@@ -136,6 +136,8 @@ namespace ft
 		void		transplant(Node * parent, Node *child);
 		void		deleteFix(Node *x);
 
+		Node		*lowerBound(Node *root, const value_type &toFind);
+		Node		*lowerBound(const value_type &toFind);
 		//MEMBER ATTRIBUTES
 		private :
 		Node			*_root;
