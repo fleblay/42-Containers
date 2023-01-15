@@ -366,6 +366,7 @@ namespace ft
 		DEBUG_PRINT("rbtree : destroy tree")
 		destroyTree(_root);
 		_root = NULL;
+		_size = 0;
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
@@ -467,6 +468,8 @@ namespace ft
 		DEBUG_PRINT("rbtree : findMax const")
 		if (_root == NULL)
 			return (NULL);
+		if (_root->right == NULL)
+			return (_root);
 		return (findMax(_root));
 	}
 
@@ -483,7 +486,15 @@ namespace ft
 	{
 		DEBUG_PRINT("rbtree : findMax")
 		if (_root == NULL)
+		{
+			std::cout << "_root is NULL" << std::endl;
 			return (NULL);
+		}
+		if (_root->right == NULL)
+		{
+			std::cout << "_root->right is NULL" << std::endl;
+			return (_root);
+		}
 		return (findMax(_root));
 	}
 
@@ -502,6 +513,8 @@ namespace ft
 		DEBUG_PRINT("rbtree : findMin const")
 		if (_root == NULL)
 			return (NULL);
+		if (_root->left == NULL)
+			return (_root);
 		return (findMin(_root));
 	}
 
@@ -530,6 +543,8 @@ namespace ft
 		DEBUG_PRINT("rbtree : findMin")
 		if (_root == NULL)
 			return (NULL);
+		if (_root->left == NULL)
+			return (_root);
 		return (findMin(_root));
 	}
 

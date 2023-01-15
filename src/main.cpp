@@ -16,6 +16,7 @@
 #include "pair.hpp"
 #include "map.hpp"
 #include <map>
+#include <list> // for testing
 
 void	signal_handler(int signal_number)
 {
@@ -92,78 +93,60 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 	}
 };
 
-#include <string>
-int main(void)
+#include "common.hpp"
+
+#define T1 int
+#define T2 std::string
+
+NAMESPACE::map<T1, T2> mp;
+NAMESPACE::map<T1, T2>::iterator it = mp.end();
+
+void	ft_find(T1 const &k)
 {
-	map<char, int> m1;
+	NAMESPACE::map<T1, T2>::iterator ret = mp.find(k);
 
-	pair<char, int>	p1 = make_pair<char, int>('b', 42);
-	pair<char, int>	p2 = make_pair<char, int>('c', 21);
-
-	pair<char, int>	p3 = make_pair<char, int>('f', 100);
-	pair<char, int>	p4 = make_pair<char, int>('g', 200);
-	pair<char, int>	p5 = make_pair<char, int>('h', -100);
-	pair<char, int>	p6 = make_pair<char, int>('i', 8200);
-	pair<char, int>	p7 = make_pair<char, int>('j', 300);
-
-	pair<char, int>	p8 = make_pair<char, int>('m', 89);
-	pair<char, int>	p9 = make_pair<char, int>('n', 189);
-	pair<char, int>	p10 = make_pair<char, int>('o', 666);
-	pair<char, int>	p11 = make_pair<char, int>('p', 777);
-	pair<char, int>	p12 = make_pair<char, int>('q', 555);
-
-	pair<char, int>	p13 = make_pair<char, int>('s', 111);
-	pair<char, int>	p14 = make_pair<char, int>('t', 999);
-	pair<char, int>	p15 = make_pair<char, int>('u', 222);
-
-	pair<char, int>	p16 = make_pair<char, int>('x', 88);
-
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
-	m1.insert(p7);
-	m1.insert(p8);
-	m1.insert(p9);
-	m1.insert(p10);
-	m1.insert(p11);
-	m1.insert(p12);
-	m1.insert(p13);
-	m1.insert(p14);
-	m1.insert(p15);
-	m1.insert(p16);
-
-	if (m1.lower_bound('a') != m1.end())
-		std::cout << "a lower bound : " << *(m1.lower_bound('a')) << std::endl;
-	if (m1.lower_bound('c') != m1.end())
-		std::cout << "c lower bound : " << *(m1.lower_bound('c')) << std::endl;
-	if (m1.lower_bound('d') != m1.end())
-		std::cout << "d lower bound : " << *(m1.lower_bound('d')) << std::endl;
-	if (m1.lower_bound('e') != m1.end())
-		std::cout << "e lower bound : " << *(m1.lower_bound('e')) << std::endl;
-	if (m1.lower_bound('o') != m1.end())
-		std::cout << "o lower bound : " << *(m1.lower_bound('o')) << std::endl;
-	if (m1.lower_bound('z') != m1.end())
-		std::cout << "z lower bound : " << *(m1.lower_bound('z')) << std::endl;
+	if (ret != it)
+		printPair(ret);
 	else
-		std:: cout << "no lower" << std::endl;
-	// constructeur par copy a faire avant puis operateur= puis test sur une const map
-	// Const version
-	const map<char, int> m2(++(m1.begin()), m1.end());
-	if (m2.lower_bound('a') != m2.end())
-		std::cout << "a lower bound : " << *(m2.lower_bound('a')) << std::endl;
-	if (m2.lower_bound('c') != m2.end())
-		std::cout << "c lower bound : " << *(m2.lower_bound('c')) << std::endl;
-	if (m2.lower_bound('d') != m2.end())
-		std::cout << "d lower bound : " << *(m2.lower_bound('d')) << std::endl;
-	if (m2.lower_bound('e') != m2.end())
-		std::cout << "e lower bound : " << *(m2.lower_bound('e')) << std::endl;
-	if (m2.lower_bound('o') != m2.end())
-		std::cout << "o lower bound : " << *(m2.lower_bound('o')) << std::endl;
-	if (m2.lower_bound('z') != m2.end())
-		std::cout << "z lower bound : " << *(m2.lower_bound('z')) << std::endl;
-	else
-		std:: cout << "no lower" << std::endl;
+		std::cout << "map::find(" << k << ") returned end()" << std::endl;
+}
+
+void	ft_count(T1 const &k)
+{
+	std::cout << "map::count(" << k << ")\treturned [" << mp.count(k) << "]" << std::endl;
+}
+
+int		main(void)
+{
+	mp[42] = "fgzgxfn";
+	mp[25] = "funny";
+	mp[80] = "hey";
+	mp[12] = "no";
+	mp[27] = "bee";
+	mp[90] = "8";
+	printSize(mp);
+
+	std::cout << "\t-- FIND --" << std::endl;
+	ft_find(12);
+	ft_find(3);
+	ft_find(35);
+	ft_find(90);
+	ft_find(100);
+
+	std::cout << "\t-- COUNT --" << std::endl;
+	ft_count(-3);
+	ft_count(12);
+	ft_count(3);
+	ft_count(35);
+	ft_count(90);
+	ft_count(100);
+
+	mp.find(27)->second = "newly inserted mapped_value";
+
+	printSize(mp);
+
+	NAMESPACE::map<T1, T2> const c_map(mp.begin(), mp.end());
+	std::cout << "const map.find(" << 42 << ")->second: [" << c_map.find(42)->second << "]" << std::endl;
+	std::cout << "const map.count(" << 80 << "): [" << c_map.count(80) << "]" << std::endl;
+	return (0);
 }

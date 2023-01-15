@@ -21,8 +21,11 @@ namespace ft
 		~node(void)
 		{
 			DEBUG_PRINT("node : default destructor")
-			alloc.destroy(data);
-			alloc.deallocate(data, 1);
+			if (data != NULL)
+			{
+				alloc.destroy(data);
+				alloc.deallocate(data, 1);
+			}
 		}
 		void setData(const value_type &initValue)
 		{
@@ -163,6 +166,7 @@ namespace ft
 		//MEMBER ATTRIBUTES
 		private :
 		Node			*_root;
+		Node			leaft;
 		value_compare	_comp;
 		allocator_type	_alloc;
 		size_type		_size;
