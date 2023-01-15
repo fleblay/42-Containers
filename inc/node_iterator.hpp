@@ -25,8 +25,10 @@ namespace ft
 
 		private	:
 		node_pointer	_current;
+		node_pointer	_end;
 
 		public	:
+		//changer les constructeur pour leur donner la end a chaque fois
 		node_iterator(void) :_current(NULL)
 		{
 			DEBUG_PRINT("ft::node_iterator : default constructor")

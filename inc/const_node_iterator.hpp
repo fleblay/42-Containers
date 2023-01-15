@@ -22,9 +22,11 @@ namespace ft
 		typedef const node_type*					const_node_pointer;
 
 		private	:
-		const_node_pointer	_current;
+		const_node_pointer		_current;
+		const_node_pointer		_end;
 
 		public	:
+		//changer les constructeur pour leur donner la end a chaque fois
 		const_node_iterator(void) : _current(NULL)
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : default constructor")

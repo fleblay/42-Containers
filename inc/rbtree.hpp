@@ -67,25 +67,32 @@ namespace ft
 		public	:
 		rbtree(const value_compare &map_compare = value_compare()) :
 			_root(NULL),
+			_leaf(NULL),
 			_comp(map_compare),
 			_alloc(allocator_type()),
 			_size(0)
 
-		{ DEBUG_PRINT("rbtree : default constuctor"); }
+		{
+			DEBUG_PRINT("rbtree : default constuctor");
+			_leaf = _alloc.allocate(1);
+			_alloc.construct(_leaf, Node());
+		}
 
 		rbtree(const rbtree &src) :
 			_root(src._root),
+			_leaf(src._leaf),
 			_comp(src._comp),
 			_alloc(src._alloc),
 			_size(src._size)
 		{
-			DEBUG_PRINT("rbtree : copy constuctor");
+			DEBUG_PRINT("rbtree : copy constuctor"); // non utilisee et shallow copy !!!
 		}
 
 		rbtree &operator=(const rbtree &src)
 		{
 			DEBUG_PRINT("rbtree : operator=")
 			this->_root = src._root;
+			this->_leaf = src._leaf;
 			this->_comp = src._comp;
 			this->_alloc = src._alloc;
 			this->_size = src._size;
@@ -95,17 +102,20 @@ namespace ft
 		void	swap(rbtree &x)
 		{
 			DEBUG_PRINT("rbtree : swap")
-			Node			*tmp_root = this->_root;;
+			Node			*tmp_root = this->_root;
+			Node			*tmp_leaf = this->_leaf;
 			value_compare	tmp_comp = this->_comp;
 			allocator_type	tmp_alloc = this->_alloc;
 			size_type		tmp_size = this->_size;
 
 			this->_root = x._root;
+			this->_leaf = x._leaf;
 			this->_comp = x._comp;
 			this->_alloc = x._alloc;
 			this->_size = x._size;
 
 			x._root = tmp_root;
+			x._root = tmp_leaf;
 			x._comp = tmp_comp;
 			x._alloc = tmp_alloc;
 			x._size = tmp_size;
@@ -162,11 +172,26 @@ namespace ft
 		Node		*lowerBound(const value_type &toFind);
 		const Node	*lowerBound(const Node *root, const value_type &toFind) const;
 		const Node	*lowerBound(const value_type &toFind) const;
+		
+
+		//Fx get_end qui renvoie la leaf et qui sera utilisee pour map.end()
+		Node			*getEnd(void)
+		{
+			DEBUG_PRINT("rbtree : getEnd")
+			return (_leaf);
+
+		}
+		const Node		*getEnd(void) const
+		{
+			DEBUG_PRINT("rbtree : getEnd const")
+			return (_leaf);
+
+		}
 
 		//MEMBER ATTRIBUTES
 		private :
 		Node			*_root;
-		Node			leaft;
+		Node			*_leaf;
 		value_compare	_comp;
 		allocator_type	_alloc;
 		size_type		_size;

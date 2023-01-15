@@ -131,7 +131,8 @@ namespace ft
 			DEBUG_PRINT("ft::map : end")
 			if (this->empty())
 				return (begin());
-			return iterator(_tree.findMax()->right);
+			//return iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
+			return iterator(_tree.getEnd());
 		}
 
 		const_iterator			end(void) const
@@ -139,7 +140,8 @@ namespace ft
 			DEBUG_PRINT("ft::map : const end")
 			if (this->empty())
 				return (begin());
-			return const_iterator(_tree.findMax()->right);
+			//return const_iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
+			return const_iterator(_tree.getEnd());
 		}
 
 		reverse_iterator		rbegin(void)
