@@ -187,7 +187,7 @@ namespace ft
 		mapped_type		&operator[](const key_type &k)
 		{
 			DEBUG_PRINT("ft::map : operator[]")
-			return ((*((this->insert(make_pair(k,mapped_type()))).first)).second);
+			return ((*((this->insert(ft::make_pair(k,mapped_type()))).first)).second);
 		}
 
 		//FUNCTIONS : MODIFIERS
@@ -383,6 +383,14 @@ namespace ft
 		tree					_tree;
 
 	};
+
+	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS
+	template <classe Key, class T, class Compare, class Alloc>
+	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator<")
+		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
 }
 
 #endif

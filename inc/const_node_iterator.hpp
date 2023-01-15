@@ -88,26 +88,26 @@ namespace ft
 			return (_current->data);
 		}
 
-		bool		operator==(const const_node_iterator &rhs)
+		bool		operator==(const const_node_iterator &rhs) const
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : operator==")
 			return (this->base() == rhs.base());
 		}
 
-		bool		operator==(const node_iterator<T> &rhs)
+		bool		operator==(const node_iterator<T> &rhs) const
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : operator== for node_iterator")
 			return (this->base() == rhs.base());
 		}
 
-		bool		operator!=(const const_node_iterator &rhs)
+		bool		operator!=(const const_node_iterator &rhs) const
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : operator!=")
 			return (this->base() != rhs.base());
 		}
 
 		//to test
-		bool		operator!=(const node_iterator<T> &rhs)
+		bool		operator!=(const node_iterator<T> &rhs) const
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : operator!= for node_iterator")
 			return (this->base() != rhs.base());

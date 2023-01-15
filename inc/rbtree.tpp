@@ -157,19 +157,19 @@ namespace ft
 			if (root->left == NULL)
 			{
 				std::cout <<  "KO left child!!!";
-				exit(1);
+				//exit(1);
 			}
 			if (root->right == NULL)
 			{
 				std::cout <<  "KO Right child!!!";
-				exit(1);
+				//exit(1);
 			}
 			std::cout << *(root->data);
 		}
 		if (root->parent == NULL && root != _root)
 		{
 			std::cout <<  "KO parent!!!";
-			exit(1);
+			//exit(1);
 		}
 		std::cout << "\x1b[0m]"<< std::endl;
 		print(root->left, depth + 1);
