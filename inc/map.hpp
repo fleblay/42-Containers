@@ -72,7 +72,26 @@ namespace ft
 			DEBUG_PRINT("ft::map default constructor")
 		}
 
-		//AUTRES CONSTRUCTEURS A FAIRE !!!!! 
+		template <class InputIterator>
+		map(InputIterator first, InputIterator last,
+				const key_compare &comp = key_compare(),
+				const allocator_type &alloc = allocator_type()) :
+			_comp(value_compare(comp)),
+			_alloc(alloc),
+			_tree(_comp)
+		{
+			DEBUG_PRINT("ft::map range constructor")
+			insert(first, last);
+		}
+
+		map(const map &x) :
+			_comp(value_compare(key_compare())),
+			_alloc(allocator_type()),
+			_tree(_comp)
+		{
+			DEBUG_PRINT("ft::map copy constructor")
+			*this = x;
+		}
 
 		~map(void)
 		{
@@ -85,8 +104,8 @@ namespace ft
 			DEBUG_PRINT("ft::map operator=")
 			this->_comp = x._comp;
 			this->_alloc = x._alloc;
-			this->_tree= x._tree;
-
+			_tree.destroyTree();
+			insert(x.begin(), x.end());
 			return (*this);
 		}
 
@@ -239,13 +258,14 @@ namespace ft
 			DEBUG_PRINT("ft::swap")
 			value_compare			tmp_comp = this->_comp;
 			allocator_type			tmp_alloc = this->_alloc;
-			tree					tmp_tree = this->_tree;
 
-			*this = x;
+			this->_comp = x._comp;
+			this->_alloc = x._alloc;
 
 			x._comp = tmp_comp;
 			x._alloc = tmp_alloc;
-			x._tree = tmp_tree;
+
+			_tree.swap(x._tree);
 		}
 
 		void	clear(void)
@@ -306,6 +326,53 @@ namespace ft
 			if (lower.base() != NULL)
 				return (lower);
 			return (end());
+		}
+
+		const_iterator lower_bound(const key_type &k) const
+		{
+			DEBUG_PRINT("ft::map : const lowerBound")
+			value_type	dummy = value_type(k, mapped_type());
+			const_iterator	lower = const_iterator(_tree.lowerBound(dummy));
+			if (lower.base() != NULL)
+				return (lower);
+			return (end());
+		}
+
+		iterator upper_bound(const key_type &k)
+		{
+			DEBUG_PRINT("ft::map : upperBound")
+			iterator	upper = lower_bound(k);
+			if (upper != end() && upper->first == k)
+				++upper;
+			return (upper);
+		}
+
+		const_iterator upper_bound(const key_type &k) const
+		{
+			DEBUG_PRINT("ft::map : const upperBound")
+			const_iterator	upper = lower_bound(k);
+			if (upper != end() && upper->first == k)
+				++upper;
+			return (upper);
+		}
+
+		pair<iterator,iterator> equal_range(const key_type &k)
+		{
+			DEBUG_PRINT("ft::map : equal_range")
+			return (pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
+		}
+
+		pair<const_iterator,const_iterator> equal_range(const key_type &k) const
+		{
+			DEBUG_PRINT("ft::map : const equal_range")
+			return (pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
+		}
+
+		//FUNCTIONS : OPERATIONS
+
+		allocator_type get_allocator(void) const
+		{
+			return (_alloc);
 		}
 
 		//ATTRIBUTES

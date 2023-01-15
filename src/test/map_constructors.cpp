@@ -91,14 +91,32 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 int main(void)
 {
 	map<char, int> m1;
-	pair<const char, int>	*p;
 
-	p = m1.get_allocator().allocate(5);
-	int psize = sizeof(map<char, int>::value_type) * 5;
+	pair<char, int>	p2 = make_pair<char, int>('z', 21);
+	pair<char, int>	p3 = make_pair<char, int>('a', 84);
+	pair<char, int>	p4 = make_pair<char, int>('b', 12);
+	pair<char, int>	p5 = make_pair<char, int>('c', 8);
+	pair<char, int>	p6 = make_pair<char, int>('d', 333);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100);
+	pair<char, int>	p8 = make_pair<char, int>('f', 666);
+	pair<char, int>	p9 = make_pair<char, int>('g', 1);
+	m1.insert(p2);
+	m1.insert(p3);
+	m1.insert(p4);
+	m1.insert(p5);
+	m1.insert(p6);
+	m1.insert(p7);
+	m1.insert(p8);
+	m1.insert(p9);
 
-	std::cout << "Successfull allocation of " << psize << "bytes" << std::endl;
+	printMap(m1);
 
-	m1.get_allocator().deallocate(p, 5);
+	map<char, int> m2(++(m1.begin()), m1.end());
+	printMap(m2);
 
-	return (0);
+	map<char, int> m3(m2);
+	printMap(m3);
+
+	const map<char, int> m4(++(m1.begin()), m1.end());
+	printMap(m4);
 }

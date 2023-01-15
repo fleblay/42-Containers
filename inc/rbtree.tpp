@@ -363,7 +363,9 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::destroyTree(void)
 	{
+		DEBUG_PRINT("rbtree : destroy tree")
 		destroyTree(_root);
+		_root = NULL;
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
@@ -767,6 +769,30 @@ namespace ft
 		return (rightResult);
 	}
 
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	const Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::lowerBound(const value_type &toFind) const
+	{
+		DEBUG_PRINT("rbtree : lowerBound")
+		if (_root == NULL)
+			return (NULL);
+		return (lowerBound(_root, toFind));
+	}
+
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	const Node	*rbtree<T, Compare, Alloc, Node, Alloc2>::lowerBound(const Node * root, const value_type &toFind) const
+	{
+		if (root->data == NULL)
+			return (NULL);
+
+		const Node *	leftResult = lowerBound(root->left, toFind);
+		const Node *	rightResult = lowerBound(root->right, toFind);
+
+		if (leftResult)
+			return (leftResult);
+		if (! _comp(*(root->data), toFind))
+			return (root);
+		return (rightResult);
+	}
 	/*
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)

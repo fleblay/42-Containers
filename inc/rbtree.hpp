@@ -89,6 +89,25 @@ namespace ft
 			return (*this);
 		}
 
+		void	swap(rbtree &x)
+		{
+			DEBUG_PRINT("rbtree : swap")
+			Node			*tmp_root = this->_root;;
+			value_compare	tmp_comp = this->_comp;
+			allocator_type	tmp_alloc = this->_alloc;
+			size_type		tmp_size = this->_size;
+
+			this->_root = x._root;
+			this->_comp = x._comp;
+			this->_alloc = x._alloc;
+			this->_size = x._size;
+
+			x._root = tmp_root;
+			x._comp = tmp_comp;
+			x._alloc = tmp_alloc;
+			x._size = tmp_size;
+		}
+
 		size_type	getSize(void) const
 		{
 			DEBUG_PRINT("rbtree : getSize")
@@ -138,6 +157,9 @@ namespace ft
 
 		Node		*lowerBound(Node *root, const value_type &toFind);
 		Node		*lowerBound(const value_type &toFind);
+		const Node	*lowerBound(const Node *root, const value_type &toFind) const;
+		const Node	*lowerBound(const value_type &toFind) const;
+
 		//MEMBER ATTRIBUTES
 		private :
 		Node			*_root;
