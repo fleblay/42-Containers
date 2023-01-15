@@ -10,6 +10,8 @@
 # include "node_iterator.hpp"
 # include "const_node_iterator.hpp"
 # include <iterator> //For the tags
+#include "lexicographical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -385,11 +387,46 @@ namespace ft
 	};
 
 	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS
-	template <classe Key, class T, class Compare, class Alloc>
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator==")
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
 	bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
 		DEBUG_PRINT("ft::map operator<")
 		return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator!=")
+		return (!(lhs == rhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator>")
+		return (rhs < lhs);
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator<=")
+		return (!(rhs < lhs));
+	}
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
+	{
+		DEBUG_PRINT("ft::map operator>=")
+		return (!(lhs < rhs));
 	}
 }
 

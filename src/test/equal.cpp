@@ -95,61 +95,28 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 #include <string>
 int main(void)
 {
-	map<char, int>	mymap;
+	vector<int>	myvect;
+	vector<int>	myvect2;
 
-	pair<char, int>	p2 = make_pair<char, int>('z', 21);
-	pair<char, int>	p3 = make_pair<char, int>('a', 84);
-	pair<char, int>	p4 = make_pair<char, int>('b', 12);
-	pair<char, int>	p5 = make_pair<char, int>('c', 8);
-	pair<char, int>	p6 = make_pair<char, int>('d', 333);
-	pair<char, int>	p7 = make_pair<char, int>('e', 100);
-	pair<char, int>	p8 = make_pair<char, int>('f', 666);
-	pair<char, int>	p9 = make_pair<char, int>('g', 1);
-	mymap.insert(p2);
-	mymap.insert(p3);
-	mymap.insert(p4);
-	mymap.insert(p5);
-	mymap.insert(p6);
-	mymap.insert(p7);
-	mymap.insert(p8);
-	mymap.insert(p9);
+	for (int i = 0; i < 11; i++)
+		myvect.push_back(i);
+	for (int i = 0; i < 20; i++)
+		myvect2.push_back(i);
 
-	map<char, int> mymap2(++(mymap.begin()), ++(++(++(mymap.begin())))) ;
-	map<char, int> mymap3(mymap);
+	std::cout	<< "equal default : ["
+				<< equal(myvect.begin(), myvect.end(), myvect2.begin())
+				<< "]" << std::endl;
 
-	std::cout << "== : " << std::endl;
-	std::cout << (mymap == mymap2) << std::endl;
-	std::cout << (mymap == mymap3) << std::endl;
-	std::cout << (mymap2 == mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
+	std::cout	<< "equal custom : ["
+				<< equal(myvect.begin(), myvect.end(), myvect2.begin(), predicate)
+				<< "]" << std::endl;
 
-	std::cout << "< : " << std::endl;
-	std::cout << (mymap < mymap2) << std::endl;
-	std::cout << (mymap < mymap3) << std::endl;
-	std::cout << (mymap2 < mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
+	//Reverse
+	std::cout	<< "equal default : ["
+				<< equal(myvect2.begin(), myvect2.end(), myvect.begin())
+				<< "]" << std::endl;
 
-	std::cout << "> : " << std::endl;
-	std::cout << (mymap > mymap2) << std::endl;
-	std::cout << (mymap > mymap3) << std::endl;
-	std::cout << (mymap2 > mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
-
-	std::cout << "!= : " << std::endl;
-	std::cout << (mymap != mymap2) << std::endl;
-	std::cout << (mymap != mymap3) << std::endl;
-	std::cout << (mymap2 != mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
-
-	std::cout << ">= : " << std::endl;
-	std::cout << (mymap >= mymap2) << std::endl;
-	std::cout << (mymap >= mymap3) << std::endl;
-	std::cout << (mymap2 >= mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
-
-	std::cout << "<= : " << std::endl;
-	std::cout << (mymap <= mymap2) << std::endl;
-	std::cout << (mymap <= mymap3) << std::endl;
-	std::cout << (mymap2 <= mymap3) << std::endl;
-	std::cout << "------------------" << std::endl;
+	std::cout	<< "equal custom : ["
+				<< equal(myvect2.begin(), myvect2.end(), myvect.begin(), predicate)
+				<< "]" << std::endl;
 }

@@ -14,6 +14,7 @@
 #include "enable_if.hpp"
 #include "distance.hpp"
 #include "lexicographical_compare.hpp"
+#include "equal.hpp"
 
 namespace ft
 {
@@ -523,14 +524,7 @@ namespace ft
 	bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs)
 	{
 		DEBUG_PRINT("ft::vector operator==")
-		if (lhs.size() != rhs.size())
-			return (false);
-		for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size(); i++)
-		{
-			if (!(lhs[i] == rhs[i]))
-				return (false);
-		}
-		return (true);
+		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template <class T, class Alloc>
