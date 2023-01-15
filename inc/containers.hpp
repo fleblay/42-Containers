@@ -13,7 +13,7 @@
 # define GREEN_COUT(x) std::cout << "\e[32m" << x << "\e[0m" << std::endl;
 # define ORANGE_COUT(x) std::cout << "\e[33m" << x << "\e[0m" << std::endl;
 
-# ifdef DEBUG
+# ifdef DEBUG_PRINTER
 #  define DEBUG_PRINT(x) CERR(x)
 # else
 #  define DEBUG_PRINT(x)

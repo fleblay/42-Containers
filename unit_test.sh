@@ -4,6 +4,7 @@ TEST_NUMBER="0"
 TEST_FILES_DIR="test" #must be inside ./src/
 TEST_EXEC_DIR="./test_exec"
 LEAKS="0"
+LEAKS_STD="0"
 
 function make_test()
 {
@@ -30,6 +31,8 @@ function run_test()
 	valgrind --leak-check=full --error-exitcode=2 ${TEST_EXEC_DIR}/ft/$1 >/dev/null 2>/dev/null
 	LEAKS=$?
 	${TEST_EXEC_DIR}/std/$1 > ${TEST_EXEC_DIR}/output/$1_std_stdout 2>${TEST_EXEC_DIR}/output/$1_std_stderr
+	valgrind --leak-check=full --error-exitcode=2 ${TEST_EXEC_DIR}/std/$1 >/dev/null 2>/dev/null
+	LEAKS_STD=$?
 	DIF_STDOUT=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stdout ${TEST_EXEC_DIR}/output/$1_std_stdout)
 	DIF_STDERR=$(diff -u ${TEST_EXEC_DIR}/output/$1_ft_stderr ${TEST_EXEC_DIR}/output/$1_std_stderr)
 	if [ ! -z "$DIF_STDOUT" ]  || [ ! -z "$DIF_STDERR" ]
@@ -118,7 +121,7 @@ case $1 in
 			else
 				echo -en " : \x1b[32mOK\x1b[0m"
 			fi
-			if [ $LEAKS -ne "0" ]
+			if [ $LEAKS != $LEAKS_STD ]
 			then
 				echo -e " : \x1b[31mLEAKS\x1b[0m"
 				if [ ! -z $STOP ]
