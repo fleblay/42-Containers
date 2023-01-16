@@ -8,7 +8,7 @@ CPP			= c++
 SRC_DIR		= ./src
 HEADER_DIR	= ./inc
 OBJ_DIR		= ./obj
-INC			= -I $(HEADER_DIR) -I ./containers_test/srcs/map
+INC			= -I $(HEADER_DIR) -I ./containers_test/srcs/set
 
 ifndef IGNORE_STD_98
 	CPPFLAGS	+= -std=c++98
@@ -22,7 +22,7 @@ endif
 
 HEADER_LIST	= const_node_iterator.hpp containers.hpp distance.hpp enable_if.hpp equal.hpp is_integral.hpp iterator.hpp lexicographical_compare.hpp map.hpp\
 node_iterator.hpp pair.hpp random_access_iterator.hpp rbtree.hpp reverse_iterator.hpp\
-stack.hpp vector.hpp
+stack.hpp vector.hpp set.hpp
 
 SRCS		= $(addprefix $(SRC_DIR)/, $(SRC_LIST))
 HEADERS		= $(addprefix $(HEADER_DIR)/, $(HEADER_LIST))
