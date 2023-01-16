@@ -30,7 +30,7 @@ OBJS		= $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.o, $(SRCS))
 DEPS		= $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.d, $(SRCS))
 
 ifeq ($(MAKECMDGOALS), debug)
-	CPPFLAGS	+= -D DEBUG_PRINTER=1
+	CPPFLAGS	+= -D DEBUG=1
 endif
 
 ifeq ($(MAKECMDGOALS), std)

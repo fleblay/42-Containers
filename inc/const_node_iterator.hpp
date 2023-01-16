@@ -193,6 +193,8 @@ namespace ft
 			DEBUG_PRINT("ft::CONST_node_iterator : pre-decrement operator--")
 			if (_current->data == NULL) // on return le plus grand node
 			{
+				//std::cout << "here" << std::endl;
+				//std::cout << "root :" << _root << std::endl;
 				_current = _root;
 				while (_current->parent)
 					_current = _current->parent;
@@ -207,7 +209,8 @@ namespace ft
 					_current = _current->right;
 			}
 			else
-			{ // travail a faire pour aller a la node la plus a droite
+			{
+				// travail a faire pour aller a la node la plus a droite
 				const_node_pointer save_end = _end;
 				/*
 				const_node_pointer save_end = _current;

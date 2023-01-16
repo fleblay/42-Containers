@@ -9,7 +9,7 @@
 
 namespace ft
 {
-
+	//this is the save !!!!
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(const value_type &val)
 	{
@@ -42,7 +42,43 @@ namespace ft
 			DEBUG_PRINT("rbtree : insert exception catch")
 			throw;
 		}
+		DEBUG_PRINT("rbtree : insert end")
 	}
+
+	/*
+	template<class T, class Compare, class Alloc, class Node, class Alloc2>
+	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(const value_type &val)
+	{
+		DEBUG_PRINT("rbtree : insert no try catch")
+			Node *newNode = _alloc.allocate(1);
+			_alloc.construct(newNode, Node());
+			DEBUG_PRINT("rbtree : 1")
+
+			Node *newLeaf_1 = _alloc.allocate(1);
+			_alloc.construct(newLeaf_1, Node());
+			DEBUG_PRINT("rbtree : 2")
+
+			Node *newLeaf_2 = _alloc.allocate(1);
+			_alloc.construct(newLeaf_2, Node());
+			DEBUG_PRINT("rbtree : 3")
+
+			newNode->setData(val);
+			DEBUG_PRINT("rbtree : 4")
+			newNode->left = newLeaf_1;
+			//newNode->left = _leaf;
+			newNode->left->parent = newNode;
+			newNode->left->color = BLACK;
+			newNode->right = newLeaf_2;
+			//newNode->right = _leaf;
+			newNode->right->parent = newNode;
+			newNode->right->color = BLACK;
+			DEBUG_PRINT("rbtree : 5")
+			insert(_root, NULL, newNode);
+			DEBUG_PRINT("rbtree : 6")
+			_size++;
+		DEBUG_PRINT("rbtree : insert end")
+	}
+	*/
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	Node * rbtree<T, Compare, Alloc, Node, Alloc2>::getRoot(void)
@@ -67,22 +103,28 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
+		DEBUG_PRINT("rbtree : insert true")
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
+			DEBUG_PRINT("rbtree : insert true begin 1")
 			root = toInsert;
 			root->color = BLACK;
+			DEBUG_PRINT("rbtree : insert true end 1")
 			return ;
 		}
 		if (root->data == NULL) // on est sur une feuille
 		{
+			DEBUG_PRINT("rbtree : insert true begin 2")
 			_alloc.destroy(root);// > plus besoin avec leaf
 			_alloc.deallocate(root, 1);// > plus besoin avec leaf
+			DEBUG_PRINT("rbtree : insert true 2 after deletion")
 			root = toInsert;
 			root->parent = parent;
 			if (root->parent->color == RED)
 			{
 				insertFix(root);
 			}
+			DEBUG_PRINT("rbtree : insert true end 2")
 			return ;
 		}
 		//if (*(toInsert->data) < *(root->data))
@@ -696,6 +738,7 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insertFix(Node * &root)
 	{
+		DEBUG_PRINT("rbtree : insert fix")
 		Node *toCheck = root;
 		Node *p = toCheck->parent;
 		Node *gp = toCheck->parent->parent;
@@ -757,7 +800,9 @@ namespace ft
 					u = (gp->left == p ? gp->right : gp->left);
 				}
 			}
+			DEBUG_PRINT("rbtree : insert fix loop end")
 		}
+		DEBUG_PRINT("rbtree : insert fix end")
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>

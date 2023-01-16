@@ -22,6 +22,7 @@ void printInfo(const vector<T> &to_print)
 				<< " capacity : [" << to_print.capacity() << "]"
 				<< std::endl;
 }
+
 struct myStruct
 {
 	int a;

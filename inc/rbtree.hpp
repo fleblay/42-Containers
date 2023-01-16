@@ -26,6 +26,7 @@ namespace ft
 				alloc.destroy(data);
 				alloc.deallocate(data, 1);
 			}
+			DEBUG_PRINT("node : default destructor end")
 		}
 		void setData(const value_type &initValue)
 		{
