@@ -154,10 +154,19 @@ namespace ft
 				node_pointer save_end = _end; // save end si jamais on etait le node le plus gd du tree
 				while (_current->parent && _current == _current->parent->right)
 					_current = _current->parent; // je remonte
-				if (_current->parent == NULL) // je suis remonte jusqu'au root, ie je suis le plus gd -> je renvoie end
+				if (_current->parent == NULL)
+				{
+					// je suis remonte jusqu'au root, ie je suis le plus gd -> je renvoie end
+					//std::cout << "Using save end" << std::endl;
 					_current = save_end;
-				else // Je renvoie mon parent
+
+				}
+				else
+				{
+					// Je renvoie mon parent
+					//std::cout << "Using parent" << std::endl;
 					_current = _current->parent;
+				}
 			}
 			return *this;
 		}

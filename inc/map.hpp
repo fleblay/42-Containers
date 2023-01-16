@@ -115,23 +115,13 @@ namespace ft
 		//FUNCTIONS : ITERATOR
 		public	:
 
-		iterator				begin(void)
-		{
-			DEBUG_PRINT("ft::map : begin")
-			return iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
-		}
-
-		const_iterator			begin(void) const
-		{
-			DEBUG_PRINT("ft::map : const begin")
-			return const_iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
-		}
-
 		iterator				end(void)
 		{
 			DEBUG_PRINT("ft::map : end")
+			/*
 			if (this->empty())
 				return (begin());
+			*/
 			return iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
 			//return iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
 			//return iterator(_tree.getEnd());
@@ -140,11 +130,31 @@ namespace ft
 		const_iterator			end(void) const
 		{
 			DEBUG_PRINT("ft::map : const end")
+			/*
 			if (this->empty())
 				return (begin());
+			*/	
 			return const_iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
 			//return const_iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
 			//return const_iterator(_tree.getEnd());
+		}
+
+		iterator				begin(void)
+		{
+			DEBUG_PRINT("ft::map : begin")
+			if (empty())
+				return (end());
+			else
+				return iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
+		}
+
+		const_iterator			begin(void) const
+		{
+			DEBUG_PRINT("ft::map : const begin")
+			if (empty())
+				return (end());
+			else
+				return const_iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
 		}
 
 		reverse_iterator		rbegin(void)
@@ -396,6 +406,8 @@ namespace ft
 	bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{
 		DEBUG_PRINT("ft::map operator==")
+		if (lhs.size() != rhs.size())
+			return (false);
 		return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 

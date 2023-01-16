@@ -84,7 +84,7 @@ namespace ft
 			return (*this);
 		}
 
-		//From normal to const
+		//From normal to const -> useless and dangerous !!!
 		const_node_iterator &operator=(const node_iterator<T> &rhs)
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : operator= from node_iterator")
@@ -94,13 +94,18 @@ namespace ft
 			return (*this);
 		}
 
-		const_node_iterator(const node_iterator<T> &src)
+		const_node_iterator(const node_iterator<T> &src) :
+			_current(src.base()),
+			_root(src.base_root()),
+			_end(src.base_end())
 		{
 			DEBUG_PRINT("ft::CONST_node_iterator : copy constructor from node_iterator")
+			/*
 			this->_current = src.base();
 			this->_root = src.base_root();
 			this->_end = src.base_end();
 			*this = src;
+			*/
 		}
 
 		reference	operator*(void) const
@@ -166,10 +171,19 @@ namespace ft
 				const_node_pointer save_end = _end; // save end si jamais on etait le node le plus gd du tree
 				while (_current->parent && _current == _current->parent->right)
 					_current = _current->parent; // je remonte
-				if (_current->parent == NULL) // je suis remonte jusqu'au root, ie je suis le plus gd -> je renvoie end
+				if (_current->parent == NULL)
+				{
+					// je suis remonte jusqu'au root, ie je suis le plus gd -> je renvoie end
+	//				std::cout << "Using save end" << std::endl;
 					_current = save_end;
-				else // Je renvoie mon parent
+
+				}
+				else
+				{
+					// Je renvoie mon parent
+	//				std::cout << "Using parent" << std::endl;
 					_current = _current->parent;
+				}
 			}
 			return *this;
 		}

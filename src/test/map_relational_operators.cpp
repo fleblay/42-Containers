@@ -97,7 +97,7 @@ int main(void)
 {
 	map<char, int>	mymap;
 
-	pair<char, int>	p2 = make_pair<char, int>('z', 21);
+	pair<char, int>	p2 = make_pair<char, int>('x', 21);
 	pair<char, int>	p3 = make_pair<char, int>('a', 84);
 	pair<char, int>	p4 = make_pair<char, int>('b', 12);
 	pair<char, int>	p5 = make_pair<char, int>('c', 8);
@@ -152,4 +152,10 @@ int main(void)
 	std::cout << (mymap <= mymap3) << std::endl;
 	std::cout << (mymap2 <= mymap3) << std::endl;
 	std::cout << "------------------" << std::endl;
+
+	//Different size but first members are equal
+	pair<char, int>	p10 = make_pair<char, int>('z', 1323);
+	mymap3.insert(p10);
+	std::cout << (mymap == mymap3) << std::endl;
+	std::cout << (mymap3 == mymap) << std::endl;
 }

@@ -80,6 +80,7 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 int main(void)
 {
 	map<char, int> m1;
+	map<char, int>::iterator m1_end = m1.end();
 
 	pair<char, int>	p1 = make_pair<char, int>('e', 42);
 	pair<char, int>	p2 = make_pair<char, int>('z', 21);
@@ -96,13 +97,13 @@ int main(void)
 	m1.insert(p6);
 
 
-	if (m1.find('b') != m1.end())
+	if (m1.find('b') != m1_end)
 		std::cout << "node is found : "<< m1.find('b')->second << std::endl;
 	else
 		std::cout << "node is NOT found" << std::endl;
 
-	if (m1.find('u') != m1.end())
-		std::cout << "node is found : "<< m1.find('b')->second << std::endl;
+	if (m1.find('u') != m1_end)
+		std::cout << "node is found : "<< m1.find('u')->second << std::endl;
 	else
 		std::cout << "node is NOT found" << std::endl;
 
@@ -117,7 +118,7 @@ int main(void)
 		std::cout << "node is NOT found" << std::endl;
 
 	if (m2.find('u') != m2.end())
-		std::cout << "node is found : "<< m2.find('b')->second << std::endl;
+		std::cout << "node is found : "<< m2.find('u')->second << std::endl;
 	else
 		std::cout << "node is NOT found" << std::endl;
 
