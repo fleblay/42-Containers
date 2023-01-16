@@ -36,7 +36,7 @@ namespace ft
 		{return _container.pop_back();};
 
 		//ATTRIBUTES
-		private	:
+		protected	:
 		container_type			_container;
 
 

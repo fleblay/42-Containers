@@ -115,7 +115,7 @@ namespace ft
 			this->_size = x._size;
 
 			x._root = tmp_root;
-			x._root = tmp_leaf;
+			x._leaf = tmp_leaf;
 			x._comp = tmp_comp;
 			x._alloc = tmp_alloc;
 			x._size = tmp_size;
@@ -175,17 +175,24 @@ namespace ft
 		
 
 		//Fx get_end qui renvoie la leaf et qui sera utilisee pour map.end()
-		Node			*getEnd(void)
+		Node	*getEnd(void)
 		{
 			DEBUG_PRINT("rbtree : getEnd")
 			return (_leaf);
 
 		}
-		const Node		*getEnd(void) const
+		const Node	*getEnd(void) const
 		{
 			DEBUG_PRINT("rbtree : getEnd const")
 			return (_leaf);
 
+		}
+
+		void		createLeaf(void)
+		{
+			DEBUG_PRINT("rbtree : create Leaf")
+			_leaf = _alloc.allocate(1);
+			_alloc.construct(_leaf, Node());
 		}
 
 		//MEMBER ATTRIBUTES

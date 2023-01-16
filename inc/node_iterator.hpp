@@ -25,17 +25,21 @@ namespace ft
 
 		private	:
 		node_pointer	_current;
+		node_pointer	_root;
 		node_pointer	_end;
 
 		public	:
-		//changer les constructeur pour leur donner la end a chaque fois
-		node_iterator(void) :_current(NULL)
+		//changer les constructeur pour leur donner la end a chaque fois et le root !!!	
+		node_iterator(void) : _current(NULL), _root(NULL), _end(NULL)
 		{
 			DEBUG_PRINT("ft::node_iterator : default constructor")
 		}
 
 		//to test
-		node_iterator(const node_pointer &initValue) : _current(initValue)
+		node_iterator(const node_pointer &initValue, const node_pointer &root, const node_pointer &end)
+			: _current(initValue),
+			_root(root),
+			_end(end)
 		{
 			DEBUG_PRINT("ft::node_iterator : parametric constructor")
 		}
@@ -51,16 +55,40 @@ namespace ft
 			return (_current);
 		}
 
+		const node_pointer &base_root(void) const
+		{
+			DEBUG_PRINT("ft::node_iterator : base_root")
+			return (_root);
+		}
+
+		const node_pointer &base_end(void) const
+		{
+			DEBUG_PRINT("ft::node_iterator : base_end")
+			return (_end);
+		}
+
+		/*
 		node_iterator(const node_iterator &src)
 		{
 			DEBUG_PRINT("ft::node_iterator : copy constructor")
 			*this = src;
+		}
+		*/
+		node_iterator(const node_iterator &src) :
+			_current(src._current),
+			_root(src._root),
+			_end(src._end)
+		{
+			DEBUG_PRINT("ft::CONST_node_iterator : copy constructor")
+			//*this = src;
 		}
 
 		node_iterator &operator=(const node_iterator &rhs)
 		{
 			DEBUG_PRINT("ft::node_iterator : operator=")
 			this->_current = rhs._current;
+			this->_root = rhs._root;
+			this->_end = rhs._end;
 			return (*this);
 		}
 
@@ -105,6 +133,7 @@ namespace ft
 			DEBUG_PRINT("ft::node_iterator : pre-increment operator++")
 			if (_current->data == NULL) // on return le plus petit node
 			{
+				_current = _root;
 				while (_current->parent)
 					_current = _current->parent;
 				while (_current->left->data)
@@ -119,7 +148,10 @@ namespace ft
 			}
 			else
 			{	//tant que pas root et que je suis fils le plus gd
+				/*
 				node_pointer save_end = _current->right; // save end si jamais on etait le node le plus gd du tree
+				*/
+				node_pointer save_end = _end; // save end si jamais on etait le node le plus gd du tree
 				while (_current->parent && _current == _current->parent->right)
 					_current = _current->parent; // je remonte
 				if (_current->parent == NULL) // je suis remonte jusqu'au root, ie je suis le plus gd -> je renvoie end
@@ -135,6 +167,7 @@ namespace ft
 			DEBUG_PRINT("ft::node_iterator : pre-decrement operator--")
 			if (_current->data == NULL) // on return le plus grand node
 			{
+				_current = _root;
 				while (_current->parent)
 					_current = _current->parent;
 				while (_current->right->data)
@@ -149,6 +182,8 @@ namespace ft
 			}
 			else
 			{ // travail a faire pour aller a la node la plus a droite
+				node_pointer save_end = _end;
+			  /*
 				node_pointer save_end = _current;
 				while (save_end->parent)
 					save_end = save_end->parent;
@@ -156,6 +191,7 @@ namespace ft
 					save_end = save_end->right;
 				save_end = save_end->right;
 				// save_end vaut end;
+			*/
 
 				while (_current->parent && _current == _current->parent->left)
 					_current = _current->parent;
@@ -170,7 +206,7 @@ namespace ft
 		node_iterator operator++(int)
 		{
 			DEBUG_PRINT("ft::node_iterator : post-increment operator++")
-			node_iterator	tmp(_current);
+			node_iterator	tmp(_current, _root, _end);
 			this->operator++();
 			return (tmp);
 		}
@@ -178,7 +214,7 @@ namespace ft
 		node_iterator operator--(int)
 		{
 			DEBUG_PRINT("ft::node_iterator : post-increment operator--")
-			node_iterator	tmp(_current);
+			node_iterator	tmp(_current, _root, _end);
 			this->operator--();
 			return (tmp);
 		}

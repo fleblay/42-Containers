@@ -19,21 +19,19 @@ namespace ft
 			Node *newNode = _alloc.allocate(1);
 			_alloc.construct(newNode, Node());
 
-			/*
 			Node *newLeaf_1 = _alloc.allocate(1);
 			_alloc.construct(newLeaf_1, Node());
 
 			Node *newLeaf_2 = _alloc.allocate(1);
 			_alloc.construct(newLeaf_2, Node());
-			*/
 
 			newNode->setData(val);
-			//newNode->left = newLeaf_1;
-			newNode->left = _leaf;
+			newNode->left = newLeaf_1;
+			//newNode->left = _leaf;
 			newNode->left->parent = newNode;
 			newNode->left->color = BLACK;
-			//newNode->right = newLeaf_2;
-			newNode->right = _leaf;
+			newNode->right = newLeaf_2;
+			//newNode->right = _leaf;
 			newNode->right->parent = newNode;
 			newNode->right->color = BLACK;
 			insert(_root, NULL, newNode);
@@ -77,8 +75,8 @@ namespace ft
 		}
 		if (root->data == NULL) // on est sur une feuille
 		{
-		//	_alloc.destroy(root); > plus besoin avec leaf
-			//_alloc.deallocate(root, 1); > plus besoin avec leaf
+			_alloc.destroy(root);// > plus besoin avec leaf
+			_alloc.deallocate(root, 1);// > plus besoin avec leaf
 			root = toInsert;
 			root->parent = parent;
 			if (root->parent->color == RED)
@@ -351,8 +349,8 @@ namespace ft
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::destroyTree(Node * &root)
 	{
-		//if (root == NULL) -> different avec leaf
-		if (root == NULL || root->data == NULL)
+		//if (root == NULL || root->data == NULL)
+		if (root == NULL)// -> different avec leaf (ie solution juste au dessus)
 			return;
 		destroyTree(root->left);
 		destroyTree(root->right);
@@ -367,9 +365,9 @@ namespace ft
 		destroyTree(_root);
 		_root = NULL;
 		_size = 0;
+		//desallouer la leaf
 		_alloc.destroy(_leaf);
 		_alloc.deallocate(_leaf, 1);
-		//desallouer la leaf
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>
@@ -584,15 +582,15 @@ namespace ft
 		{
 			x = target->right;
 			transplant(target, target->right);
-			//_alloc.destroy(target->left); -> plus besoin leaf
-			//_alloc.deallocate(target->left, 1); -> plus besoin leaf
+			_alloc.destroy(target->left);// -> plus besoin leaf
+			_alloc.deallocate(target->left, 1);// -> plus besoin leaf
 		}
 		else if (target->right->data == NULL)
 		{
 			x = target->left;
 			transplant(target, target->left);
-			//_alloc.destroy(target->right); -> plus besoin leaf
-			//_alloc.deallocate(target->right, 1); -> plus besoin leaf
+			_alloc.destroy(target->right);// -> plus besoin leaf
+			_alloc.deallocate(target->right, 1);// -> plus besoin leaf
 		}
 		else
 		{
@@ -608,8 +606,8 @@ namespace ft
 				y->right->parent = y;
 			}
 			transplant(target, y);
-			//_alloc.destroy(y->left); -> plub besoin leaf
-			//_alloc.deallocate(y->left, 1); -> plub besoin leaf
+			_alloc.destroy(y->left);// -> plub besoin leaf
+			_alloc.deallocate(y->left, 1);// -> plub besoin leaf
 			y->left = target->left;
 			y->left->parent = y;
 			y->color = target->color; // Not sure ?

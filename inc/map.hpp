@@ -107,6 +107,7 @@ namespace ft
 			this->_comp = x._comp;
 			this->_alloc = x._alloc;
 			_tree.destroyTree();
+			_tree.createLeaf();
 			insert(x.begin(), x.end());
 			return (*this);
 		}
@@ -117,13 +118,13 @@ namespace ft
 		iterator				begin(void)
 		{
 			DEBUG_PRINT("ft::map : begin")
-			return iterator(_tree.findMin());
+			return iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
 		}
 
 		const_iterator			begin(void) const
 		{
 			DEBUG_PRINT("ft::map : const begin")
-			return const_iterator(_tree.findMin());
+			return const_iterator(_tree.findMin(), _tree.getRoot(), _tree.getEnd());
 		}
 
 		iterator				end(void)
@@ -131,8 +132,9 @@ namespace ft
 			DEBUG_PRINT("ft::map : end")
 			if (this->empty())
 				return (begin());
+			return iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
 			//return iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
-			return iterator(_tree.getEnd());
+			//return iterator(_tree.getEnd());
 		}
 
 		const_iterator			end(void) const
@@ -140,8 +142,9 @@ namespace ft
 			DEBUG_PRINT("ft::map : const end")
 			if (this->empty())
 				return (begin());
+			return const_iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
 			//return const_iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
-			return const_iterator(_tree.getEnd());
+			//return const_iterator(_tree.getEnd());
 		}
 
 		reverse_iterator		rbegin(void)
@@ -203,13 +206,13 @@ namespace ft
 			if (_tree.findNode(val))
 			{
 				DEBUG_PRINT("ft::map insert : Key already existed")
-				return (ft::make_pair<iterator, bool>(_tree.findNode(val), false));
+				return (ft::make_pair<iterator, bool>(iterator(_tree.findNode(val),_tree.getRoot(), _tree.getEnd()) , false));
 			}
 			else
 			{
 				DEBUG_PRINT("ft::map insert : Key did not exist -> inserting it")
 				_tree.insert(val);
-				return (ft::make_pair<iterator, bool>(_tree.findNode(val), true));
+				return (ft::make_pair<iterator, bool>(iterator(_tree.findNode(val),_tree.getRoot(), _tree.getEnd()) , true));
 			}
 		}
 
@@ -233,7 +236,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::map erase : key")
 			value_type	dummy = value_type(k, mapped_type());
-			iterator	find = iterator(_tree.findNode(dummy));
+			iterator	find = iterator(_tree.findNode(dummy), _tree.getRoot(), _tree.getEnd());
 
 			if (find.base() == NULL)
 				return (0);
@@ -298,7 +301,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::map : find")
 			value_type	dummy = value_type(k, mapped_type());
-			iterator	find = iterator(_tree.findNode(dummy));
+			iterator	find = iterator(_tree.findNode(dummy), _tree.getRoot(), _tree.getEnd());
 			if (find.base() != NULL)
 				return (find);
 			return (end());
@@ -308,7 +311,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::map : const find")
 			value_type	dummy = value_type(k, mapped_type());
-			const_iterator find = const_iterator(_tree.findNode(dummy));
+			const_iterator find = const_iterator(_tree.findNode(dummy), _tree.getRoot(), _tree.getEnd());
 			if (find.base() != NULL)
 				return (find);
 			return (end());
@@ -326,7 +329,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::map : lowerBound")
 			value_type	dummy = value_type(k, mapped_type());
-			iterator	lower = iterator(_tree.lowerBound(dummy));
+			iterator	lower = iterator(_tree.lowerBound(dummy), _tree.getRoot(), _tree.getEnd());
 			if (lower.base() != NULL)
 				return (lower);
 			return (end());
@@ -336,7 +339,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::map : const lowerBound")
 			value_type	dummy = value_type(k, mapped_type());
-			const_iterator	lower = const_iterator(_tree.lowerBound(dummy));
+			const_iterator	lower = const_iterator(_tree.lowerBound(dummy), _tree.getRoot(), _tree.getEnd());
 			if (lower.base() != NULL)
 				return (lower);
 			return (end());

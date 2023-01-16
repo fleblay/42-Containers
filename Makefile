@@ -1,7 +1,7 @@
 SHELL		= /bin/bash
 
 NAME		= containers
-CPPFLAGS	= -MMD -Wall -Wextra -Werror -g3 -fsanitize=address
+CPPFLAGS	= -MMD -Wall -Wextra -Werror -g3 #-fsanitize=address
 #-MMD : first M for dependencies, second M to ignore system header directories, D to output to file .d with same name as .o file
 CPP			= c++
 
