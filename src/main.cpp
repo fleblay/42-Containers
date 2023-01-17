@@ -106,90 +106,72 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 	}
 };
 
+
 template <class T>
 void	is_empty(T const &st)
 {
 	std::cout << "is_empty: " << st.empty() << std::endl;
 }
 
-int main(void)
+#include "common.hpp"
+#include <list>
+
+#define T1 int
+typedef NAMESPACE::set<T1>::iterator ft_iterator;
+typedef NAMESPACE::set<T1>::const_iterator ft_const_iterator;
+
+static int iter = 0;
+
+template <typename SET>
+void	ft_bound(SET &st, const T1 &param)
 {
-	map<char, int>	mymap;
+	ft_iterator ite = st.end(), it[2];
+	_pair<ft_iterator, ft_iterator> ft_range;
 
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
+	ft_range = st.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
 
-	pair<char, int>	p2 = make_pair<char, int>('x', 21);
+template <typename SET>
+void	ft_const_bound(const SET &st, const T1 &param)
+{
+	ft_const_iterator ite = st.end(), it[2];
+	_pair<ft_const_iterator, ft_const_iterator> ft_range;
 
+	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
+	ft_range = st.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
 
-	pair<char, int>	p3 = make_pair<char, int>('a', 84);
-	pair<char, int>	p4 = make_pair<char, int>('b', 12);
-	pair<char, int>	p5 = make_pair<char, int>('c', 8);
-	pair<char, int>	p6 = make_pair<char, int>('d', 333);
-	pair<char, int>	p7 = make_pair<char, int>('e', 100);
-	pair<char, int>	p8 = make_pair<char, int>('f', 666);
-	pair<char, int>	p9 = make_pair<char, int>('g', 1);
-	mymap.insert(p2);
+int		main(void)
+{
+	std::list<T1> lst;
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back((i + 1) * 3);
+	NAMESPACE::set<T1> st(lst.begin(), lst.end());
+	printSize(st);
 
-	map<char, int>::reverse_iterator rit = mymap.rbegin();
-	map<char, int>::const_reverse_iterator crit = mymap.rbegin();
+	ft_const_bound(st, -10);
+	ft_const_bound(st, 1);
+	ft_const_bound(st, 5);
+	ft_const_bound(st, 10);
+	ft_const_bound(st, 50);
 
-	mymap.insert(p3);
-	mymap.insert(p4);
-	mymap.insert(p5);
-	mymap.insert(p6);
-	mymap.insert(p7);
-	mymap.insert(p8);
-	mymap.insert(p9);
+	printSize(st);
 
-	map<char, int>::reverse_iterator rend = mymap.rend();
-	map<char, int>::const_reverse_iterator crend = mymap.rend();
+	ft_bound(st, 5);
+	ft_bound(st, 7);
 
-	std::cout << "reverse" << std::endl;
-	for (; rit != rend; rit++)
-		std::cout << *rit << std::endl;
-
-	std::cout << "const reverse" << std::endl;
-	for (; crit != crend; crit++)
-		std::cout << *crit << std::endl;
-
-	/*
-	map<char, int> m1;
-
-	pair<char, int>	p1 = make_pair<char, int>('e', 42);
-	pair<char, int>	p2 = make_pair<char, int>('z', 21);
-	pair<char, int>	p3 = make_pair<char, int>('a', 84);
-	pair<char, int>	p4 = make_pair<char, int>('b', 12);
-	pair<char, int>	p5 = make_pair<char, int>('c', 8);
-	pair<char, int>	p6 = make_pair<char, int>('d', 333);
-	pair<char, int>	p7 = make_pair<char, int>('e', 100); // should fail
-	pair<char, int>	p8 = make_pair<char, int>('f', 666);
-	pair<char, int>	p9 = make_pair<char, int>('g', 1);
-
-	pair<map<char, int>::iterator, bool> res1 = m1.insert(p1);
-	pair<map<char, int>::iterator, bool> res2 = m1.insert(p2);
-	pair<map<char, int>::iterator, bool> res3 = m1.insert(p3);
-	pair<map<char, int>::iterator, bool> res4 = m1.insert(p4);
-	pair<map<char, int>::iterator, bool> res5 = m1.insert(p5);
-	pair<map<char, int>::iterator, bool> res6 = m1.insert(p6);
-	pair<map<char, int>::iterator, bool> res7 = m1.insert(p7);
-	pair<map<char, int>::iterator, bool> res8 = m1.insert(p8);
-	pair<map<char, int>::iterator, bool> res9 = m1.insert(p9);
-
-	//m1.clear();
-	for (map<char, int>::iterator it = m1.begin(); it != m1.end();)
-	{
-		m1.erase(it->first);
-		it = m1.begin();
-	}
-	
-	printMap(m1);
-
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
-
+	printSize(st);
 	return (0);
-	*/
 }

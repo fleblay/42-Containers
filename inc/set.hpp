@@ -33,7 +33,7 @@ namespace ft
 		typedef	typename allocator_type::pointer					pointer;
 		typedef	typename allocator_type::const_pointer				const_pointer;
 
-		typedef	typename ft::node_iterator<value_type>				iterator;
+		typedef	typename ft::const_node_iterator<value_type>				iterator;
 		typedef	typename ft::const_node_iterator<value_type>		const_iterator;
 
 		typedef	typename ft::reverse_iterator<iterator>				reverse_iterator;
@@ -166,7 +166,7 @@ namespace ft
 		size_type		max_size(void) const
 		{
 			DEBUG_PRINT("ft::set : max_size")
-			return (_alloc.max_size());
+			return (_tree.max_size());
 		}
 
 		//FUNCTIONS : MODIFIERS
@@ -268,7 +268,7 @@ namespace ft
 		}
 
 		//FUNCTIONS : OPERATIONS
-		iterator	find(const value_type &val)
+		iterator	find(const value_type &val) const
 		{
 			DEBUG_PRINT("ft::set : find")
 			iterator	find = iterator(_tree.findNode(val), _tree.getRoot(), _tree.getEnd());
@@ -285,7 +285,7 @@ namespace ft
 			return (0);
 		}
 
-		iterator lower_bound(const value_type &val)
+		iterator lower_bound(const value_type &val) const
 		{
 			DEBUG_PRINT("ft::set : lowerBound")
 			iterator	lower = iterator(_tree.lowerBound(val), _tree.getRoot(), _tree.getEnd());
@@ -295,16 +295,16 @@ namespace ft
 		}
 
 
-		iterator upper_bound(const value_type &val)
+		iterator upper_bound(const value_type &val) const
 		{
 			DEBUG_PRINT("ft::set : upperBound")
 			iterator	upper = lower_bound(val);
-			if (upper != end() && upper->first == val)
+			if (upper != end() && *upper == val)
 				++upper;
 			return (upper);
 		}
 
-		pair<iterator,iterator> equal_range(const value_type &val)
+		pair<iterator,iterator> equal_range(const value_type &val) const
 		{
 			DEBUG_PRINT("ft::set : equal_range")
 			return (pair<iterator, iterator>(lower_bound(val), upper_bound(val)));

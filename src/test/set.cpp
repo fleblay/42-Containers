@@ -167,5 +167,14 @@ int main(void)
 	std::cout << myset4.count(60) << std::endl;
 	std::cout << myset4.count(65) << std::endl;
 
-	return (0);
+	std::cout << *(myset4.upper_bound(70)) << std::endl;
+	std::cout << *(myset4.lower_bound(70)) << std::endl;
+	std::cout << *(myset4.equal_range(70).first) << std::endl;
+
+	std::cout << (myset == myset4) << std::endl;
+	std::cout << (myset != myset4) << std::endl;
+	std::cout << (myset < myset4) << std::endl;
+	std::cout << (myset > myset4) << std::endl;
+	std::cout << (myset <= myset4) << std::endl;
+	std::cout << (myset >= myset4) << std::endl;
 }
