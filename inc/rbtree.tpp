@@ -104,6 +104,7 @@ namespace ft
 	void	rbtree<T, Compare, Alloc, Node, Alloc2>::insert(Node * &root, Node *parent, Node *toInsert)
 	{
 		DEBUG_PRINT("rbtree : insert true")
+		//std::cerr << "size is :" << _size << std::endl;
 		if (root == NULL) // cas ou _root est null, ie l'arbre est vide
 		{
 			DEBUG_PRINT("rbtree : insert true begin 1")
@@ -120,7 +121,12 @@ namespace ft
 			DEBUG_PRINT("rbtree : insert true 2 after deletion")
 			root = toInsert;
 			root->parent = parent;
-			if (root->parent->color == RED)
+			if (_size < 3)
+			{
+				_root->color = BLACK;
+				return;
+			}
+			else if (root->parent != NULL && root->parent->color == RED)
 			{
 				insertFix(root);
 			}
@@ -129,9 +135,15 @@ namespace ft
 		}
 		//if (*(toInsert->data) < *(root->data))
 		if (_comp(*(toInsert->data), *(root->data)))
+		{
+			//std::cerr << "going left" << std::endl;
 			insert(root->left, root, toInsert);
+		}
 		else
+		{
+			//std::cerr << "going right" << std::endl;
 			insert(root->right, root, toInsert);
+		}
 	}
 
 	/*
@@ -616,7 +628,7 @@ namespace ft
 			return ;
 		if (findNode(toDelete) == NULL)
 		{
-			std::cout << "didn't find node to delete" << std::endl;
+			//std::cout << "didn't find node to delete" << std::endl;
 			return ;
 		}
 		color originalColor = target->color;
@@ -658,8 +670,15 @@ namespace ft
 		if (originalColor == BLACK)
 			deleteFix(x);
 		_alloc.destroy(target);
-		_alloc.deallocate(target, 0); // 0 ?????
+		_alloc.deallocate(target, 1); // 0 ?????
 		_size--;
+		if (_size == 0)
+		{
+			_alloc.destroy(_root);
+			_alloc.deallocate(_root, 1); // 0 ?????
+			_root = NULL;
+			_leaf->color = BLACK;
+		}
 	}
 
 	template<class T, class Compare, class Alloc, class Node, class Alloc2>

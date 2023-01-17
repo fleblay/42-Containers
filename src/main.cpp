@@ -114,58 +114,43 @@ void	is_empty(T const &st)
 
 int main(void)
 {
-	set<int>	myset;
-	set<int>	myset4;
+	map<char, int> m1;
 
-	myset.insert(2);
-	myset.insert(3);
-	myset.insert(4);
-	myset.insert(5);
-	myset.insert(6);
-	myset.insert(7);
-	myset.insert(8);
-	myset.insert(9);
+	pair<char, int>	p1 = make_pair<char, int>('e', 42);
+	pair<char, int>	p2 = make_pair<char, int>('z', 21);
+	pair<char, int>	p3 = make_pair<char, int>('a', 84);
+	pair<char, int>	p4 = make_pair<char, int>('b', 12);
+	pair<char, int>	p5 = make_pair<char, int>('c', 8);
+	pair<char, int>	p6 = make_pair<char, int>('d', 333);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100); // should fail
+	pair<char, int>	p8 = make_pair<char, int>('f', 666);
+	pair<char, int>	p9 = make_pair<char, int>('g', 1);
 
-	myset4.insert(20);
-	myset4.insert(30);
-	myset4.insert(40);
-	myset4.insert(50);
-	myset4.insert(60);
-	myset4.insert(70);
-	myset4.insert(80);
-	myset4.insert(90);
+	pair<map<char, int>::iterator, bool> res1 = m1.insert(p1);
+	pair<map<char, int>::iterator, bool> res2 = m1.insert(p2);
+	pair<map<char, int>::iterator, bool> res3 = m1.insert(p3);
+	pair<map<char, int>::iterator, bool> res4 = m1.insert(p4);
+	pair<map<char, int>::iterator, bool> res5 = m1.insert(p5);
+	pair<map<char, int>::iterator, bool> res6 = m1.insert(p6);
+	pair<map<char, int>::iterator, bool> res7 = m1.insert(p7);
+	pair<map<char, int>::iterator, bool> res8 = m1.insert(p8);
+	pair<map<char, int>::iterator, bool> res9 = m1.insert(p9);
 
-	set<int>	myset2(myset);
-	set<int>	myset3(++myset.begin(), myset.end());
-	printSet(myset2);
-	printSet(myset3);
+	//m1.clear();
+	for (map<char, int>::iterator it = m1.begin(); it != m1.end();)
+	{
+		m1.erase(it->first);
+		it = m1.begin();
+	}
+	
+	printMap(m1);
 
-	for( set<int>::reverse_iterator rit = myset.rbegin(); rit != myset.rend(); rit++)
-		std::cout << *rit << std::endl;
-
-	std::cout << myset.empty() << std::endl;
-	std::cout << myset.size() << std::endl;
-	std::cout << myset.max_size() << std::endl;
-
-	myset.insert(10);
-	myset.insert(myset4.begin(), 12);
-	myset.insert(myset4.begin(), myset4.end());
-	printSet(myset);
-
-	myset.erase(++myset.begin());
-	myset.erase(12);
-	myset.insert(++(myset.begin()), --(myset.end()));
-
-	myset4.swap(myset);
-	printSet(myset);
-	printSet(myset4);
-
-	myset.clear();
-	printSet(myset);
-
-	std::cout << *(myset4.find(70)) << std::endl;
-	std::cout << myset4.count(60) << std::endl;
-	std::cout << myset4.count(65) << std::endl;
+	m1.insert(p1);
+	m1.insert(p2);
+	m1.insert(p3);
+	m1.insert(p4);
+	m1.insert(p5);
+	m1.insert(p6);
 
 	return (0);
 }
