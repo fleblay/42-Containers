@@ -148,12 +148,13 @@ int main(void)
 	std::cout << myset.max_size() << std::endl;
 
 	myset.insert(10);
-	myset.insert(myset4.begin(), 12);
+	myset.insert(myset.begin(), 12);
 	myset.insert(myset4.begin(), myset4.end());
 	printSet(myset);
 
 	myset.erase(++myset.begin());
 	myset.erase(12);
+	myset.erase(++myset.begin(), ++(++(myset.begin())));
 	myset.insert(++(myset.begin()), --(myset.end()));
 
 	myset4.swap(myset);

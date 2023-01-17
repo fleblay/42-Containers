@@ -106,72 +106,80 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 	}
 };
 
-
-template <class T>
-void	is_empty(T const &st)
+int main(void)
 {
-	std::cout << "is_empty: " << st.empty() << std::endl;
-}
+	set<int>	myset;
+	set<int>	myset4;
 
-#include "common.hpp"
-#include <list>
+	myset.insert(2);
+	myset.insert(3);
+	myset.insert(4);
+	myset.insert(5);
+	myset.insert(6);
+	myset.insert(7);
+	myset.insert(8);
+	myset.insert(9);
 
-#define T1 int
-typedef NAMESPACE::set<T1>::iterator ft_iterator;
-typedef NAMESPACE::set<T1>::const_iterator ft_const_iterator;
+	myset4.insert(20);
+	myset4.insert(30);
+	myset4.insert(40);
+	myset4.insert(50);
+	myset4.insert(60);
+	myset4.insert(70);
+	myset4.insert(80);
+	myset4.insert(90);
 
-static int iter = 0;
+	set<int>	myset2(myset);
+	set<int>	myset3(++(myset.begin()), myset.end());
+	//printSet(myset2);
+	//printSet(myset3);
 
-template <typename SET>
-void	ft_bound(SET &st, const T1 &param)
-{
-	ft_iterator ite = st.end(), it[2];
-	_pair<ft_iterator, ft_iterator> ft_range;
+	//for( set<int>::reverse_iterator rit = myset.rbegin(); rit != myset.rend(); rit++)
+	//	std::cout << *rit << std::endl;
 
-	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
-	ft_range = st.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+	//std::cout << myset.empty() << std::endl;
+	//std::cout << myset.size() << std::endl;
+	//std::cout << myset.max_size() << std::endl;
 
-template <typename SET>
-void	ft_const_bound(const SET &st, const T1 &param)
-{
-	ft_const_iterator ite = st.end(), it[2];
-	_pair<ft_const_iterator, ft_const_iterator> ft_range;
+	myset.insert(10);
+	printSet(myset);
+	myset.insert(myset.begin(), 12);
+	printSet(myset);
+	exit(0);
+	myset.insert(myset4.begin(), myset4.end());
+	printSet(myset);
 
-	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
-	std::cout << "with key [" << param << "]:" << std::endl;
-	it[0] = st.lower_bound(param); it[1] = st.upper_bound(param);
-	ft_range = st.equal_range(param);
-	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
-	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
-	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
-}
+	myset.erase(++myset.begin());
+	printSet(myset);
+	//OK
+	myset.erase(12); // ou ici
+	printSet(myset);
+	/*
+	myset.erase(++myset.begin(), ++(++(myset.begin())));
+	printSet(myset);
+	myset.insert(++(myset.begin()), --(myset.end()));
 
-int		main(void)
-{
-	std::list<T1> lst;
-	unsigned int lst_size = 10;
-	for (unsigned int i = 0; i < lst_size; ++i)
-		lst.push_back((i + 1) * 3);
-	NAMESPACE::set<T1> st(lst.begin(), lst.end());
-	printSize(st);
+	myset4.swap(myset);
+	printSet(myset);
+	printSet(myset4);
 
-	ft_const_bound(st, -10);
-	ft_const_bound(st, 1);
-	ft_const_bound(st, 5);
-	ft_const_bound(st, 10);
-	ft_const_bound(st, 50);
+	myset.clear();
+	printSet(myset);
 
-	printSize(st);
+	std::cout << *(myset4.find(70)) << std::endl;
+	std::cout << myset4.count(60) << std::endl;
+	std::cout << myset4.count(65) << std::endl;
 
-	ft_bound(st, 5);
-	ft_bound(st, 7);
+	std::cout << *(myset4.upper_bound(70)) << std::endl;
+	std::cout << *(myset4.lower_bound(70)) << std::endl;
+	std::cout << *(myset4.equal_range(70).first) << std::endl;
 
-	printSize(st);
+	std::cout << (myset == myset4) << std::endl;
+	std::cout << (myset != myset4) << std::endl;
+	std::cout << (myset < myset4) << std::endl;
+	std::cout << (myset > myset4) << std::endl;
+	std::cout << (myset <= myset4) << std::endl;
+	std::cout << (myset >= myset4) << std::endl;
+	*/
 	return (0);
 }

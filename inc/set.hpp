@@ -11,6 +11,7 @@
 # include <iterator> //For the tags
 #include "lexicographical_compare.hpp"
 #include "equal.hpp"
+#include "pair.hpp"
 
 namespace ft
 {
@@ -172,7 +173,7 @@ namespace ft
 		//FUNCTIONS : MODIFIERS
 		public	:
 
-		pair<iterator, bool>	insert(const value_type &val)
+		ft::pair<iterator, bool>	insert(const value_type &val)
 		{
 			DEBUG_PRINT("ft::set insert : single element")
 			if (_tree.findNode(val))
@@ -228,7 +229,7 @@ namespace ft
 		{
 			DEBUG_PRINT("ft::set erase : range")
 			for (; first != last; )
-				erase(first++->first);
+				erase(*first++);
 		}
 
 		void	swap(set &x)
@@ -304,10 +305,10 @@ namespace ft
 			return (upper);
 		}
 
-		pair<iterator,iterator> equal_range(const value_type &val) const
+		ft::pair<iterator,iterator> equal_range(const value_type &val) const
 		{
 			DEBUG_PRINT("ft::set : equal_range")
-			return (pair<iterator, iterator>(lower_bound(val), upper_bound(val)));
+			return (ft::pair<iterator, iterator>(lower_bound(val), upper_bound(val)));
 		}
 
 		//FUNCTIONS : OPERATIONS
