@@ -375,6 +375,7 @@ namespace ft
 		}
 	}
 
+	/*
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator position)
 	{
@@ -387,6 +388,24 @@ namespace ft
 
 		return (this->begin() + pos);
 	}
+	*/
+
+	template <class T, class Alloc>
+	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator position)
+	{
+		DEBUG_PRINT("ft::vector erase single elem")
+		size_type	pos = ft::distance(begin(), position);
+
+		if (position != end())
+			--_size;
+		for (size_type i = pos; i < _size ; i++) 
+		{
+			_alloc.destroy(_data + i);
+			_alloc.construct(_data + i, *(_data + i + 1));
+		}
+		return (this->begin() + pos);
+	}
+
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator first, iterator last)

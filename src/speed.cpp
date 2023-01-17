@@ -154,8 +154,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::map.insert() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -176,8 +174,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::map.fin() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -196,8 +192,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::map copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -218,8 +212,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::map.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -242,8 +234,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::vector.push_back() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -262,8 +252,6 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::vector copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
@@ -284,167 +272,9 @@ int main(void)
 	time_ft = get_exec_time(start, end);
 
 	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
 
 	std::cout << "ft::vector.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
 
-	//set insert
-	std::cout << "set insert" << std::endl;
-	std::set<int>	s1;
-	ft::set<int>	s2;
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s1.insert(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s2.insert(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::set.insert() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//set find
-	std::cout << "set find" << std::endl;
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s1.find(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s2.find(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::set.fin() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//set copy
-	std::cout << "set copy" << std::endl;
-
-	gettimeofday(&start, NULL);
-	std::set<int>	s3(s1);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	ft::set<int>	s4(s2);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::set copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//set erase
-	std::cout << "set erase" << std::endl;
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s1.erase(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		s2.erase(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::set.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//stack insert
-	std::cout << "stack insert" << std::endl;
-	std::stack<int>	k1;
-	ft::stack<int>		k2;
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		k1.push(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i++)
-		k2.push(data_pool[i]);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::stack.push_back() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//stack copy
-	std::cout << "stack copy" << std::endl;
-
-	gettimeofday(&start, NULL);
-	std::stack<int>	k3(k1);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	ft::stack<int>	k4(k2);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::stack copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-	//stack erase
-	std::cout << "stack erase" << std::endl;
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i+= 10)
-		k1.pop();
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	for (int i = 0; i < 100000 ; i+= 10)
-		k2.pop();
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::stack.pop() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
-
 	return (0);
-
 }
