@@ -112,6 +112,16 @@ unsigned int get_exec_time(struct timeval start, struct timeval end)
 	return (end.tv_sec * 1000000 + end.tv_usec - start.tv_sec * 1000000 - start.tv_usec);
 }
 
+std::string	get_color(float ratio)
+{
+	if (ratio < 5)
+		return ("\x1b[32m");
+	if (ratio < 20)
+		return ("\x1b[33m");
+	return ("\x1b[31m");
+
+}
+
 int main(void)
 {
 	struct timeval start;
@@ -126,6 +136,8 @@ int main(void)
 	for (int i = 0; i < 100000 ; i++)
 		data_pool.push_back(rand());
 
+	//MAP insert
+	std::cout << "MAP insert" << std::endl;
 	std::map<int, int>	m1;
 	ft::map<int, int>	m2;
 
@@ -143,7 +155,125 @@ int main(void)
 
 	ratio = (float)time_ft/time_std;
 
-	std::cout << "ft::map.insert() is : [" << ratio << "] slower than std" << std::endl;
+	std::cout << "ft::map.insert() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//MAP find
+	std::cout << "MAP find" << std::endl;
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m1.find(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m2.find(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::map.fin() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//MAP copy
+	std::cout << "MAP copy" << std::endl;
+
+	gettimeofday(&start, NULL);
+	std::map<int, int>	m3(m1);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	ft::map<int, int>	m4(m2);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::map copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//MAP erase
+	std::cout << "MAP erase" << std::endl;
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m1.erase(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m2.erase(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::map.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//vector insert
+	std::cout << "vector insert" << std::endl;
+	std::vector<int>	v1;
+	ft::vector<int>		v2;
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		v1.push_back(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		v2.push_back(data_pool[i]);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::vector.push_back() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//vector copy
+	std::cout << "vector copy" << std::endl;
+
+	gettimeofday(&start, NULL);
+	std::vector<int>	v3(v1);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	ft::vector<int>	v4(v2);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::vector copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
+	//vector erase
+	std::cout << "vector erase" << std::endl;
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i+= 1000)
+		v1.erase(v1.begin());
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i+= 1000)
+		v2.erase(v2.begin());
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+
+	std::cout << "ft::vector.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
 
 	return (0);
