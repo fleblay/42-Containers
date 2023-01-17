@@ -19,6 +19,7 @@
 #include <list> // for testing
 #include <set>
 #include "set.hpp"
+#include <sys/time.h>
 
 void	signal_handler(int signal_number)
 {
@@ -106,80 +107,44 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 	}
 };
 
+unsigned int get_exec_time(struct timeval start, struct timeval end)
+{
+	return (end.tv_sec * 1000000 + end.tv_usec - start.tv_sec * 1000000 - start.tv_usec);
+}
+
 int main(void)
 {
-	set<int>	myset;
-	set<int>	myset4;
+	struct timeval start;
+	struct timeval end;
+	unsigned int time_ft = 0;
+	unsigned int time_std = 0;
+	float ratio = 0;
 
-	myset.insert(2);
-	myset.insert(3);
-	myset.insert(4);
-	myset.insert(5);
-	myset.insert(6);
-	myset.insert(7);
-	myset.insert(8);
-	myset.insert(9);
+	srand(time(NULL));
 
-	myset4.insert(20);
-	myset4.insert(30);
-	myset4.insert(40);
-	myset4.insert(50);
-	myset4.insert(60);
-	myset4.insert(70);
-	myset4.insert(80);
-	myset4.insert(90);
+	std::vector<int>	data_pool;
+	for (int i = 0; i < 100000 ; i++)
+		data_pool.push_back(rand());
 
-	set<int>	myset2(myset);
-	set<int>	myset3(++(myset.begin()), myset.end());
-	//printSet(myset2);
-	//printSet(myset3);
+	std::map<int, int>	m1;
+	ft::map<int, int>	m2;
 
-	//for( set<int>::reverse_iterator rit = myset.rbegin(); rit != myset.rend(); rit++)
-	//	std::cout << *rit << std::endl;
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m1.insert(std::make_pair<int, int>(data_pool[i], data_pool[i]));
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
 
-	//std::cout << myset.empty() << std::endl;
-	//std::cout << myset.size() << std::endl;
-	//std::cout << myset.max_size() << std::endl;
+	gettimeofday(&start, NULL);
+	for (int i = 0; i < 100000 ; i++)
+		m2.insert(ft::make_pair<int, int>(data_pool[i], data_pool[i]));
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
 
-	myset.insert(10);
-	printSet(myset);
-	myset.insert(myset.begin(), 12);
-	printSet(myset);
-	exit(0);
-	myset.insert(myset4.begin(), myset4.end());
-	printSet(myset);
+	ratio = (float)time_ft/time_std;
 
-	myset.erase(++myset.begin());
-	printSet(myset);
-	//OK
-	myset.erase(12); // ou ici
-	printSet(myset);
-	/*
-	myset.erase(++myset.begin(), ++(++(myset.begin())));
-	printSet(myset);
-	myset.insert(++(myset.begin()), --(myset.end()));
+	std::cout << "ft::map.insert() is : [" << ratio << "] slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
 
-	myset4.swap(myset);
-	printSet(myset);
-	printSet(myset4);
-
-	myset.clear();
-	printSet(myset);
-
-	std::cout << *(myset4.find(70)) << std::endl;
-	std::cout << myset4.count(60) << std::endl;
-	std::cout << myset4.count(65) << std::endl;
-
-	std::cout << *(myset4.upper_bound(70)) << std::endl;
-	std::cout << *(myset4.lower_bound(70)) << std::endl;
-	std::cout << *(myset4.equal_range(70).first) << std::endl;
-
-	std::cout << (myset == myset4) << std::endl;
-	std::cout << (myset != myset4) << std::endl;
-	std::cout << (myset < myset4) << std::endl;
-	std::cout << (myset > myset4) << std::endl;
-	std::cout << (myset <= myset4) << std::endl;
-	std::cout << (myset >= myset4) << std::endl;
-	*/
 	return (0);
 }
