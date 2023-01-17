@@ -97,10 +97,10 @@ int		main(void)
 {
 	map<char, int>	mymap;
 
-	map<char, int>::reverse_iterator rit = mymap.rbegin();
-	map<char, int>::const_reverse_iterator crit = mymap.rbegin();
 
 	pair<char, int>	p2 = make_pair<char, int>('x', 21);
+
+
 	pair<char, int>	p3 = make_pair<char, int>('a', 84);
 	pair<char, int>	p4 = make_pair<char, int>('b', 12);
 	pair<char, int>	p5 = make_pair<char, int>('c', 8);
@@ -109,6 +109,8 @@ int		main(void)
 	pair<char, int>	p8 = make_pair<char, int>('f', 666);
 	pair<char, int>	p9 = make_pair<char, int>('g', 1);
 	mymap.insert(p2);
+	map<char, int>::reverse_iterator rit = mymap.rbegin();
+	map<char, int>::const_reverse_iterator crit = mymap.rbegin();
 	mymap.insert(p3);
 	mymap.insert(p4);
 	mymap.insert(p5);

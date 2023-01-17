@@ -197,7 +197,7 @@ namespace ft
 		size_type		max_size(void) const
 		{
 			DEBUG_PRINT("ft::map : max_size")
-			return (_alloc.max_size());
+			return (_tree.max_size());
 		}
 
 		//FUNCTIONS : ELEMENT ACCESS

@@ -114,6 +114,44 @@ void	is_empty(T const &st)
 
 int main(void)
 {
+	map<char, int>	mymap;
+
+
+	pair<char, int>	p2 = make_pair<char, int>('x', 21);
+
+
+	pair<char, int>	p3 = make_pair<char, int>('a', 84);
+	pair<char, int>	p4 = make_pair<char, int>('b', 12);
+	pair<char, int>	p5 = make_pair<char, int>('c', 8);
+	pair<char, int>	p6 = make_pair<char, int>('d', 333);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100);
+	pair<char, int>	p8 = make_pair<char, int>('f', 666);
+	pair<char, int>	p9 = make_pair<char, int>('g', 1);
+	mymap.insert(p2);
+
+	map<char, int>::reverse_iterator rit = mymap.rbegin();
+	map<char, int>::const_reverse_iterator crit = mymap.rbegin();
+
+	mymap.insert(p3);
+	mymap.insert(p4);
+	mymap.insert(p5);
+	mymap.insert(p6);
+	mymap.insert(p7);
+	mymap.insert(p8);
+	mymap.insert(p9);
+
+	map<char, int>::reverse_iterator rend = mymap.rend();
+	map<char, int>::const_reverse_iterator crend = mymap.rend();
+
+	std::cout << "reverse" << std::endl;
+	for (; rit != rend; rit++)
+		std::cout << *rit << std::endl;
+
+	std::cout << "const reverse" << std::endl;
+	for (; crit != crend; crit++)
+		std::cout << *crit << std::endl;
+
+	/*
 	map<char, int> m1;
 
 	pair<char, int>	p1 = make_pair<char, int>('e', 42);
@@ -153,4 +191,5 @@ int main(void)
 	m1.insert(p6);
 
 	return (0);
+	*/
 }

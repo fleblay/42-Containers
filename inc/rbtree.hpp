@@ -196,6 +196,12 @@ namespace ft
 			_alloc.construct(_leaf, Node());
 		}
 
+		size_type		max_size(void) const
+		{
+			DEBUG_PRINT("rbtree :  max_size")
+			return (_alloc.max_size());
+		}
+
 		//MEMBER ATTRIBUTES
 		private :
 		Node			*_root;
