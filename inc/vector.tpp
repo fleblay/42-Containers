@@ -219,7 +219,6 @@ namespace ft
 	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag)
 	{
 		DEBUG_PRINT("ft::vector assign : range version : forward_iterator_tag specialisation")
-		std::cout << "forward used" << std::endl;
 		size_type	n = ft::distance(first, last);
 		if (n > _capacity)
 			this->reserve(n);
@@ -234,7 +233,6 @@ namespace ft
 	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::input_iterator_tag)
 	{
 		DEBUG_PRINT("ft::vector assign : range version : input_iterator specialisation")
-		std::cout << "input used" << std::endl;
 		for (size_type i = 0; i < _size; i++)
 			_alloc.destroy(_data + i);
 		_size = 0;
