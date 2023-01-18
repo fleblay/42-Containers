@@ -42,10 +42,13 @@ namespace ft
 	}
 
 	template <class T, class Alloc>
-	vector<T, Alloc>::vector(const vector &x) : _size(0), _capacity(0), _data(NULL)
+	vector<T, Alloc>::vector(const vector &x) : _size(x._size), _capacity(x._size), _data(NULL), _alloc(x._alloc)
 	{
 		DEBUG_PRINT("ft::vector : copy constructor")
-		*this = x;
+		//*this = x;
+		_data = _alloc.allocate(_size);
+		for (size_type i = 0; i < _size; i++)
+			_alloc.construct(_data + i, x._data[i]);
 		return ;
 	}
 
