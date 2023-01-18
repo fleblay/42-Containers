@@ -86,11 +86,14 @@ namespace ft
 		set	&operator=(const set &x)
 		{
 			DEBUG_PRINT("ft::set operator=")
-			this->_comp = x._comp;
-			this->_alloc = x._alloc;
-			_tree.destroyTree();
-			_tree.createLeaf();
-			insert(x.begin(), x.end());
+			if (*this != x)
+			{
+				this->_comp = x._comp;
+				this->_alloc = x._alloc;
+				_tree.destroyTree();
+				_tree.createLeaf();
+				insert(x.begin(), x.end());
+			}
 			return (*this);
 		}
 

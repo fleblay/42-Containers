@@ -192,15 +192,6 @@ namespace ft
 			else
 			{ // travail a faire pour aller a la node la plus a droite
 				node_pointer save_end = _end;
-			  /*
-				node_pointer save_end = _current;
-				while (save_end->parent)
-					save_end = save_end->parent;
-				while (save_end->right->data)
-					save_end = save_end->right;
-				save_end = save_end->right;
-				// save_end vaut end;
-			*/
 
 				while (_current->parent && _current == _current->parent->left)
 					_current = _current->parent;

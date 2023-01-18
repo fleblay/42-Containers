@@ -30,8 +30,8 @@ namespace ft
 	random_access_iterator<Iter>::random_access_iterator(const random_access_iterator<IterR> &src) : _curentElemPtr(src.base())
 	{
 		DEBUG_PRINT("ft::random_access_iterator : copy constructor")
-		//if (*this != src)
-		//	*this = src;
+		if (*this != src)
+			*this = src;
 		return ;
 	}
 

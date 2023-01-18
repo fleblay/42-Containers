@@ -1,4 +1,4 @@
-#include "vector.hpp"
+
 #include <vector>
 #include "containers.hpp"
 #include <stdexcept>
@@ -16,10 +16,6 @@
 #include "pair.hpp"
 #include "map.hpp"
 #include <map>
-#include <list> // for testing
-#include <set>
-#include "set.hpp"
-#include <sys/time.h>
 
 void	signal_handler(int signal_number)
 {
@@ -46,36 +42,9 @@ void printInfo(const map<K, V> &to_print)
 				<< std::endl;
 }
 
-template <typename K, typename V>
-void printMap(const map<K, V> &to_print)
-{
-	std::cout	<< "Map"
-				<< " size : [" << to_print.size() << "]"
-				<< std::endl;
-	for (typename map<K, V>::const_iterator it = to_print.begin(); it != to_print.end(); it++)
-		std::cout << *it << std::endl;
-	std::cout << "--------------------" << std::endl;
-}
-
-template <typename T>
-void printSet(const set<T> &to_print)
-{
-	std::cout	<< "set"
-				<< " size : [" << to_print.size() << "]"
-				<< std::endl;
-	for (typename set<T>::const_iterator it = to_print.begin(); it != to_print.end(); it++)
-		std::cout << *it << std::endl;
-	std::cout << "--------------------" << std::endl;
-}
-
 bool comparator (int c1, int c2)
 {
 	return (c1 < c2);
-}
-
-bool predicate (int c1, int c2)
-{
-	return (c1 == c2);
 }
 
 template <class T>
@@ -107,46 +76,59 @@ struct myCustomLess< pair<T,U> > : std::less<T>
 	}
 };
 
-unsigned int get_exec_time(struct timeval start, struct timeval end)
-{
-	return (end.tv_sec * 1000000 + end.tv_usec - start.tv_sec * 1000000 - start.tv_usec);
-}
-
-std::string	get_color(float ratio)
-{
-	if (ratio < 5)
-		return ("\x1b[32m");
-	if (ratio < 20)
-		return ("\x1b[33m");
-	return ("\x1b[31m");
-
-}
-
+#include <string>
 int main(void)
 {
-
 	map<char, int> m1;
 
-	pair<char, int>	p2 = make_pair<char, int>('y', 21);
+	pair<char, int>	p1 = make_pair<char, int>('e', 42);
+	pair<char, int>	p2 = make_pair<char, int>('z', 21);
 	pair<char, int>	p3 = make_pair<char, int>('a', 84);
 	pair<char, int>	p4 = make_pair<char, int>('b', 12);
 	pair<char, int>	p5 = make_pair<char, int>('c', 8);
-	pair<char, int>	p1 = make_pair<char, int>('e', 42);
-	pair<char, int>	p7 = make_pair<char, int>('f', 666);
-	pair<char, int>	p8 = make_pair<char, int>('g', 1);
-	pair<char, int>	p6 = make_pair<char, int>('x', 333);
-	pair<char, int>	p9 = make_pair<char, int>('t', 13);
+	pair<char, int>	p6 = make_pair<char, int>('d', 333);
+	pair<char, int>	p7 = make_pair<char, int>('e', 100); // should fail
+	pair<char, int>	p8 = make_pair<char, int>('f', 666);
+	pair<char, int>	p9 = make_pair<char, int>('g', 1);
 
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
-	m1.insert(p7);
-	m1.insert(p8);
-	m1.insert(p9);
+	vector<pair<char, int> >	v;
+	v.push_back(p1);
+	v.push_back(p2);
+	v.push_back(p3);
+	v.push_back(p4);
+	v.push_back(p5);
+	v.push_back(p6);
+	v.push_back(p7);
+	v.push_back(p8);
+	v.push_back(p9);
 
-	m1.print();
+	m1.insert(v.begin(), v.end());
+
+	map<char, int>::iterator it = m1.begin();
+	map<char, int>::iterator ite = m1.end();
+
+	for (; it != ite; it++)
+		std::cout << *it << std::endl;
+
+	std::cout << "----------" << std::endl;
+
+	map<char, int>::iterator toDelete1 = m1.begin();
+	map<char, int>::iterator toDelete2 = --m1.end();
+	map<char, int>::iterator toPreserve1 = ++m1.begin();
+	map<char, int>::iterator toPreserve2 = ++(++m1.begin());
+
+	std::cout << "To delete1 is " << *toDelete1 << std::endl;
+	std::cout << "To delete2 is " << *toDelete2 << std::endl;
+	std::cout << "To preserve1 is " << *toPreserve1 << std::endl;
+	std::cout << "To preserve2 is " << *toPreserve2 << std::endl;
+	std::cout << "----------" << std::endl;
+
+	std::cout << "Deleting delete1 and delete2" << std::endl;
+	m1.erase(toDelete1->first);
+	m1.erase(toDelete2->first);
+
+	std::cout << "----------" << std::endl;
+	std::cout << "To preserve1 is " << *toPreserve1 << std::endl;
+	std::cout << "To preserve2 is " << *toPreserve2 << std::endl;
 	return (0);
 }

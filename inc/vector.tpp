@@ -219,6 +219,7 @@ namespace ft
 	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::forward_iterator_tag)
 	{
 		DEBUG_PRINT("ft::vector assign : range version : forward_iterator_tag specialisation")
+		std::cout << "forward used" << std::endl;
 		size_type	n = ft::distance(first, last);
 		if (n > _capacity)
 			this->reserve(n);
@@ -233,6 +234,7 @@ namespace ft
 	void			vector<T, Alloc>::assign_range(InputIterator first, InputIterator last, std::input_iterator_tag)
 	{
 		DEBUG_PRINT("ft::vector assign : range version : input_iterator specialisation")
+		std::cout << "input used" << std::endl;
 		for (size_type i = 0; i < _size; i++)
 			_alloc.destroy(_data + i);
 		_size = 0;
@@ -325,8 +327,6 @@ namespace ft
 	}
 
 	template <class T, class Alloc> template <class InputIterator>
-	//void			vector<T, Alloc>::insert(iterator position,
-//			typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
 	void			vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type*)
 	{
 		DEBUG_PRINT("ft::vector insert : range version")
@@ -375,20 +375,6 @@ namespace ft
 		}
 	}
 
-	/*
-	template <class T, class Alloc>
-	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator position)
-	{
-		DEBUG_PRINT("ft::vector erase single elem")
-		size_type	pos = ft::distance(begin(), position);
-
-		vector tmp(this->begin(), position);
-		tmp.insert(tmp.end(), position + 1, this->end());
-		*this = tmp;
-
-		return (this->begin() + pos);
-	}
-	*/
 
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator position)

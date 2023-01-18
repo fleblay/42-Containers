@@ -124,29 +124,24 @@ std::string	get_color(float ratio)
 
 int main(void)
 {
+	stack<int, std::list<int> > s;
 
-	map<char, int> m1;
+	s.push(1);
+	s.push(2);
+	s.push(3);
+	s.push(4);
+	s.push(5);
+	s.push(6);
+	s.push(7);
+	s.push(8);
+	s.push(9);
+	s.push(10);
+	s.push(11);
+	s.push(12);
 
-	pair<char, int>	p2 = make_pair<char, int>('y', 21);
-	pair<char, int>	p3 = make_pair<char, int>('a', 84);
-	pair<char, int>	p4 = make_pair<char, int>('b', 12);
-	pair<char, int>	p5 = make_pair<char, int>('c', 8);
-	pair<char, int>	p1 = make_pair<char, int>('e', 42);
-	pair<char, int>	p7 = make_pair<char, int>('f', 666);
-	pair<char, int>	p8 = make_pair<char, int>('g', 1);
-	pair<char, int>	p6 = make_pair<char, int>('x', 333);
-	pair<char, int>	p9 = make_pair<char, int>('t', 13);
+	std::cout << s.top() << std::endl;
+	s.pop();
+	std::cout << s.top() << std::endl;
 
-	m1.insert(p1);
-	m1.insert(p2);
-	m1.insert(p3);
-	m1.insert(p4);
-	m1.insert(p5);
-	m1.insert(p6);
-	m1.insert(p7);
-	m1.insert(p8);
-	m1.insert(p9);
-
-	m1.print();
 	return (0);
 }

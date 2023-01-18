@@ -248,26 +248,6 @@ int main(void)
 	std::cout << "ft::vector.push_back() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
 
-	//vector copy
-	std::cout << "vector copy" << std::endl;
-
-	gettimeofday(&start, NULL);
-	std::vector<int>	v3(v1);
-	gettimeofday(&end, NULL);
-	time_std = get_exec_time(start, end);
-
-	gettimeofday(&start, NULL);
-	ft::vector<int>	v4(v2);
-	gettimeofday(&end, NULL);
-	time_ft = get_exec_time(start, end);
-
-	ratio = (float)time_ft/time_std;
-	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
-	std::cout << "time_std : [" << time_std << "]" << std::endl;
-
-	std::cout << "ft::vector copy constructor is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
-	std::cout << "--------------------" << std::endl;
-
 	//vector erase
 	std::cout << "vector erase" << std::endl;
 

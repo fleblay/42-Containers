@@ -104,11 +104,14 @@ namespace ft
 		map	&operator=(const map &x)
 		{
 			DEBUG_PRINT("ft::map operator=")
-			this->_comp = x._comp;
-			this->_alloc = x._alloc;
-			_tree.destroyTree();
-			_tree.createLeaf();
-			insert(x.begin(), x.end());
+			if (*this != x)
+			{
+				this->_comp = x._comp;
+				this->_alloc = x._alloc;
+				_tree.destroyTree();
+				_tree.createLeaf();
+				insert(x.begin(), x.end());
+			}
 			return (*this);
 		}
 
@@ -123,8 +126,6 @@ namespace ft
 				return (begin());
 			*/
 			return iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
-			//return iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
-			//return iterator(_tree.getEnd());
 		}
 
 		const_iterator			end(void) const
@@ -135,8 +136,6 @@ namespace ft
 				return (begin());
 			*/	
 			return const_iterator(_tree.getEnd(), _tree.getRoot(), _tree.getEnd());
-			//return const_iterator(_tree.findMax()->right); // a securiser si findMax renvoie null
-			//return const_iterator(_tree.getEnd());
 		}
 
 		iterator				begin(void)
@@ -399,6 +398,13 @@ namespace ft
 		allocator_type			_alloc;
 		tree					_tree;
 
+
+		//debug and defense
+		public :
+		void print(void) const
+		{
+			_tree.print();
+		}
 	};
 
 	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS

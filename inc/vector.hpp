@@ -80,9 +80,6 @@ namespace ft
 		void			pop_back(void);
 		iterator		insert(iterator position, const value_type &val);
 		void			insert(iterator position, size_type n, const value_type &val);
-//		template <class InputIterator>
-//		void			insert(iterator position, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type first,
-//							InputIterator last);
 		template <class InputIterator>
 		void			insert(iterator position, InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type* = 0);
 		iterator		erase(iterator position);
