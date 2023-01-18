@@ -398,13 +398,14 @@ namespace ft
 		allocator_type			_alloc;
 		tree					_tree;
 
-
+		/*
 		//debug and defense
 		public :
 		void print(void) const
 		{
 			_tree.print();
 		}
+		*/
 	};
 
 	//FUNCTIONS : NON-MEMBER FUNCTION OVERLOADS
