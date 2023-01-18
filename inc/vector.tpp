@@ -397,13 +397,15 @@ namespace ft
 		size_type	pos = ft::distance(begin(), position);
 
 		if (position != end())
-			--_size;
-		for (size_type i = pos; i < _size ; i++) 
 		{
+			--_size;
+			size_type i = pos;
 			_alloc.destroy(_data + i);
-			_alloc.construct(_data + i, *(_data + i + 1));
+			for (; i < _size; i++)
+				*(_data + i) = *(_data + i + 1);
+			return (this->begin() + pos);
 		}
-		return (this->begin() + pos);
+		return (position);
 	}
 
 
@@ -411,13 +413,23 @@ namespace ft
 	typename vector<T, Alloc>::iterator		vector<T, Alloc>::erase(iterator first, iterator last)
 	{
 		DEBUG_PRINT("ft::vector erase range")
+		size_type	start = ft::distance(begin(), first);
+		size_type	end = ft::distance(begin(), last);
 
-		vector tmp(this->begin(), first);
-		size_type	pos = ft::distance(tmp.begin(), tmp.end());
-		tmp.insert(tmp.end(), last, this->end());
-		*this = tmp;
+		size_type i = 0;
+		bool erase_end = (last == this->end() ? true : false);
 
-		return (this->begin() + pos);
+		for (; i < end - start; i++)
+		{
+			_alloc.destroy(_data + start + i);
+			*(_data + start + i) = *(_data + end + i);
+			--_size;
+		}
+		for (; i < _size; i++)
+			*(_data + start + i) = *(_data + end + i);
+		if (!erase_end)
+			return (begin() + start);
+		return (this->end());
 	}
 
 	template <class T, class Alloc>

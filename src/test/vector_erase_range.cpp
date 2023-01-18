@@ -48,7 +48,7 @@ int main(void)
 	printInfo(myvect);
 	std::cout << "----------------------" << std::endl;
 
-	std::cout << "next value : [" << *myvect.erase(myvect.begin() + 6, myvect.end()) << "]" << std::endl;
+	std::cout << "next value is end ? : [" << (*myvect.erase(myvect.begin() + 6, myvect.end()) == *myvect.end()) << "]" << std::endl;
 	for (vector<int>::size_type i = 0; i < myvect.size(); i++)
 		std::cout << "value : [" << myvect[i] << "]" << std::endl;
 	printInfo(myvect);

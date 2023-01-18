@@ -290,6 +290,26 @@ int main(void)
 	std::cout << "ft::vector.erase() is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
 	std::cout << "--------------------" << std::endl;
 
+	//vector erase range
+	std::cout << "vector erase range" << std::endl;
+
+	gettimeofday(&start, NULL);
+		v1.erase(v1.begin() + 2, v1.begin() + 5000);
+	gettimeofday(&end, NULL);
+	time_std = get_exec_time(start, end);
+
+	gettimeofday(&start, NULL);
+		v2.erase(v2.begin() + 2, v2.begin() + 5000);
+	gettimeofday(&end, NULL);
+	time_ft = get_exec_time(start, end);
+
+	ratio = (float)time_ft/time_std;
+	std::cout << "time_ft : [" << time_ft << "]" << std::endl;
+	std::cout << "time_std : [" << time_std << "]" << std::endl;
+
+	std::cout << "ft::vector.erase() range version is : [" << get_color(ratio) << ratio << "\x1b[0m] times slower than std" << std::endl;
+	std::cout << "--------------------" << std::endl;
+
 	//set insert
 	std::cout << "set insert" << std::endl;
 	std::set<int>	s1;
